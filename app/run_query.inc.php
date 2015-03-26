@@ -109,7 +109,7 @@ function readCookie($cookie_name){
 
 function cookieContainsCommand($oldValue, $command){
     $commands = split($oldValue, DELIMITER_COMMANDCOOKIE_EXTERNAL);
-    for($command in $commands){
+    foreach($commands as $command){
         $tokens = split($command, DELIMITER_COMMANDCOOKIE_INTERNAL);
         if ($token[2] == $command){
             return true;

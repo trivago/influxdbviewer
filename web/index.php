@@ -95,7 +95,7 @@ function addLoginToCookie(){
 
 function cookieContainsLogin($oldValue, $str){
     $logins = split($oldValue, DELIMITER_LOGINCOOKIE_EXTERNAL);
-    for($login in $logins){
+    foreach($logins as $login){
         if ($login == $str){
             return true;
         }
