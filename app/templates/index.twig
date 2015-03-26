@@ -1,0 +1,16 @@
+{% extends "layout.twig" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi quibusdam numquam laudantium eum asperiores non libero odio quae debitis beatae perferendis eius esse molestiae voluptatum vel inventore quasi. Quo sint sequi sunt amet sapiente tempora autem iusto praesentium rerum ducimus.</p>
+
+    <ul>
+        {% for color in colors %}
+            <li>{{ color }}</li>        
+        {% endfor %}
+    </ul>
+{% endblock %}

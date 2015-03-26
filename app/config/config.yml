@@ -1,0 +1,4 @@
+debug: true
+
+config:
+    title: AdminfluxDB
