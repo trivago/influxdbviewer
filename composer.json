@@ -3,6 +3,7 @@
         "silex/silex": "1.0.*-dev",
         "twig/twig": ">=1.8,<2.0-dev",
         "igorw/config-service-provider": "~1.0",
-        "symfony/yaml": "2.1.*"
+        "symfony/yaml": "2.1.*",
+        "symfony/security": "*"
     }
 }

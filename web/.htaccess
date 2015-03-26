@@ -2,7 +2,9 @@
     Options -MultiViews
 
     RewriteEngine On
-    #RewriteBase /path/to/app
+    RewriteCond %{HTTP:Authorization} ^(.+)$
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+    RewriteRule ^(.*)$ app.php [QSA,L]
 </IfModule>
+
