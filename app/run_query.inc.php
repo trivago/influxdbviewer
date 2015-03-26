@@ -23,7 +23,7 @@ if (!empty($_REQUEST['query']))
 
 function getDatabaseResults($query)
 {
-    $debug = true; // TODO
+   // $debug = true; // TODO
     $feedback      = [];
     $feedback['error_message'] = null;
 
@@ -40,12 +40,12 @@ function getDatabaseResults($query)
     }
     else
     {
-         if ($debug) print "Getting data from db. "; 
+        // if ($debug) print "Getting data from db. "; 
         $now        = mktime();
         $url        = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
 
-        if($debug) print $url;
+        //if($debug) print $url;
         $httpResult = getUrlContent($url);
 
         if (200 == $httpResult['status_code'])
@@ -98,7 +98,7 @@ function addCommandToCookie($command, $ts, $number_of_pages){
     if(!cookieContainsCommand($oldValue, $command)){
     $newValue = $oldValue . DELIMITER_COMMANDCOOKIE_EXTERNAL . $saveMe;
    # print "Old cookie section: " . $oldValue . "<br>";
-    print "Full cookie section: " . $newValue . "<br>";
+    #print "Full cookie section: " . $newValue . "<br>";
 
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
     }
