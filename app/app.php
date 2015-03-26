@@ -21,6 +21,7 @@ $app->get(
     '/',
     function () use ($app)
     {
+        require_once("login.inc.php");
         return $app['twig']->render(
             'index.twig',
             array(
@@ -36,6 +37,7 @@ $app->get(
     'databases',
     function () use ($app)
     {
+        require_once("list_databases.inc.php");
         return $app['twig']->render(
             'databases.twig',
             array(
@@ -51,6 +53,7 @@ $app->get(
     'query',
     function () use ($app)
     {
+        require_once("run_query.inc.php");
         return $app['twig']->render(
             'query.twig',
             array(
