@@ -6,29 +6,15 @@ require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
 
-if ($_POST)
-{
-    $loggedIn      = false;
-    $error_message = null;
-    // session_start();
+$databases = getListOfDatabases();
 
-    require_once("../app/login.inc.php");
+if(isset($_REQUEST['database']) && !empty($_REQUEST['database'])){
 
-    if ($loggedIn)
+if (in_array($_REQUEST['database'], $databases))
     {
-        redirectTo("databases.php");
+        $_SESSION['database'] = $_REQUEST['database'];
+       redirectTo("query.php");
     }
-    else
-    {
-        $_SESSION['host'] = "";
-        $_SESSION['user'] = "";
-        // does not redirect, will end up in loginform
-    }
-}
-else
-{
-    $_SESSION['host'] = "";
-    $_SESSION['user'] = "";
 }
 
 try
@@ -47,7 +33,7 @@ try
     echo $template->render(
         array(
             'title' => "Databases",
-                'databases' => $databases,
+            'databases' => $databases,
             
             'user'  => $_SESSION['user'],
             'host'  => $_SESSION['host'],
