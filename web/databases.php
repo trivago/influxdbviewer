@@ -2,7 +2,7 @@
 //$app = require __DIR__.'/../app/app.php';
 // $app->run();
 session_start();
-if(!isset($_SESSION['host']) || empty($_SESSION['host']) ){
+if(!isset($_SESSION['host']) || empty($_SESSION['host']) ){ // TODO same for username
 	redirectTo("index.php");
 }
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
@@ -54,7 +54,7 @@ function redirectTo($path)
 
 function getListOfDatabases()
 {
-    $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
+    $url        = "http://" . $_SESSION['host'] . ":8086/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
     print ("URRREL " . $url);
     $httpResult = getUrlContent($url);
 
