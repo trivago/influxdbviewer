@@ -1,0 +1,9 @@
+/*
+ * Centers anything on x-axis
+ */
+@mixin center-x {
+	position: relative;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+}
