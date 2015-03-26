@@ -26,7 +26,7 @@ try
     $twig = new Twig_Environment($loader);
 
     // load template
-    $template = $twig->loadTemplate('index.twig');
+    $template = $twig->loadTemplate('databases.twig');
 
     // set template variables
     // render template
@@ -49,4 +49,43 @@ function redirectTo($path)
 {
     header("Location: " . $path);
     die();
+}
+
+function getListOfDatabases()
+{
+    $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
+    print ("URRREL " . $url);
+    $httpResult = getUrlContent($url);
+
+    if (200 == $httpResult['status_code'])
+    {
+
+        $json = json_decode($httpResult['results']);
+        print_r($json);
+        $result = array();
+        foreach ($json as $key => $value)
+        {
+            $result[] = $value;
+        }
+
+        return $result;
+    }
+    else
+    {
+        // TODO error handling
+    }
+}
+
+function getUrlContent($url)
+{
+	    $ch = curl_init();
+	    curl_setopt($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+	    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+	    $data       = curl_exec($ch);
+	    $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	    curl_close($ch);
+
+	    return ['status_code' => $statuscode, 'results' => $data];
 }
