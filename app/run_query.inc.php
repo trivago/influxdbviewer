@@ -91,8 +91,10 @@ function getDatabaseResults($query)
 function addCommandToCookie($command, $ts, $number_of_pages){
     $cookie_name = "last_commands";
     $saveMe = $ts . "/" . $number_of_pages . "/" . $command;
+    print "New cookie section: " . $saveMe . "<br>";
     $oldValue = readCookie($cookie_name);
     $newValue = $oldValue . "|" . $saveMe;
+    print "Old cookie section: " . $oldValue . "<br>";
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
 }
 
