@@ -16,8 +16,7 @@ if ($_POST)
 
 function checkLoginValid()
 {
-
-    $url        = "http://" + $_POST['host'] + "/db/?u=" + $_POST['user'] + "&p=" + $_POST['pw'];
+    $url        = "http://" . $_POST['host'] . "/db/?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
     $httpResult = getUrlContent($url);
 
     return (200 == $httpResult['status_code']);

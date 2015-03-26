@@ -1,4 +1,4 @@
-<?
+<?php
 $databases = getListOfDatabases();
 
 if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['database']))
@@ -14,8 +14,9 @@ if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['d
 
     function getListOfDatabases()
     {
-        $url        = "http://" + $_SESSION['host'] + "/db/?u=" + $_SESSION['user'] + "&p=" + $_SESSION['pw'];
+        $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
         $httpResult = getUrlContent($url);
+
         if (200 == $httpResult['status_code'])
         {
 
@@ -27,7 +28,7 @@ if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['d
                 $result[] = $value;
             }
 
-            return result;
+            return $result;
         }
         else
         {

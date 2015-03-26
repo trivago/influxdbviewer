@@ -1,4 +1,5 @@
-<?
+<?php
+
 define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
 define('RESULTS_PER_PAGE', 50);
 
@@ -17,8 +18,9 @@ if (!empty($_REQUEST['query']))
 
 function getDatabaseResults($query)
 {
-
+    $feedback      = '';
     $cache_results = searchCache($query);
+
     if ($cache_results != null && !$_REQUEST['ignore_cache'])
     {
         $cache_results['is_cached'] = true;
@@ -27,8 +29,10 @@ function getDatabaseResults($query)
     else
     {
         $now        = mktime();
-        $url        = "http://" + $_SESSION['host'] + "/db/" + $_SESSION['database'] + "/series?u=" + $_SESSION['user'] + "&p=" + $_SESSION['pw'] + "&q=" + urlencode($query);
+        $url        = "http://" . $_SESSION['host'] . "/db/" . $_SESSION['database'] . "/series?u="
+            . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
         $httpResult = getUrlContent($url);
+
         if (200 == $httpResult['status_code'])
         {
             $json            = json_decode($httpResult['results']);
@@ -36,7 +40,14 @@ function getDatabaseResults($query)
             $datapoints      = $json['points'];
             $results         = ['columns' => $columns, 'datapoints' => $datapoints];
             $number_of_pages = count($datapoints);
-            $feedback        = ['timestamp' => $now, 'results' => $results, 'is_cached' => false, 'page' => 1, 'number_of_pages' => $number_of_pages, 'error_message' => null];
+            $feedback        = [
+                'timestamp'       => $now,
+                'results'         => $results,
+                'is_cached'       => false,
+                'page'            => 1,
+                'number_of_pages' => $number_of_pages,
+                'error_message'   => null
+            ];
             saveResultsToCache($query, $results, $now, $number_of_pages);
         }
         else
@@ -47,7 +58,8 @@ function getDatabaseResults($query)
     if ($feedback['error_message'] == null)
     {
         $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-        $limitedResult = limitResult($_REQUEST['page']);
+        $limitedResult = limitResult($_REQUEST['page'], $feedback);
+
         if ($limitedResult != null)
         {
             $feedback['page']    = $_REQUEST['page'];
@@ -55,7 +67,7 @@ function getDatabaseResults($query)
         }
     }
 
-    return feedback;
+    return $feedback;
 }
 
 function isSeriesList($query)
@@ -95,5 +107,11 @@ function getUrlContent($url)
     $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    return ['status_code' => statuscode, 'results' => $data];
+    return ['status_code' => $statuscode, 'results' => $data];
+}
+
+function limitResult($page, $data)
+{
+    // TODO fill in
+    return false;
 }

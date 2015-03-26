@@ -51,6 +51,7 @@ $app->get(
     {
         $loggedIn      = false;
         $error_message = null;
+        
         require_once("login.inc.php");
 
         if ($loggedIn)
