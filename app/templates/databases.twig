@@ -5,9 +5,7 @@
 {% endblock %}
 
 {% block header %}
-    <header class="site-header">
-        <h1>{{ title }}</h1>
-    </header>
+    {% include "snippets/header-logged-in.twig" %}
 {% endblock %}
 
 {% block content %}
