@@ -25,6 +25,7 @@ function checkLoginValid()
 
 function storeToSession()
 {
+    $session->set('host', $_POST['host']);
     $_SESSION['host'] = $_POST['host'];
     $_SESSION['user'] = $_POST['user'];
     $_SESSION['pw']   = $_POST['pw'];
