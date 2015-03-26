@@ -109,11 +109,14 @@ function readCookie($cookie_name){
 
 }
 
-function cookieContainsCommand($oldValue, $command){
+function cookieContainsCommand($oldValue, $str){
     $commands = split($oldValue, DELIMITER_COMMANDCOOKIE_EXTERNAL);
+
     foreach($commands as $command){
+            print "cookieContainsCommand " . $command . " check<br>";
         $tokens = split($command, DELIMITER_COMMANDCOOKIE_INTERNAL);
-        if ($token[2] == $command){
+         print "cookieContainsCommand " . $comand . " vs " . $str . " check<br>";
+        if ($token[2] == $str){
             return true;
         }
     }
