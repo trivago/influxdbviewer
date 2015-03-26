@@ -14,9 +14,11 @@
     <script language="javascript">
         function listPreviousQueries(){
     var last_commands = readCookie("last_commands");
-    document.write(last_commands);
-    for (var command = last_commands.split("|"), i = last_commands.length -1; i >= 0; i--){
-   //     document.write(command + "<br>");
+    // document.write(last_commands);
+    var show_max = 30;
+    var found = last_commands.length ;
+    for (var command = last_commands.split("|"), i = found -1; i >= found - show_max; i--){
+        document.write(command + "<br>");
     }}
     function readCookie(name) {
     name += '=';
