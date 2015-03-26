@@ -17,6 +17,7 @@
     <!-- Add your site or application content here -->
     <main>
       {% block content %}{% endblock %}
+      {% block maincontent %}{% endblock %}
     </main>
     {% block footer %}
       {% include "snippets/footer.twig" %}
@@ -24,5 +25,7 @@
   </div>
 
   <script src="{{ app.request.basepath }}/js/modernizr.js"></script>
+  <script src="{{ app.request.basepath }}/js/jquery.min.js"></script>
+  <script src="{{ app.request.basepath }}/js/flexflux.js"></script>
 </body>
 </html>
