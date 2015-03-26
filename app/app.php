@@ -3,7 +3,6 @@ require __DIR__ . '/bootstrap.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Silex\Provider\FormServiceProvider;
 
 $app = new Silex\Application();
 
@@ -15,9 +14,6 @@ $app->register(
         'twig.path' => __DIR__ . '/templates',
     )
 );
-
-// FORM EXTENSION
-$app->register(new FormServiceProvider());
 
 // CONFIG EXTENSION
 $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.yml"));
@@ -51,7 +47,7 @@ $app->get(
     {
         $loggedIn      = false;
         $error_message = null;
-        
+
         require_once("login.inc.php");
 
         if ($loggedIn)
