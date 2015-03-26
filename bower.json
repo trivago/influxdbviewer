@@ -14,6 +14,8 @@
     "normalize-css": "~3.0.2"
   },
   "devDependencies": {
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "html5-boilerplate": "~5.0.0",
+    "ladda": "~0.9.7"
   }
 }
