@@ -18,10 +18,14 @@ if (!empty($_REQUEST['query']))
 
 function getDatabaseResults($query)
 {
-    $feedback      = '';
+    $feedback      = [];
+    $feedback['error_message'] = null;
+
     $cache_results = searchCache($query);
 
-    if ($cache_results != null && !$_REQUEST['ignore_cache'])
+    $ignore_cache = isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
+
+    if ($cache_results != null && !$ignore_cache)
     {
         $cache_results['is_cached'] = true;
         $feedback                   = $cache_results;
@@ -59,7 +63,7 @@ function getDatabaseResults($query)
     if ($feedback['error_message'] == null)
     {
         $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-        $limitedResult = limitResult($_REQUEST['page'], $feedback['results']);
+        $limitedResult = limitResult($page, $feedback['results']);
 
         if ($limitedResult != null)
         {
