@@ -42,105 +42,40 @@
         <div class="sectionbody">
 
             <!-- replace this static list with the real data! -->
-            <ul class="no-bullet zebralist">
-                <li class="listitem"><a href="#" class="celllink">Lorem ipsum.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Excepturi, itaque.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Expedita, sunt.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Architecto, vel.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Optio, vero!</a></li>
-                <li class="listitem"><a href="#" class="celllink">Fuga, quos.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Odio, repellat.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Fugit, quibusdam.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Delectus, minus.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Amet, aperiam.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Ipsa, quos.</a></li>
-                <li class="listitem"><a href="#" class="celllink">Beatae, ipsum.</a></li>
-            </ul>
+            <ul class="no-bullet zebralist"> <script language="javascript">listPreviousLogins();</script></ul>
         </div>
     </section>
+    <script language="javascript">
+      function listPreviousLogins(){
+    var last_logins = urldecode(readCookie("last_logins"));
+    //document.write( "all : " + last_logins + "<br><br><br>");
+    var show_max = 30;
+    var commandlist = last_logins.split("|")
+    var found = commandlist.length ;
+    for (i = found -1; i >= found - show_max; i--){
+     //  var tokens =  commandlist[i].split("#");
+      
+       document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
+    }}
 
-    <table class="sectionbox">
-        <thead>
-        <tr>
-            <th>Lorem</th>
-            <th>Aspernatur</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><a href="#" class="tablelink">Lorem.</a></td>
-            <td><a href="#" class="tablelink">Praesentium.</a></td>
-        </tr>
-        <tr>
-            <td><a href="#" class="tablelink">Lorem.</a></td>
-            <td><a href="#" class="tablelink">Dignissimos.</a></td>
-        </tr>
-        <tr>
-            <td><a href="#" class="tablelink">Lorem.</a></td>
-            <td><a href="#" class="tablelink">Voluptatum.</a></td>
-        </tr>
-        <tr>
-            <td><a href="#" class="tablelink">Lorem.</a></td>
-            <td><a href="#" class="tablelink">Architecto.</a></td>
-        </tr>
-        <tr>
-            <td><a href="#" class="tablelink">Lorem.</a></td>
-            <td><a href="#" class="tablelink">Molestiae!</a></td>
-        </tr>
-        <tr>
-            <td><a href="#" class="tablelink">Lorem.</a></td>
-            <td><a href="#" class="tablelink">Pariatur!</a></td>
-        </tr>
-        </tbody>
-    </table>
+
+    function setLogin(command){
+    document.getElementById("query").value = command;
+    }
+
+    function urldecode(str) {
+   return decodeURIComponent((str+'').replace(/\+/g, '%20'));
+}
+
+    function readCookie(name) {
+    name += '=';
+    for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
+        if (!ca[i].indexOf(name))
+            return ca[i].replace(name, '');
+    }
+    </script>
+   
 {% endblock content %}
 
-{% block javascripts %}
-    <script type="text/javascript">
-        $(document).ready(function () {
 
-            listPreviousLogins();
-            onClickPreviousLogins();
-
-            function listPreviousLogins() {
-                var last_logins = readCookie("last_logins");
-
-                if (!undefined === last_logins) {
-                    var logins = last_logins.split("|"),
-                        list = $('#js_prev_logins_list');
-
-                    for (var i = logins.length - 1; i >= 0; i--) {
-                        list.append('<li><a href="#" class="login_link"></a></li><');
-                        $('.login_link').innerHTML = logins[i];
-                    }
-                }
-
-            }
-
-            function readCookie(name) {
-                name += '=';
-                var ca = document.cookie.split(/;\s*/);
-
-                for (var i = ca.length - 1; i >= 0; i--)
-                    if (!ca[i].indexOf(name))
-                        return ca[i].replace(name, '');
-            }
-
-            function onClickPreviousLogins() {
-                var link = $('.login_link');
-
-                if (!undefined === link) {
-                    var link_data = link.innerHTML.split('@');
-
-                    link.on('click', function () {
-                        $('#user').val(link_data[0]);
-                        $('#host').val(link_data[1]);
-                    })
-                }
-
-            }
-
-        });
-    </script>
-{% endblock javascripts %}
 
