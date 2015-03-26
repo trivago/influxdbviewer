@@ -62,7 +62,7 @@ function getListOfDatabases()
     {
 
         $json = json_decode($httpResult['results']);
-        print_r($json);  // TODO
+      //  print_r($json);  // TODO
         $result = array();
         foreach ($json as $value)
         {
