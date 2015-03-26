@@ -2,25 +2,30 @@
 if ($_POST)
 {
     $loggedIn = checkLoginValid();
-    if($loggedIn){
+
+    if ($loggedIn)
+    {
         storeToSession();
-    } else {
+    }
+    else
+    {
         $error_message = "Invalid login";
     }
 }
 
 
-
 function checkLoginValid()
 {
 
-    $url = "http://" + $_POST['host'] + "/db/?u=" + $_POST['user'] + "&p=" + $_POST['pw'];
+    $url        = "http://" + $_POST['host'] + "/db/?u=" + $_POST['user'] + "&p=" + $_POST['pw'];
     $httpResult = getUrlContent($url);
+
     return (200 == $httpResult['status_code']);
 }
 
-function storeToSession(){
+function storeToSession()
+{
     $_SESSION['host'] = $_POST['host'];
     $_SESSION['user'] = $_POST['user'];
-    $_SESSION['pw'] = $_POST['pw'];
+    $_SESSION['pw']   = $_POST['pw'];
 }

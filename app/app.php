@@ -49,7 +49,7 @@ $app->get(
     '/',
     function (Request $request) use ($app)
     {
-        $loggedIn = false;
+        $loggedIn      = false;
         $error_message = null;
         require_once("login.inc.php");
 
@@ -65,10 +65,10 @@ $app->get(
             'index.twig',
             array(
 
-                'title'         => "AdminfluxDB",
-                'error'         => $error_message;
-                'username'      => $_SESSION['user'],
-                'host'          => $_SESSION['host'],
+                'title'    => "AdminfluxDB",
+                'error'    => $error_message,
+                'username' => $_SESSION['user'],
+                'host'     => $_SESSION['host'],
             )
         );
     }
@@ -94,16 +94,18 @@ $app->get(
     function (Request $request) use ($app)
     {
         $databases = null;
-        $redirect = false;
+        $redirect  = false;
         require_once("list_databases.inc.php");
 
-        if($redirect){ // Database has been selected and stored in the session
+        if ($redirect)
+        { // Database has been selected and stored in the session
             return $app->redirect('/query');
         }
+
         return $app['twig']->render(
             'databases.twig',
             array(
-                'title' => 'databases',
+                'title'     => 'databases',
                 'databases' => $databases,
             )
         );
@@ -115,13 +117,13 @@ $app->get(
     'query',
     function (Request $request) use ($app)
     {
-        $query = "";
-        $results = null;
-        $is_series_list = false;
-        $timestamp = 0;
-        $is_cached = false;
-        $error_message = null;
-        $page = 1;
+        $query           = "";
+        $results         = null;
+        $is_series_list  = false;
+        $timestamp       = 0;
+        $is_cached       = false;
+        $error_message   = null;
+        $page            = 1;
         $number_of_pages = 1;
 
         require_once("run_query.inc.php");
@@ -129,14 +131,14 @@ $app->get(
         return $app['twig']->render(
             'query.twig',
             array(
-                'title' => 'Results',
-                'query' => $query,
-                'results' => $results,
-                'is_series_list' => $is_series_list,
-                'timestamp' => $timestamp,
-                'is_cached' =>  $is_cached,
-                'error_message' => $error_message,
-                'page' => $page,
+                'title'           => 'Results',
+                'query'           => $query,
+                'results'         => $results,
+                'is_series_list'  => $is_series_list,
+                'timestamp'       => $timestamp,
+                'is_cached'       => $is_cached,
+                'error_message'   => $error_message,
+                'page'            => $page,
                 'number_of_pages' => $number_of_pages
             )
         );
