@@ -9,7 +9,8 @@ session_start();
 session_destroy();
 redirectTo("index.php");
 
-function redirectTo($path){
-	header("Location: " . path);
-die();
+function redirectTo($path)
+{
+    header("Location: " . $path);
+    die();
 }
