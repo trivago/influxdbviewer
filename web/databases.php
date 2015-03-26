@@ -2,7 +2,9 @@
 //$app = require __DIR__.'/../app/app.php';
 // $app->run();
 session_start();
-
+if(!isset($_SESSION['host']) || empty($_SESSION['host']) ){
+	redirectTo("index.php");
+}
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 
