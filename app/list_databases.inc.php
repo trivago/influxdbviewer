@@ -10,9 +10,6 @@ if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['d
             $redirect             = true;
         }
     }
-
-
-
 }
 
 function getListOfDatabases()

@@ -101,8 +101,8 @@ $app->get(
         $redirect  = false;
         require_once("list_databases.inc.php");
 
-        if ($redirect)
-        { // Database has been selected and stored in the session
+        if ($redirect)  // Database has been selected and stored in the session
+        {
             return $app->redirect(PATH_QUERY);
         }
 
