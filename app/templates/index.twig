@@ -4,11 +4,11 @@
     {{ title }}
 {% endblock %}
 
-{% block content %}
-    <header class="site-header">
-        <h1>{{ title }}</h1>
-    </header>
+{% block header %}
+    {% include "snippets/header.twig" %}
+{% endblock %}
 
+{% block content %}
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi quibusdam numquam laudantium eum asperiores non libero odio quae debitis beatae perferendis eius esse molestiae voluptatum vel inventore quasi. Quo sint sequi sunt amet sapiente tempora autem iusto praesentium rerum ducimus.</p>
 
     <ul>
