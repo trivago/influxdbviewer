@@ -9,11 +9,8 @@ session_start();
 $loggedIn      = false;
 $error_message = null;
 
-if ($_POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    echo "Hello wurst";
-
-
     $loggedIn = checkLoginValid();
 
     if ($loggedIn)
@@ -22,9 +19,9 @@ if ($_POST)
         addLoginToCookie();
         redirectTo("databases.php");
     }
-    else
+   else
     {
-        $error_message    = "Invalid login";
+         $error_message = "Invalid login";
         $_SESSION['host'] = "";
         $_SESSION['user'] = "";
         // does not redirect, will end up in loginform
@@ -72,33 +69,32 @@ function redirectTo($path)
 
 function checkLoginValid()
 {
-    $url        = "http://" . $_POST['host'] . "/db/?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
+    $url        = "http://" . $_POST['host'] . "/db?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
     $httpResult = getUrlContent($url);
-
+    print "Url " . $url . " -> " ;
+    print_r($httpResult);
     return (200 == $httpResult['status_code']);
 }
 
 function storeToSession()
 {
-    $session->set('host', $_POST['host']);
     $_SESSION['host'] = $_POST['host'];
     $_SESSION['user'] = $_POST['user'];
     $_SESSION['pw']   = $_POST['pw'];
 }
 
 
-function addLoginToCookie()
-{
+function addLoginToCookie(){
     $cookie_name = "last_logins";
-    $saveMe      = $_SESSION['user'] . "@" . $_SESSION['host'];
-    $oldValue    = readCookie($cookie_name);
-    $newValue    = $oldValue . "|" . $saveMe;
+    $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
+    $oldValue = readCookie($cookie_name);
+    $newValue = $oldValue . "|" . $saveMe;
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
 }
 
-function readCookie($cookie_name)
-{
+function readCookie($cookie_name){
     return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
+
 }
 
 function getUrlContent($url)
