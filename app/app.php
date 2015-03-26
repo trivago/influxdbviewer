@@ -72,17 +72,7 @@ $app->post(
     '/login',
     function (Request $request) use ($app)
     {
-        $loggedIn      = false;
-        $error_message = null;
-
-        require_once("login.inc.php");
-
-        if ($loggedIn)
-        {
-            return $app->redirect('/databases');
-        }
-
-        return $app->redirect('/');
+        return new Response('login', 201);
     }
 );
 
@@ -102,7 +92,7 @@ $app->get(
 
 // databases
 $app->get(
-    'databases',
+    '/databases',
     function (Request $request) use ($app)
     {
         $databases = null;
@@ -126,7 +116,7 @@ $app->get(
 
 // query
 $app->get(
-    'query',
+    '/query',
     function (Request $request) use ($app)
     {
         $query           = "";
