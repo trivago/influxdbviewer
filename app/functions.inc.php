@@ -1,4 +1,4 @@
-<?
+<?php
 function getUrlContent($url)
 {
     $ch = curl_init();
