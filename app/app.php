@@ -3,11 +3,12 @@ require __DIR__ . '/bootstrap.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 Request::enableHttpMethodParameterOverride();
 
 $app = new Silex\Application();
-// session_start();
+$session = new Session();
+$session->start();
 
 $app['debug'] = true;
 
@@ -43,7 +44,7 @@ $app->get(
     {
         $loggedIn      = false;
         $error_message = null;
-        session_start();
+        // session_start();
 
         require_once("login.inc.php");
 
