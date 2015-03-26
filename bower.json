@@ -16,6 +16,7 @@
   "devDependencies": {
     "font-awesome": "~4.3.0",
     "html5-boilerplate": "~5.0.0",
-    "ladda": "~0.9.7"
+    "ladda": "~0.9.7",
+    "modernizr": "~2.8.3"
   }
 }
