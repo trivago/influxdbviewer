@@ -1,7 +1,8 @@
 .sectionbox {
 	width: 100%;
 	max-width: 48rem;
-	margin: 0 auto;
+	margin: 0 auto ($gutter)*2;
+    background: $white;
 
 	.sectionheader {
 		@extend .clearfix;
@@ -13,7 +14,6 @@
 	.sectionbody {
 		@extend .clearfix;
 		padding: 0 $gutter;
-		background: $white;
 		min-height: 300px; /* remove later! */
 	}
 }
