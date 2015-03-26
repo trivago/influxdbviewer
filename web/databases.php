@@ -66,8 +66,8 @@ function getListOfDatabases()
         $result = array();
         foreach ($json as $value)
         {
-        // 	print_r($value). "<br>";  // TODO
-
+        	print_r($value). "<br>";  // TODO
+        	print_r($value['name']); // TODO
         	// 	print "Key " . $key . " -> val " . $value . "<br>";  // TODO
             $result[] = $value['name'];
         }
