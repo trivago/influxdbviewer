@@ -14,31 +14,32 @@ if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['d
 }
 
 function getListOfDatabases()
+{
+    $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
+    print ("URRREL " . $url);
+    $httpResult = getUrlContent($url);
+
+    if (200 == $httpResult['status_code'])
     {
-        $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
-        $httpResult = getUrlContent($url);
 
-        if (200 == $httpResult['status_code'])
+        $json = json_decode($httpResult['results']);
+        print_r($json);
+        $result = array();
+        foreach ($json as $key => $value)
         {
-
-            $json = json_decode($httpResult['results']);
-            print_r($json);
-            $result = array();
-            foreach ($json as $key => $value)
-            {
-                $result[] = $value;
-            }
-
-            return $result;
+            $result[] = $value;
         }
-        else
-        {
-            // TODO error handling
-        }
+
+        return $result;
     }
+    else
+    {
+        // TODO error handling
+    }
+}
 
 function getUrlContent($url)
-	{
+{
 	    $ch = curl_init();
 	    curl_setopt($ch, CURLOPT_URL, $url);
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -49,4 +50,4 @@ function getUrlContent($url)
 	    curl_close($ch);
 
 	    return ['status_code' => $statuscode, 'results' => $data];
-	}
+}
