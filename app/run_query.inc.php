@@ -7,7 +7,7 @@ if (!empty($_REQUEST['query']))
 {
     $query           = $_REQUEST['query'];
     $feedback        = getDatabaseResults($query);
-    $results         = $feedback['result'];
+    $results         = $feedback['results'];
     $timestamp       = $feedback['timestamp'];
     $is_cached       = $feedback['is_cached'];
     $page            = $feedback['page'];
