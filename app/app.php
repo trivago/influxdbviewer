@@ -68,7 +68,7 @@ $app->get(
 
                 'title'    => "AdminfluxDB",
                 'error'    => $error_message,
-                'username' => $_SESSION['user'],
+                'user' => $_SESSION['user'],
                 'host'     => $_SESSION['host'],
             )
         );
