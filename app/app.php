@@ -55,19 +55,34 @@ $app->get(
             return $app->redirect('/databases');
         }
 
-        // TODO template rendern und falls error != null dann das form mit den vorherigen postdaten füllen
-        // und die fehlermeldung anzeigen wtf?
-
         return $app['twig']->render(
             'index.twig',
             array(
 
-                'title'    => "AdminfluxDB",
-                'error'    => $error_message,
-                'user' => $_SESSION['user'],
-                'host'     => $_SESSION['host'],
+                'title' => "AdminfluxDB",
+                'error' => $error_message,
+                'user'  => $_SESSION['user'],
+                'host'  => $_SESSION['host'],
             )
         );
+    }
+);
+
+$app->post(
+    '/login',
+    function (Request $request) use ($app)
+    {
+        $loggedIn      = false;
+        $error_message = null;
+
+        require_once("login.inc.php");
+
+        if ($loggedIn)
+        {
+            return $app->redirect('/databases');
+        }
+
+        return $app->redirect('/');
     }
 );
 
