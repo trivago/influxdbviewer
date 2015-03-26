@@ -89,10 +89,7 @@ $app->get(
     PATH_LOGOUT,
     function (Request $request) use ($app)
     {
-        // logout
-        // destroy session
-        // etc
-
+        session_destroy();
         return $app->redirect('/');
     }
 );

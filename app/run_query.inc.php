@@ -49,6 +49,7 @@ function getDatabaseResults($query)
                 'error_message'   => null
             ];
             saveResultsToCache($query, $results, $now, $number_of_pages);
+            addCommandToCookie($query, $now, $number_of_pages);
         }
         else
         {
@@ -68,6 +69,19 @@ function getDatabaseResults($query)
     }
 
     return $feedback;
+}
+
+function addCommandToCookie($command, $ts, $number_of_pages){
+    $cookie_name = "commands";
+    $saveMe = $ts . "/" . $number_of_pages . "/" . $command;
+    $oldValue = readCookie($cookie_name);
+    $newValue = $oldValue . "|" . $saveMe;
+    setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
+}
+
+function readCookie($cookie_name){
+    return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
+
 }
 
 function isSeriesList($query)
@@ -96,19 +110,6 @@ function isFreshResult($timestamp)
     return mktime() - $timestamp < MAX_RESULT_AGE_CACHE_SECONDS;
 }
 
-function getUrlContent($url)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    $data       = curl_exec($ch);
-    $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    return ['status_code' => $statuscode, 'results' => $data];
-}
 
 function limitResult($page, $data)
 {
