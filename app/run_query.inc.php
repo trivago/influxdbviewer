@@ -29,8 +29,9 @@ function getDatabaseResults($query)
     if(!$ignore_cache && $cache_results = searchCache($query) != null)
     {
         if ($debug) print "Got data from cache. "; 
-        $cache_results['is_cached'] = true;
         $feedback                   = $cache_results;
+        $feedback['is_cached'] = true;
+        $feedback['error_message'] = null;
     }
     else
     {
@@ -43,6 +44,7 @@ function getDatabaseResults($query)
         if (200 == $httpResult['status_code'])
         {
             $json            = json_decode($httpResult['results']);
+            print_r($json);
             $columns         = $json['columns'];
             $datapoints      = $json['points'];
             $results         = ['columns' => $columns, 'datapoints' => $datapoints];
