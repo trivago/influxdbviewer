@@ -1,6 +1,11 @@
 @import 'foundation/normalize';
 @import 'foundation/helpers';
 @import 'foundation/globals';
+@import 'mixins/center-x';
+@import 'mixins/link-pseudos';
+@import 'mixins/placeholder';
 @import 'foundation/layout';
-@import 'modules/footer';
+@import 'foundation/formelements';
+@import 'foundation/buttons';
 @import 'modules/header';
+@import 'modules/footer';

@@ -1,0 +1,23 @@
+/*
+ * Pseudoclasses for links
+ */
+@mixin link-pseudos {
+	&:link,
+	&:visited,
+	&:hover,
+	&:focus,
+	&:active {
+		@content;
+	}
+}
+
+/*
+ * Hover pseudoclasses for links
+ */
+@mixin link-pseudos-hover {
+	&:hover,
+	&:focus,
+	&:active {
+		@content;
+	}
+}
