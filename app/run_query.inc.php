@@ -44,7 +44,7 @@ function getDatabaseResults($query)
         if (200 == $httpResult['status_code'])
         {
             $json            = json_decode($httpResult['results']);
-            print_r($json);
+            print_r($json[0]);
             $columns         = $json['columns'];
             $datapoints      = $json['points'];
             $results         = ['columns' => $columns, 'datapoints' => $datapoints];
