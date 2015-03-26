@@ -55,21 +55,16 @@ function redirectTo($path)
 function getListOfDatabases()
 {
     $url        = "http://" . $_SESSION['host'] . ":8086/db?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
-    print ("URRREL " . $url); // TODO
     $httpResult = getUrlContent($url);
 
     if (200 == $httpResult['status_code'])
     {
 
         $json = json_decode($httpResult['results']);
-      //  print_r($json);  // TODO
         $result = array();
         foreach ($json as $value)
         {
-        	print_r($value). "<br>";  // TODO
-        	print_r($value->name); // TODO
-        	// 	print "Key " . $key . " -> val " . $value . "<br>";  // TODO
-            $result[] = $value->name;
+        	$result[] = $value->name;
         }
 
         return $result;
