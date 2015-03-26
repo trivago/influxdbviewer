@@ -15,12 +15,12 @@ if (!empty($_REQUEST['query']))
     $number_of_pages = $feedback['number_of_pages'];
     $number_of_results = $feedback['number_of_results'];
     $error_message   = $feedback['error_message'];
-    print_r($feedback);
+    print_r($results);
 }
 
 function getDatabaseResults($query)
 {
-    $debug = true; // TODO
+    $debug = false; // TODO
     $feedback      = [];
     $feedback['error_message'] = null;
 
