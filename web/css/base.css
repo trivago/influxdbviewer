@@ -4,6 +4,13 @@
  * 2. Prevent iOS text size adjust after orientation change, without disabling
  *    user zoom.
  */
+/* Reset box-sizing to "border-box" for all elements:
+ * http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+ */
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
 html {
   font-family: sans-serif;
   /* 1 */
@@ -33,7 +40,6 @@ figcaption,
 figure,
 footer,
 header,
-hgroup,
 main,
 menu,
 nav,
@@ -356,8 +362,83 @@ td,
 th {
   padding: 0; }
 
+/*
+ * Helpers
+ */
+/* text-align */
+.text-left {
+  text-align: left; }
+
+.text-right {
+  text-align: right; }
+
+.text-center {
+  text-align: center; }
+
+.text-nowrap {
+  white-space: nowrap;
+  overflow: hidden; }
+
+/* float helpers */
+.pull-left {
+  float: left; }
+
+.pull-right {
+  float: right; }
+
+/* text transform */
+.text-upper {
+  text-transform: uppercase; }
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  /*
+  * Extends the .visuallyhidden class to allow the element to be focusable
+  * when navigated to via the keyboard: h5bp.com/p
+  */ }
+  .visuallyhidden .focusable:active, .visuallyhidden .focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto; }
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before, .site-header:before, .clearfix:after, .site-header:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+.clearfix:after, .site-header:after {
+  clear: both;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  visibility: hidden; }
+
 .site-header {
-  background-color: blue;
+  background-color: #2c70b7;
   min-height: 300px; }
 
 /*# sourceMappingURL=base.css.map */
