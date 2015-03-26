@@ -69,7 +69,7 @@ function redirectTo($path)
 
 function checkLoginValid()
 {
-    $url        = "http://" . $_POST['host'] . "/db?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
+    $url        = "http://" . $_POST['host'] . ":8086/db?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
     $httpResult = getUrlContent($url);
     print "Url " . $url . " -> " ;
     print_r($httpResult);
