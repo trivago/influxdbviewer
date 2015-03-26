@@ -85,12 +85,22 @@ $app->get(
     'query',
     function (Request $request) use ($app)
     {
+        $query = "";
+        $results = null;
+        $is_series_list = false;
+        $timestamp = 0;
+        $is_cached = false;
+
         require_once("run_query.inc.php");
         return $app['twig']->render(
             'query.twig',
             array(
-                'title' => 'databases',
-                'query' => "select * from i_heart_css",
+                'title' => 'Results',
+                'query' => $query,
+                'results' => $results,
+                'is_series_list' => $is_series_list,
+                'timestamp' => $timestamp,
+                'is_cached' =>  $is_cached
             )
         );
     }
