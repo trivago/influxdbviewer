@@ -1,6 +1,6 @@
 <?
-const MAX_RESULT_AGE_CACHE_SECONDS = 30;
-const RESULTS_PER_PAGE = 50;
+define('MAX_RESULT_AGE_CACHE_SECONDS',30);
+define('RESULTS_PER_PAGE',50);
 
 if(!empty($_REQUEST['query']){
 	$feedback =  getDatabaseResults();
