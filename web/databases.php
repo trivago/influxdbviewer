@@ -36,6 +36,7 @@ try
         array(
             'title'     => "Databases",
             'databases' => $databases,
+            
             'user'      => $_SESSION['user'],
             'host'      => $_SESSION['host'],
         )
