@@ -18,10 +18,14 @@ if (!empty($_REQUEST['query']))
 
 function getDatabaseResults($query)
 {
-    $feedback      = '';
+    $feedback      = [];
+    $feedback['error_message'] = null;
+
     $cache_results = searchCache($query);
 
-    if ($cache_results != null && !$_REQUEST['ignore_cache'])
+    $ignore_cache = isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
+
+    if ($cache_results != null && !$ignore_cache)
     {
         $cache_results['is_cached'] = true;
         $feedback                   = $cache_results;
@@ -29,7 +33,7 @@ function getDatabaseResults($query)
     else
     {
         $now        = mktime();
-        $url        = "http://" . $_SESSION['host'] . "/db/" . $_SESSION['database'] . "/series?u="
+        $url        = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
         $httpResult = getUrlContent($url);
 
@@ -59,7 +63,7 @@ function getDatabaseResults($query)
     if ($feedback['error_message'] == null)
     {
         $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-        $limitedResult = limitResult($_REQUEST['page'], $feedback['results']);
+        $limitedResult = limitResult($page, $feedback['results']);
 
         if ($limitedResult != null)
         {
@@ -121,4 +125,18 @@ function limitResult($page, $data)
 	$start = ($page - 1) * RESULTS_PER_PAGE;
 	return array_slice ( $data, $start, RESULTS_PER_PAGE );
     
+}
+
+function getUrlContent($url)
+{
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        $data       = curl_exec($ch);
+        $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return ['status_code' => $statuscode, 'results' => $data];
 }

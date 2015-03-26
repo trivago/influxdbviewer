@@ -11,8 +11,17 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ title }}</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi quibusdam numquam laudantium eum asperiores non libero odio quae debitis beatae perferendis eius esse molestiae voluptatum vel inventore quasi. Quo sint sequi sunt amet sapiente tempora autem iusto praesentium rerum ducimus.</p>
+
+    <form action="" method="get">
+        <div class="centerwrapper">
+            {#{{ error }}#}
+            <label for="query" class="label-query">
+                <input type="text" name="query" value="{{ query }}" id="query" class="textinput-query" placeholder="select * from xxx">
+            </label>
+            <input type="submit" class="btn btn-secondary">
+        </div>
+    </form>
 
     <p>{{ query }}</p>
 
@@ -22,7 +31,7 @@
     <section class="main-content">
         <aside id="js_sidebar">
             <header>
-                <h3>last tools</h3>
+                <h3>last commands</h3>
             </header>
             <section class="aside-content">
                 <ul>

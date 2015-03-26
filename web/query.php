@@ -7,9 +7,6 @@ Twig_Autoloader::register();
 session_start();
 
 
-
-
-
 try
 {
     // specify where to look for templates
@@ -30,14 +27,7 @@ try
     $page            = 1;
     $number_of_pages = 1;
 
-    require_once("run_query.inc.php");
-
-        return $app['twig']->render(
-            'query.twig',
-            array(
-               
-            )
-        );
+    require_once("../app/run_query.inc.php");
 
     // set template variables
     // render template
