@@ -100,6 +100,7 @@ $app->get(
     PATH_DATABASES,
     function (Request $request) use ($app)
     {
+        session_start();
         $databases = null;
         $redirect  = false;
         require_once("list_databases.inc.php");
