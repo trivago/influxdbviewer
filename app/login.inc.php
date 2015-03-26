@@ -36,10 +36,10 @@ function addLoginToCookie(){
     $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
     $oldValue = readCookie($cookie_name);
     $newValue = $oldValue . "|" . $saveMe;
-    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/');
+    setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
 }
 
-function readCookie($name){
+function readCookie($cookie_name){
     return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
 
 }
