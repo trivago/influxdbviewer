@@ -21,7 +21,7 @@ if (!empty($_REQUEST['query']))
 
 function getDatabaseResults($query)
 {
-    $debug = false; // TODO
+    $debug = true; // TODO
     $feedback      = [];
     $feedback['error_message'] = null;
 
