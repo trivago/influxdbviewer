@@ -1,0 +1,19 @@
+{
+  "name": "Adminfluxdb",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.3.0",
+    "normalize-css": "~3.0.2"
+  },
+  "devDependencies": {
+    "font-awesome": "~4.3.0"
+  }
+}
