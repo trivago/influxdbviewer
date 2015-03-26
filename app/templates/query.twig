@@ -18,7 +18,7 @@
     var show_max = 30;
     var found = last_commands.length ;
     for (var command = last_commands.split("|"), i = found -1; i >= found - show_max; i--){
-        document.write(command + "<br>");
+        document.write(i + " : " + command + "<br>");
     }}
     function readCookie(name) {
     name += '=';
