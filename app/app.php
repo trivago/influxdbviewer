@@ -1,7 +1,12 @@
 <?php
 require __DIR__ . '/bootstrap.php';
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Silex\Provider\FormServiceProvider;
+
 $app = new Silex\Application();
+
 
 // TWIG EXTENSION
 $app->register(
@@ -11,6 +16,9 @@ $app->register(
     )
 );
 
+// FORM EXTENSION
+$app->register(new FormServiceProvider());
+
 // CONFIG EXTENSION
 $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.yml"));
 
@@ -19,9 +27,11 @@ $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.y
 // login
 $app->get(
     '/',
-    function () use ($app)
+    function (Request $request) use ($app)
     {
         require_once("login.inc.php");
+
+        //$message = $request->get('message');
         return $app['twig']->render(
             'index.twig',
             array(
@@ -32,10 +42,24 @@ $app->get(
     }
 );
 
+// logout
+$app->get(
+    '/logout',
+    function (Request $request) use ($app)
+    {
+        // logout
+        // destroy session
+        // etc
+
+        return $app->redirect('/hello');
+    }
+);
+
+
 // databases
 $app->get(
     'databases',
-    function () use ($app)
+    function (Request $request) use ($app)
     {
         require_once("list_databases.inc.php");
         return $app['twig']->render(
@@ -51,7 +75,7 @@ $app->get(
 // query
 $app->get(
     'query',
-    function () use ($app)
+    function (Request $request) use ($app)
     {
         require_once("run_query.inc.php");
         return $app['twig']->render(
