@@ -11,16 +11,22 @@
 {% endblock %}
 
 {% block content %}
+
     <script language="javascript">
         function listPreviousQueries(){
     var last_commands = urldecode(readCookie("last_commands"));
-    document.write( "all : " + last_commands + "<br><br><br>");
+    //document.write( "all : " + last_commands + "<br><br><br>");
     var show_max = 2; // TODO 30
     var commandlist = last_commands.split("|")
     var found = commandlist.length ;
     for (i = found -1; i >= found - show_max; i--){
-       document.write(i + " : " + commandlist[i] + "<br><br><br>");
+       var tokens =  commandlist[i].split("#");
+       document.write("<li><a href=\"javascript:setCommand('" + tokens[2] + "');\">" + tokens[2] + "</a></li>");
     }}
+
+    function setCommand(command){
+    document.getElementByID("query").value = command;
+    }
 
     function urldecode(str) {
    return decodeURIComponent((str+'').replace(/\+/g, '%20'));
@@ -52,10 +58,10 @@
             <header>
                 <h3>last commands</h3>
             </header>
-            <section class="aside-content">
+            <section class="aside-content"><ul>
                 <script language="javascript">listPreviousQueries();
 
-                </script>
+                </script></ul>
             </section>
             <!-- -->
         </aside>
