@@ -12,7 +12,10 @@ if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['d
     }
 
 
-    function getListOfDatabases()
+
+}
+
+function getListOfDatabases()
     {
         $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
         $httpResult = getUrlContent($url);
@@ -36,7 +39,7 @@ if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['d
         }
     }
 
-    function getUrlContent($url)
+function getUrlContent($url)
 	{
 	    $ch = curl_init();
 	    curl_setopt($ch, CURLOPT_URL, $url);
@@ -49,4 +52,3 @@ if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['d
 
 	    return ['status_code' => $statuscode, 'results' => $data];
 	}
-}
