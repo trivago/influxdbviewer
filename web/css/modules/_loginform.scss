@@ -1,83 +1,88 @@
 .loginform {
-	@extend .clearfix;
-	@include center-x;
-	display: block;
-	margin-bottom: 60px;
-	padding: 40px ($gutter)*2;
-	text-align: center;
-	background: $main-color-01;
+    @extend .clearfix;
+    @include center-x;
+    display: block;
+    margin-bottom: 60px;
+    padding: 40px ($gutter)*2;
+    text-align: center;
+    background: $main-color-01;
 
-	.btn {
-		float: right;
-		margin-top: 20px;
+    .btn {
+        float: right;
+        margin-top: 20px;
 
-		@include respond-to(ipad-landscape) {
-			width: 10%;
-			height: 56px;
-			margin: 0;
-		}
-	}
+        @include respond-to(ipad-landscape) {
+            width: 10%;
+            height: 56px;
+            margin: 0;
+        }
+    }
 
-	.label-username,
-	.label-password,
-	.label-host {
-		float: left;
-		width: 100%;
-		margin-bottom: 15px;
+    .label-username,
+    .label-password,
+    .label-host {
+        width: 100%;
+        margin-bottom: 15px;
 
-		@include respond-to(ipad-landscape) {
-			width: 24%;
-			margin: 0 1%;
+        @include respond-to(ipad-landscape) {
+            float: left;
+            width: 24%;
+            margin: 0 1%;
 
-			&.label-username {
-				margin-left: 0;
-			}
-		}
-	}
+            &.label-username {
+                margin-left: 0;
+            }
+        }
+    }
 
-	.label-host {
-		@include respond-to(ipad-landscape) {
-			width: 30%;
-		}
-	}
+    .label-host {
+        @include respond-to(ipad-landscape) {
+            width: 26%;
+        }
+    }
 
-	.textinput-username,
-	.passwordinput,
-	.textinput-host {
-		width: 100%;
-		height: 56px;
-		font-size: 1.375rem;
-		line-height: 1.81818;
-	}
+    .textinput-username,
+    .passwordinput,
+    .textinput-host {
+        width: 100%;
+        height: 56px;
+        font-size: 1.375rem;
+        line-height: 1.81818;
+    }
 
-	@include placeholder {
-		font-size: 1.375rem;
-		line-height: 1.81818;
-	}
+    @include placeholder {
+        font-size: 1.375rem;
+        line-height: 1.81818;
+    }
 
 }
 
+.separator {
+    display: block;
+    width: 100%;
+    min-width: 40px;
+    margin: 0 0.5%;
+    padding: 10px;
+    text-align: center;
+    color: $white;
+    font-size: 2rem;
+    vertical-align: bottom;
+    line-height: 1.1;
+    font-weight: normal;
 
-.seperator {
-	display: inline-block;
-	width: 3%;
-	min-width: 40px;
-	height: 30px;
-	margin: 0 0.5% 10px;
-	color: $white;
-	font-size: 2rem;
-	vertical-align: bottom;
-	line-height: 1.1;
-	font-weight: normal;
+    @include respond-to(ipad-landscape) {
+        float: left;
+        width: 3%;
+        height: 60px;
+        padding: 0;
+        line-height: 2.1;
+    }
 
-	&.port {
-		width: 6%;
-	}
+    &.port {
+        padding-top: 20px;
 
-	@include respond-to(ipad-landscape) {
-		float: left;
-		height: 60px;
-		margin-bottom: 0;
-		line-height: 2.1;
-	}
+        @include respond-to(ipad-landscape) {
+            width: 8%;
+        }
+    }
 }

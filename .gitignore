@@ -5,3 +5,4 @@ vendor/
 /vendor
 /.idea
 bower_components/
+.DS_Store
