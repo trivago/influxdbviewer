@@ -441,6 +441,78 @@ th {
  * Colors
  */
 /*
+### basic spacing
+*/
+/* # Grid Styles */
+.grid-wrap {
+  margin: 8px; }
+
+/* ## Clearfix Rows */
+.row:before,
+.row:after {
+  content: " ";
+  display: table; }
+
+.row:after {
+  clear: both; }
+
+/* ## Compensate Gutters for Nested Grids */
+.is-nested {
+  margin-left: -8px;
+  margin-right: -8px; }
+
+/* ## Columns and Gutters */
+.col {
+  float: left; }
+  .col > .in {
+    margin-left: 8px;
+    margin-right: 8px; }
+
+.last-col {
+  float: none;
+  width: auto; }
+
+/* ## Grid values */
+.g-1of1 {
+  width: 100%; }
+
+.g-1of2 {
+  width: 50%; }
+
+.g-1of3 {
+  width: 33.33333%; }
+
+.g-2of3 {
+  width: 66.66666%; }
+
+.g-1of4 {
+  width: 25%; }
+
+.g-3of4 {
+  width: 75%; }
+
+.g-1of5 {
+  width: 20%; }
+
+.g-2of5 {
+  width: 40%; }
+
+.g-3of5 {
+  width: 60%; }
+
+.g-4of5 {
+  width: 80%; }
+
+.g-1of6 {
+  width: 16.66666%; }
+
+.g-4of6 {
+  width: 66.66666%; }
+
+.g-5of6 {
+  width: 83.33333%; }
+
+/*
 ### mediaqueries
 */
 /*
@@ -590,12 +662,19 @@ input[type='text'], input[type='password'] {
 
 .site-footer {
   min-height: 200px;
-  background-color: #444;
+  background-color: #37454D;
   color: #fff;
-  margin-top: 40px; }
+  margin-top: 40px;
+  padding: 40px 20px 0 20px; }
   .site-footer img {
-    width: 180px;
-    margin: 20px 0 0 20px; }
+    width: 180px; }
+  .site-footer .col > .in {
+    min-height: 100px;
+    position: relative; }
+  .site-footer .snippet {
+    position: absolute;
+    right: 0;
+    bottom: 0; }
 
 .loginform {
   position: relative;
