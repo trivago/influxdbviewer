@@ -7,10 +7,18 @@ html, body {
 	background-color: $main-color-02;
 }
 
+/*
+ * centerwrapper centers content on fixed max-width.
+ */
+.centerwrapper {
+	@extend .clearfix;
+	max-width: ($gutter)*60;
+	margin: 0 auto;
+}
+
 main {
     @extend .clearfix;
 }
-
 
 /*
  * Typography

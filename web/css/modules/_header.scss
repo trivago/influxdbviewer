@@ -1,10 +1,11 @@
 .site-header {
 	@extend .clearfix;
-	padding: 0 4%;
+	padding: 0 ($gutter)*2;
 	background-color: $main-color-01;
 }
 
 .sitelogo {
+	margin: $gutter 0;
 	text-align: center;
 	font-size: 3.75rem;
 	line-height: 1;
@@ -12,12 +13,40 @@
 	font-weight: normal;
 
 	.logged-in & {
-		float: left;
-		max-width: 18rem;
+		@include respond-to(ipad) {
+			float: left;
+			max-width: 30%;
+		}
 	}
 }
 
 .logout-wrapper {
 	@extend .clearfix;
-	float: right;
+	text-align: center;
+
+	@include respond-to(ipad) {
+		float: right;
+		width: 60%;
+		margin: $gutter 0;
+		text-align: left;
+	}
+
+	.btn {
+		margin-bottom: $gutter;
+		padding: 1rem ($gutter*2);
+
+		@include respond-to(ipad) {
+			float: right;
+		}
+	}
+
+	h2 {
+		font-size: 1rem;
+		color: $white;
+
+		@include respond-to(ipad) {
+			float: right;
+			margin: 16px $gutter 0 0;
+		}
+	}
 }
