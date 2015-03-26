@@ -1,15 +1,16 @@
 <?php
 $databases = getListOfDatabases();
-
+print_r($databases);
 if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['database']))
 {
+    // TODO if database list is empty: show warning and refuse further commandos
+
+    if (in_array($_REQUEST['database'], $databases))
     {
-        if (in_array($databases, $_REQUEST['database']))
-        {
-            $_SESSION['database'] = $_REQUEST['database'];
-            $redirect             = true;
-        }
+        $_SESSION['database'] = $_REQUEST['database'];
+        $redirect             = true;
     }
+    
 }
 
 function getListOfDatabases()
