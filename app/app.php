@@ -41,7 +41,7 @@ $app->register(new \Silex\Provider\SessionServiceProvider());
 
 // ROUTES
 // login
-$app->post(
+$app->get(
     '/',
     function (Request $request) use ($app)
     {
@@ -55,8 +55,32 @@ $app->post(
             return $app->redirect('/databases');
         }
 
-        // TODO template rendern und falls error != null dann das form mit den vorherigen postdaten füllen
-        // und die fehlermeldung anzeigen wtf?
+        return $app['twig']->render(
+            'index.twig',
+            array(
+
+                'title'    => "AdminfluxDB",
+                'error'    => $error_message,
+                'user' => $_SESSION['user'],
+                'host'     => $_SESSION['host'],
+            )
+        );
+    }
+);
+
+$app->post(
+    '/',
+    function (Request $request) use ($app)
+    {
+        $loggedIn      = false;
+        $error_message = null;
+
+        require_once("login.inc.php");
+
+        if ($loggedIn)
+        {
+            return $app->redirect('/databases');
+        }
 
         return $app['twig']->render(
             'index.twig',
