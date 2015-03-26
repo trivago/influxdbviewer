@@ -7,9 +7,6 @@ Twig_Autoloader::register();
 session_start();
 
 
-
-
-
 try
 {
     // specify where to look for templates
