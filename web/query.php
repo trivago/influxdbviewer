@@ -26,6 +26,10 @@ try
     $error_message   = null;
     $page            = 1;
     $number_of_pages = 1;
+    $number_of_results = -1;
+    $columns = [];
+    $datapoints = [];
+    
 
     require_once("../app/run_query.inc.php");
 
@@ -35,13 +39,15 @@ try
         array(
                 'title'           => 'Results',
                 'query'           => $query,
-                'results'         => $results,
+                'datapoints'         => $datapoints,
+                'columns'         => $columns,
                 'is_series_list'  => $is_series_list,
                 'timestamp'       => $timestamp,
                 'is_cached'       => $is_cached,
                 'error_message'   => $error_message,
                 'page'            => $page,
                 'number_of_pages' => $number_of_pages,
+                'number_of_results' => $number_of_results,
                 'user' => $_SESSION['user'],
                 'host' => $_SESSION['host'],
                 'database' => $_SESSION['database'],

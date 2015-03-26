@@ -35,12 +35,6 @@
         }
     }
 
-    .label-host {
-        @include respond-to(ipad-landscape) {
-            width: 26%;
-        }
-    }
-
     .textinput-username,
     .passwordinput,
     .textinput-host {
@@ -80,9 +74,12 @@
 
     &.port {
         padding-top: 20px;
+        font-size: 1.25rem;
 
         @include respond-to(ipad-landscape) {
-            width: 8%;
+            width: 6%;
+            padding-top: 9px;
+            text-align: left;
         }
     }
 }

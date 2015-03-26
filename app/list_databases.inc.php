@@ -1,7 +1,7 @@
 <?php
 $databases = getListOfDatabases();
-print_r($databases);
-if (isset($_REQUEST['database'] )) // || !isset($_SESSION['database']) || empty($_SESSION['database'])
+
+if (isset($_REQUEST['database'] )) 
 {
     // TODO if database list is empty: show warning and refuse further commandos
 
@@ -17,14 +17,12 @@ function getListOfDatabases()
 {
 	$host = $session->get('host');
     $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
-    print ("URRREL " . $url);
     $httpResult = getUrlContent($url);
 
     if (200 == $httpResult['status_code'])
     {
 
         $json = json_decode($httpResult['results']);
-        print_r($json);
         $result = array();
         foreach ($json as $key => $value)
         {

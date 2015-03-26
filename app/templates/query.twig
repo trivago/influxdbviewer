@@ -11,7 +11,28 @@
 {% endblock %}
 
 {% block content %}
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi quibusdam numquam laudantium eum asperiores non libero odio quae debitis beatae perferendis eius esse molestiae voluptatum vel inventore quasi. Quo sint sequi sunt amet sapiente tempora autem iusto praesentium rerum ducimus.</p>
+    <script language="javascript">
+        function listPreviousQueries(){
+    var last_commands = urldecode(readCookie("last_commands"));
+    document.write( "all : " + last_commands + "<br><br><br>");
+    var show_max = 2; // TODO 30
+    var commandlist = last_commands.split("|")
+    var found = commandlist.length ;
+    for (i = found -1; i >= found - show_max; i--){
+       document.write(i + " : " + commandlist[i] + "<br><br><br>");
+    }}
+
+    function urldecode(str) {
+   return decodeURIComponent((str+'').replace(/\+/g, '%20'));
+}
+
+    function readCookie(name) {
+    name += '=';
+    for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
+        if (!ca[i].indexOf(name))
+            return ca[i].replace(name, '');
+    }
+    </script>
 
     <form action="" method="get">
         <div class="centerwrapper">
@@ -32,13 +53,24 @@
                 <h3>last commands</h3>
             </header>
             <section class="aside-content">
-                <ul>
-                    <li>Lorem</li>
-                    <li>Ipsum</li>
-                    <li>dolor</li>
-                </ul>
+                <script language="javascript">listPreviousQueries();
+
+                </script>
             </section>
             <!-- -->
         </aside>
+
+        <table>
+             {% for c in columns %}
+                <th>{{ c }}</th>
+            {% endfor %}
+             {% for row in datapoints %}
+             <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                 {% endfor %}
+                 </tr>
+            {% endfor %}
+        </table>
     </section>
 {% endblock %}

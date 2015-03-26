@@ -9,17 +9,18 @@
 {% endblock %}
 
 {% block content %}
+
     <form class="loginform" action="" method="post" id="loginform">
         <div class="centerwrapper">
-            {{ error }}
+            <div class="hint error">
+                <strong>{{ error }}</strong>
+            </div>
             <label for="textinput-username" class="label-username">
-                <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username"
-                       placeholder="Username">
+                <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username" placeholder="Username">
             </label>
             <strong class="separator at">@</strong>
             <label for="textinput-host" class="label-host">
-                <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host"
-                       placeholder="localhost">
+                <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host" placeholder="localhost">
             </label>
             <strong class="separator port">:8086</strong>
             <label for="passwordinput" class="label-password">
@@ -37,11 +38,11 @@
         <div class="sectionbody">
 
             <!-- replace this static list with the real data! -->
-            <ul class="prev-logins-list" id="js_prev_logins_list">
+            <ul class="no-bullet zebralist" id="js_prev_logins_list">
             </ul>
 
 
-        </div>
+ </div>
     </section>
 {% endblock content %}
 

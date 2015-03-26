@@ -2,59 +2,71 @@
 
 define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
 define('RESULTS_PER_PAGE', 50);
+define('DELIMITER_COMMANDCOOKIE_INTERNAL', "#");
+define('DELIMITER_COMMANDCOOKIE_EXTERNAL', "|");
 
 if (!empty($_REQUEST['query']))
 {
     $query           = $_REQUEST['query'];
     $feedback        = getDatabaseResults($query);
-    $results         = $feedback['result'];
+    $columns         = $feedback['results']['columns'];
+    $datapoints         = $feedback['results']['datapoints'];
     $timestamp       = $feedback['timestamp'];
     $is_cached       = $feedback['is_cached'];
     $page            = $feedback['page'];
     $is_series_list  = isSeriesList($query);
     $number_of_pages = $feedback['number_of_pages'];
+    $number_of_results = $feedback['number_of_results'];
     $error_message   = $feedback['error_message'];
+    print_r($results);
 }
 
 function getDatabaseResults($query)
 {
-    $debug = true; // TODO
+   // $debug = true; // TODO
     $feedback      = [];
     $feedback['error_message'] = null;
 
     
 
-    $ignore_cache = isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
+    $ignore_cache = true; // TODO isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
 
     if(!$ignore_cache && $cache_results = searchCache($query) != null)
     {
         if ($debug) print "Got data from cache. "; 
-        $cache_results['is_cached'] = true;
         $feedback                   = $cache_results;
+        $feedback['is_cached'] = true;
+        $feedback['error_message'] = null;
     }
     else
     {
-         if ($debug) print "Getting data from db. "; 
+        // if ($debug) print "Getting data from db. "; 
         $now        = mktime();
         $url        = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
+
+        //if($debug) print $url;
         $httpResult = getUrlContent($url);
 
         if (200 == $httpResult['status_code'])
         {
             $json            = json_decode($httpResult['results']);
-            $columns         = $json['columns'];
-            $datapoints      = $json['points'];
+           
+            $columns         = $json[0]->columns;
+            $datapoints      = $json[0]->points;
             $results         = ['columns' => $columns, 'datapoints' => $datapoints];
-            $number_of_pages = count($datapoints);
+            $number_of_results = count($datapoints);
+            $number_of_pages = ceil($number_of_results / RESULTS_PER_PAGE);
             $feedback        = [
                 'timestamp'       => $now,
                 'results'         => $results,
                 'is_cached'       => false,
                 'page'            => 1,
                 'number_of_pages' => $number_of_pages,
+                'number_of_results' => $number_of_results,
                 'error_message'   => null
             ];
+            //  print_r($feedback);
             saveResultsToCache($query, $results, $now, $number_of_pages);
             addCommandToCookie($query, $now, $number_of_pages);
         }
@@ -70,7 +82,7 @@ function getDatabaseResults($query)
 
         if ($limitedResult != null)
         {
-            $feedback['page']    = $_REQUEST['page'];
+            $feedback['page']    = $page;
             $feedback['results'] = $limitedResult;
         }
     }
@@ -79,16 +91,38 @@ function getDatabaseResults($query)
 }
 
 function addCommandToCookie($command, $ts, $number_of_pages){
-    $cookie_name = "commands";
-    $saveMe = $ts . "/" . $number_of_pages . "/" . $command;
+    $cookie_name = "last_commands";
+    $saveMe = $ts . DELIMITER_COMMANDCOOKIE_INTERNAL . $number_of_pages . DELIMITER_COMMANDCOOKIE_INTERNAL. $command;
+    #print "New cookie section: " . $saveMe . "<br>";
     $oldValue = readCookie($cookie_name);
-    $newValue = $oldValue . "|" . $saveMe;
+    if(!cookieContainsCommand($oldValue, $command)){
+    $newValue = $oldValue . DELIMITER_COMMANDCOOKIE_EXTERNAL . $saveMe;
+   # print "Old cookie section: " . $oldValue . "<br>";
+    #print "Full cookie section: " . $newValue . "<br>";
+
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
+    }
 }
 
 function readCookie($cookie_name){
     return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
 
+}
+
+function cookieContainsCommand($oldValue, $str){
+    $commands = explode(DELIMITER_COMMANDCOOKIE_EXTERNAL, $oldValue);
+
+    foreach($commands as $command){
+        #    print "cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL . "<br>";
+        $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
+        #print_r($tokens);
+
+       #  print "cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
+        if ($tokens[2] == $str){
+            return true;
+        }
+    }
+    return false;
 }
 
 function isSeriesList($query)
