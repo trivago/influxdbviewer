@@ -11,18 +11,15 @@ $error_message = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    echo "Hello wurst";
-    
-   
-        $loggedIn = checkLoginValid();
+    $loggedIn = checkLoginValid();
 
-        if ($loggedIn)
-        {
-            storeToSession();
-            addLoginToCookie();
-            redirectTo("databases.php");
-        }
-       else
+    if ($loggedIn)
+    {
+        storeToSession();
+        addLoginToCookie();
+        redirectTo("databases.php");
+    }
+   else
     {
          $error_message = "Invalid login";
         $_SESSION['host'] = "";
@@ -74,7 +71,8 @@ function checkLoginValid()
 {
     $url        = "http://" . $_POST['host'] . "/db/?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
     $httpResult = getUrlContent($url);
-
+    print "Url " . $url . " -> " ;
+    print_r($httpResult);
     return (200 == $httpResult['status_code']);
 }
 
