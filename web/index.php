@@ -9,7 +9,7 @@ session_start();
 $loggedIn      = false;
 $error_message = null;
 
-if ($_POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     echo "Hello wurst";
     
@@ -80,7 +80,6 @@ function checkLoginValid()
 
 function storeToSession()
 {
-    $session->set('host', $_POST['host']);
     $_SESSION['host'] = $_POST['host'];
     $_SESSION['user'] = $_POST['user'];
     $_SESSION['pw']   = $_POST['pw'];
