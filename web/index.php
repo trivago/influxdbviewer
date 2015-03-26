@@ -11,7 +11,7 @@ $error_message = null;
 
 if ($_POST)
 {
-
+    echo "Hello wurst";
     
    
         $loggedIn = checkLoginValid();
