@@ -17,6 +17,11 @@ $app->register(
     )
 );
 
+const PATH_DATABASES = '/databases';
+const PATH_LOGIN = '/';
+const PATH_LOGOUT = '/logout';
+const PATH_QUERY = '/query';
+
 // CONFIG EXTENSION
 $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.yml"));
 
@@ -55,7 +60,7 @@ $app->get(
 
         if ($loggedIn)
         {
-            return $app->redirect('/databases');
+            return $app->redirect(PATH_DATABASES);
         }
 
         return $app['twig']->render(
@@ -73,7 +78,7 @@ $app->get(
 
 // logout
 $app->get(
-    '/logout',
+    PATH_LOGOUT,
     function (Request $request) use ($app)
     {
         // logout
@@ -87,7 +92,7 @@ $app->get(
 
 // databases
 $app->get(
-    '/databases',
+    PATH_DATABASES,
     function (Request $request) use ($app)
     {
         $databases = null;
@@ -96,7 +101,7 @@ $app->get(
 
         if ($redirect)
         { // Database has been selected and stored in the session
-            return $app->redirect('/query');
+            return $app->redirect(PATH_QUERY);
         }
 
         return $app['twig']->render(
@@ -111,7 +116,7 @@ $app->get(
 
 // query
 $app->get(
-    '/query',
+    PATH_QUERY,
     function (Request $request) use ($app)
     {
         $query           = "";
