@@ -118,7 +118,7 @@ function cookieContainsCommand($oldValue, $str){
         #print_r($tokens);
 
        #  print "cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
-        if ($tokens$tokens[2] == $str){ // TODO check if len() == 3
+        if ($tokens[2] == $str){ // TODO check if len() == 3
             return true;
         }
     }
