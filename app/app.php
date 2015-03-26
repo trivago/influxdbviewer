@@ -63,6 +63,9 @@ $app->get(
         if ($loggedIn)
         {
             return $app->redirect(PATH_DATABASES);
+        } else {
+            $_SESSION['host'] = "";
+            $_SESSION['user'] = "";
         }
 
         return $app['twig']->render(
