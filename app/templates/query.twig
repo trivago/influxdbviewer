@@ -14,7 +14,7 @@
     <script language="javascript">
         function listPreviousQueries(){
     var last_commands = urldecode(readCookie("last_commands"));
-    // document.write(urldecode(last_commands));
+    document.write("full: <br><br> "  + last_commands + "<br><br>);
     var show_max = 2; // TODO 30
     var commandlist = last_commands.split("|")
     var found = commandlist.length ;
