@@ -8,12 +8,12 @@ session_start();
 
 $databases = getListOfDatabases();
 
-if(isset($_REQUEST['database']) && !empty($_REQUEST['database'])){
-
-if (in_array($_REQUEST['database'], $databases))
+if (isset($_REQUEST['database']) && !empty($_REQUEST['database']))
+{
+    if (in_array($_REQUEST['database'], $databases))
     {
         $_SESSION['database'] = $_REQUEST['database'];
-       redirectTo("query.php");
+        redirectTo("query.php");
     }
 }
 
@@ -32,11 +32,11 @@ try
     // render template
     echo $template->render(
         array(
-            'title' => "Databases",
+            'title'     => "Databases",
             'databases' => $databases,
-            
-            'user'  => $_SESSION['user'],
-            'host'  => $_SESSION['host'],
+
+            'user'      => $_SESSION['user'],
+            'host'      => $_SESSION['host'],
         )
     );
 }
