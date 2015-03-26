@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block header %}
-    {% include "snippets/header.twig" %}
+    {% include "snippets/header-logged-in.twig" %}
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
 	    </label>
 	    <strong class="at-seperator">@</strong>
 	    <label for="textinput-host" class="label-host">
-            <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host" placeholder="Localhost">
+            <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host" placeholder="localhost">
 	    </label>
 	    <label for="passwordinput" class="label-password">
             <input type="password" name="pw" value="" id="pw" class="passwordinput" placeholder="Password">
@@ -25,12 +25,32 @@
         <input type="submit" class="btn btn-secondary">
     </form>
 
-	<section class="previous-logins">
-		<h2>Previous Logins</h2>
+	<section class="sectionbox prev-logins">
+		<div class="sectionheader">
+			<h2>Previous Logins</h2>
+		</div>
+
+		<div class="sectionbody">
+
+			<!-- replace this static list with the real data! -->
+			<ul class="prev-logins-list">
+				<li><a href="#">Lorem ipsum.</a></li>
+				<li><a href="#">Excepturi, itaque.</a></li>
+				<li><a href="#">Expedita, sunt.</a></li>
+				<li><a href="#">Architecto, vel.</a></li>
+				<li><a href="#">Optio, vero!</a></li>
+				<li><a href="#">Fuga, quos.</a></li>
+				<li><a href="#">Odio, repellat.</a></li>
+				<li><a href="#">Fugit, quibusdam.</a></li>
+				<li><a href="#">Delectus, minus.</a></li>
+				<li><a href="#">Amet, aperiam.</a></li>
+				<li><a href="#">Ipsa, quos.</a></li>
+				<li><a href="#">Beatae, ipsum.</a></li>
+			</ul>
+
     <script language="javascript">
 
     listPreviousLogins();
-
 
 
 
@@ -62,6 +82,7 @@
     }}
 
     </script>
+		</div>
 	</section>
     <!-- kay: end of content -->
 

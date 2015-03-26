@@ -2,8 +2,8 @@
 	@extend .clearfix;
 	@include center-x;
 	display: block;
-	margin-bottom: 0;
-	padding: 40px 2rem;
+	margin-bottom: 60px;
+	padding: 40px ($gutter)*2;
 	text-align: center;
 	background: $main-color-01;
 
