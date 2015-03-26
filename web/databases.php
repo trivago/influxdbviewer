@@ -1,10 +1,10 @@
 <?php
 //$app = require __DIR__.'/../app/app.php';
 // $app->run();
+session_start();
 
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
-session_start();
 
 $databases = getListOfDatabases();
 
@@ -34,7 +34,6 @@ try
         array(
             'title'     => "Databases",
             'databases' => $databases,
-
             'user'      => $_SESSION['user'],
             'host'      => $_SESSION['host'],
         )
