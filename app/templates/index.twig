@@ -14,7 +14,7 @@
 
     {# The admin_login_check route is automatically defined by Silex and its name is derived from the check_path value
     (all / are replaced with _ and the leading / is stripped).#}
-    <form action="{{ path('admin_login_check') }}" method="post">
+    <form action="" method="post">
         {{ error }}
         <input type="text" name="_username" value="{{ last_username }}" />
         <input type="password" name="_password" value="" />
