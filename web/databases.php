@@ -54,7 +54,7 @@ function redirectTo($path)
 
 function getListOfDatabases()
 {
-    $url        = "http://" . $_SESSION['host'] . ":8086/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
+    $url        = "http://" . $_SESSION['host'] . ":8086/db?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
     print ("URRREL " . $url);
     $httpResult = getUrlContent($url);
 
