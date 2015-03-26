@@ -59,9 +59,11 @@
                 <th>{{ c }}</th>
             {% endfor %}
              {% for row in datapoints %}
+             <tr>
                 {% for cell in row %}
                 <td>{{ cell }}</td>
                  {% endfor %}
+                 </tr>
             {% endfor %}
         </table>
     </section>
