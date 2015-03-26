@@ -9,6 +9,11 @@ session_start();
 $loggedIn      = false;
 $error_message = null;
 
+if(!isset($_SESSION['host']) || !isset($_SESSION['user'])){
+     $_SESSION['host'] = "";
+    $_SESSION['user'] = "";
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     $loggedIn = checkLoginValid();
@@ -22,16 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
    else
     {
          $error_message = "Invalid login";
-        $_SESSION['host'] = "";
-        $_SESSION['user'] = "";
         // does not redirect, will end up in loginform
     }
 }
-else
-{
-    $_SESSION['host'] = "";
-    $_SESSION['user'] = "";
-}
+
 
 try
 {
@@ -64,7 +63,7 @@ catch (Exception $e)
 function redirectTo($path)
 {
     header("Location: " . $path);
-    die();
+    exit();
 }
 
 function checkLoginValid()
