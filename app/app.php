@@ -59,10 +59,10 @@ $app->get(
             'index.twig',
             array(
 
-                'title'    => "AdminfluxDB",
-                'error'    => $error_message,
-                'user' => $_SESSION['user'],
-                'host'     => $_SESSION['host'],
+                'title' => "AdminfluxDB",
+                'error' => $error_message,
+                'user'  => $_SESSION['user'],
+                'host'  => $_SESSION['host'],
             )
         );
     }
