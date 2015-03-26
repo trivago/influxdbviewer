@@ -1,6 +1,6 @@
 # Usage
 
-1. Clone or download the boilerplate code
+1. Clone or download the AdminfluxDB codebase
 1. Install Dependencies via Composer:
 
         $ curl -s http://getcomposer.org/installer | php

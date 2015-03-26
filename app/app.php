@@ -3,7 +3,7 @@ require __DIR__ . '/bootstrap.php';
 
 $app = new Silex\Application();
 
-// Twig Extension
+// TWIG EXTENSION
 $app->register(
     new Silex\Provider\TwigServiceProvider(),
     array(
@@ -11,11 +11,12 @@ $app->register(
     )
 );
 
-// Config Extension
+// CONFIG EXTENSION
 $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.yml"));
 
 
-// Routes
+// ROUTES
+// login
 $app->get(
     '/',
     function () use ($app)
@@ -23,11 +24,29 @@ $app->get(
         return $app['twig']->render(
             'index.twig',
             array(
-                'title'  => "Hello World",
+                'title'  => "AdminfluxDB",
                 'colors' => array("red", "green", "yellow"),
             )
         );
     }
 );
+
+// databases
+$app->get(
+    'databases',
+    function () use ($app)
+    {
+        return $app['twig']->render(
+            'databases.twig',
+            array(
+                'title' => 'databases',
+
+            )
+        );
+    }
+);
+
+
+// query
 
 return $app;
