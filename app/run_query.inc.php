@@ -13,6 +13,7 @@ if (!empty($_REQUEST['query']))
     $page            = $feedback['page'];
     $is_series_list  = isSeriesList($query);
     $number_of_pages = $feedback['number_of_pages'];
+    $number_of_results = $feedback['number_of_results'];
     $error_message   = $feedback['error_message'];
 }
 
@@ -48,13 +49,15 @@ function getDatabaseResults($query)
             $columns         = $json[0]->columns;
             $datapoints      = $json[0]->points;
             $results         = ['columns' => $columns, 'datapoints' => $datapoints];
-            $number_of_pages = count($datapoints);
+            $number_of_results = count($datapoints);
+            $number_of_pages = ceil($number_of_results / RESULTS_PER_PAGE);
             $feedback        = [
                 'timestamp'       => $now,
                 'results'         => $results,
                 'is_cached'       => false,
                 'page'            => 1,
                 'number_of_pages' => $number_of_pages,
+                'number_of_results' => $number_of_results,
                 'error_message'   => null
             ];
              print_r($feedback);
@@ -82,7 +85,7 @@ function getDatabaseResults($query)
 }
 
 function addCommandToCookie($command, $ts, $number_of_pages){
-    $cookie_name = "commands";
+    $cookie_name = "last_commands";
     $saveMe = $ts . "/" . $number_of_pages . "/" . $command;
     $oldValue = readCookie($cookie_name);
     $newValue = $oldValue . "|" . $saveMe;

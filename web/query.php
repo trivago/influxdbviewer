@@ -26,6 +26,7 @@ try
     $error_message   = null;
     $page            = 1;
     $number_of_pages = 1;
+    $number_of_results = -1;
 
     require_once("../app/run_query.inc.php");
 
@@ -42,6 +43,7 @@ try
                 'error_message'   => $error_message,
                 'page'            => $page,
                 'number_of_pages' => $number_of_pages,
+                'number_of_results' => $number_of_results,
                 'user' => $_SESSION['user'],
                 'host' => $_SESSION['host'],
                 'database' => $_SESSION['database'],
