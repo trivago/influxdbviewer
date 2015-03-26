@@ -22,6 +22,8 @@ const PATH_LOGIN = '/';
 const PATH_LOGOUT = '/logout';
 const PATH_QUERY = '/query';
 
+require_once("functions.inc.php");
+
 // CONFIG EXTENSION
 $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.yml"));
 
