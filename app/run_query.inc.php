@@ -24,7 +24,7 @@ function getDatabaseResults($query)
 
     
 
-    $ignore_cache = isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
+    $ignore_cache = true; // TODO isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
 
     if(!$ignore_cache && $cache_results = searchCache($query) != null)
     {
