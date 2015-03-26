@@ -117,8 +117,8 @@ function cookieContainsCommand($oldValue, $str){
         $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
         print_r($tokens);
 
-         print "cookieContainsCommand " . $token[2] . " vs " . $str . "<br>";
-        if ($token[2] == $str){
+         print "cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
+        if ($tokens[2] == $str){
             return true;
         }
     }
