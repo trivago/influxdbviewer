@@ -90,6 +90,7 @@ $app->get(
         $is_series_list = false;
         $timestamp = 0;
         $is_cached = false;
+        $error_message = null;
 
         require_once("run_query.inc.php");
         return $app['twig']->render(
@@ -100,7 +101,8 @@ $app->get(
                 'results' => $results,
                 'is_series_list' => $is_series_list,
                 'timestamp' => $timestamp,
-                'is_cached' =>  $is_cached
+                'is_cached' =>  $is_cached,
+                'error_message' => $error_message
             )
         );
     }
