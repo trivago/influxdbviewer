@@ -771,9 +771,6 @@ input[type='text'], input[type='password'] {
         .loginform .label-password.label-username,
         .loginform .label-host.label-username {
           margin-left: 0; } }
-  @media only screen and (min-width: 1024px) {
-    .loginform .label-host {
-      width: 26%; } }
   .loginform .textinput-username,
   .loginform .passwordinput,
   .loginform .textinput-host {
@@ -814,10 +811,13 @@ input[type='text'], input[type='password'] {
       padding: 0;
       line-height: 2.1; } }
   .separator.port {
-    padding-top: 20px; }
+    padding-top: 20px;
+    font-size: 1.25rem; }
     @media only screen and (min-width: 1024px) {
       .separator.port {
-        width: 8%; } }
+        width: 6%;
+        padding-top: 9px;
+        text-align: left; } }
 
 .sectionbox {
   width: 100%;
@@ -861,5 +861,15 @@ aside {
       background-position: 5px 8px; }
     aside.disabled .aside-content {
       display: none; }
+
+.hint {
+  display: block;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #ff7474;
+  border: 1px solid #d22828; }
+  .hint strong {
+    display: block;
+    color: #fff; }
 
 /*# sourceMappingURL=base.css.map */
