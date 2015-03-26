@@ -39,6 +39,14 @@ h6,
 }
 
 h1 {
-	font-size: 2rem;
-	font-weight: normal;
+	font-size: $font-size-h1;
+}
+
+h2 {
+    font-size: $font-size-h2;
+}
+
+.no-bullet {
+    padding: 0;
+    list-style: none;
 }

@@ -1,0 +1,62 @@
+/*
+ # Tables
+ */
+table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: $gutter;
+    // Rows
+    tr {
+        vertical-align: top;
+    }
+
+    // Heads
+    th {
+        padding: $gutter;
+        background-color: $main-color-01;
+        color: $white;
+        vertical-align: bottom;
+        text-align: left;
+        font-size: $font-size-h2;
+        font-weight: normal;
+    }
+
+    tbody {
+        &:before {
+            content: '-';
+            display: block;
+            line-height: 1em;
+            color: $white; /* to hide text */
+        }
+    }
+
+    // Tabledata
+    td {
+        padding: 0;
+        vertical-align: top;
+
+        &:first-of-type {
+            padding-left: $gutter;
+        }
+
+        &:last-of-type {
+            padding-right: $gutter;
+        }
+    }
+
+    .tablelink {
+        display: block;
+        text-decoration: none;
+        padding: $gutter;
+    }
+
+    tr:nth-of-type(2n+1) {
+        .tablelink {
+            background: $main-color-02;
+        }
+    }
+}
+
+
+
+
