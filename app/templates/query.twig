@@ -21,8 +21,12 @@
     var found = commandlist.length ;
     for (i = found -1; i >= found - show_max; i--){
        var tokens =  commandlist[i].split("#");
-       document.write("<li><a href=\"javascript:setCommand('" + commandlist[i] + "');\">" + commandlist[i] + "</a></li>");
+       document.write("<li><a href=\"javascript:setCommand('" + tokens[2] + "');\">" + tokens[2] + "</a></li>");
     }}
+
+    function setCommand(command){
+    document.getElementByID("query").value = command;
+    }
 
     function urldecode(str) {
    return decodeURIComponent((str+'').replace(/\+/g, '%20'));
