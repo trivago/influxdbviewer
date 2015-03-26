@@ -1,7 +1,7 @@
 <?php
 $databases = getListOfDatabases();
 print_r($databases);
-if ($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['database']))
+if ($_REQUEST['database'] ) // || !isset($_SESSION['database']) || empty($_SESSION['database'])
 {
     // TODO if database list is empty: show warning and refuse further commandos
 
