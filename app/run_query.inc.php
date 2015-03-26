@@ -42,6 +42,8 @@ function getDatabaseResults($query)
         $now        = mktime();
         $url        = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
+
+        if($debug) print $url;
         $httpResult = getUrlContent($url);
 
         if (200 == $httpResult['status_code'])
