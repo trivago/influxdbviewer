@@ -4,3 +4,4 @@
 vendor/
 /vendor
 /.idea
+bower_components/

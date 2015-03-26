@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}{% endblock %} - {{ app.config.title }}</title>
+  <link rel="stylesheet" href="{{ app.request.basepath }}/css/base.css" media="screen"/>
 </head>
 <body>
   {% block content %}{% endblock %}
