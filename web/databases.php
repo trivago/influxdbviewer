@@ -26,7 +26,7 @@ try
     $twig = new Twig_Environment($loader);
 
     // load template
-    $template = $twig->loadTemplate('index.twig');
+    $template = $twig->loadTemplate('database.twig');
 
     // set template variables
     // render template
