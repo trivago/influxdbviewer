@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{% block title %}{% endblock %} - {{ app.config.title }}</title>
+  <title>{% block title %}{% endblock %}</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ app.request.basepath }}/css/base.css" media="screen"/>
+  <link rel="stylesheet" href="../web/css/base.scss" media="screen"/>
 </head>
 <body>
   <!--[if lt IE 8]>
@@ -24,8 +24,8 @@
     {% endblock %}
   </div>
 
-  <script src="{{ app.request.basepath }}/js/modernizr.js"></script>
-  <script src="{{ app.request.basepath }}/js/jquery.min.js"></script>
-  <script src="{{ app.request.basepath }}/js/flexflux.js"></script>
+  <script src="../web/js/modernizr.js"></script>
+  <script src="../web/js/jquery.min.js"></script>
+  <script src="../web/js/flexflux.js"></script>
 </body>
 </html>
