@@ -18,20 +18,23 @@ if (!empty($_REQUEST['query']))
 
 function getDatabaseResults($query)
 {
+    $debug = true; // TODO
     $feedback      = [];
     $feedback['error_message'] = null;
 
-    $cache_results = searchCache($query);
+    
 
     $ignore_cache = isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
 
-    if ($cache_results != null && !$ignore_cache)
+    if(!$ignore_cache && $cache_results = searchCache($query) != null)
     {
+        if ($debug) print "Got data from cache. "; 
         $cache_results['is_cached'] = true;
         $feedback                   = $cache_results;
     }
     else
     {
+         if ($debug) print "Getting data from db. "; 
         $now        = mktime();
         $url        = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
