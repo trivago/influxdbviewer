@@ -82,7 +82,7 @@ function getDatabaseResults($query)
 
         if ($limitedResult != null)
         {
-            $feedback['page']    = $_REQUEST['page'];
+            $feedback['page']    = $page;
             $feedback['results'] = $limitedResult;
         }
     }
