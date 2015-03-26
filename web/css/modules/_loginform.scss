@@ -58,7 +58,7 @@
 }
 
 
-.at-seperator {
+.seperator {
 	display: inline-block;
 	width: 3%;
 	min-width: 40px;
@@ -69,6 +69,10 @@
 	vertical-align: bottom;
 	line-height: 1.1;
 	font-weight: normal;
+
+	&.port {
+		width: 6%;
+	}
 
 	@include respond-to(ipad-landscape) {
 		float: left;
