@@ -16,8 +16,10 @@
     (all / are replaced with _ and the leading / is stripped).#}
     <form action="" method="post">
         {{ error }}
-        <input type="text" name="_username" value="{{ last_username }}" />
-        <input type="password" name="_password" value="" />
+        <input type="text" name="user" value="{{ user }}" />
+        @
+        <input type="text" name="host" value="{{ host }}" />
+        <input type="password" name="pw" value="" />
         <input type="submit" />
     </form>
 {% endblock %}
