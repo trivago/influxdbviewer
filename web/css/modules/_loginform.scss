@@ -14,8 +14,8 @@
 		@include respond-to(ipad-landscape) {
 			float: none;
 			width: 10%;
-			height: 56px;
-			margin-top: 0;
+			height: 54px;
+			margin-top: -1px;
 		}
 	}
 

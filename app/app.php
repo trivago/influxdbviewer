@@ -9,6 +9,8 @@ Request::enableHttpMethodParameterOverride();
 $app = new Silex\Application();
 // session_start();
 
+$app['debug'] = true;
+
 // TWIG EXTENSION
 $app->register(
     new Silex\Provider\TwigServiceProvider(),
@@ -17,32 +19,17 @@ $app->register(
     )
 );
 
+const PATH_HOME      = '/';
+const PATH_LOGIN     = '/login';
 const PATH_DATABASES = '/databases';
-const PATH_LOGIN = '/';
-const PATH_LOGOUT = '/logout';
-const PATH_QUERY = '/query';
+const PATH_LOGOUT    = '/logout';
+const PATH_QUERY     = '/query';
 
 // require_once("functions.inc.php");
 
 // CONFIG EXTENSION
 $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.yml"));
 
-// SECURITY SERVICE
-$app->register(
-    new Silex\Provider\SecurityServiceProvider(),
-    array(
-        'security.firewalls' => array(
-            'admin' => array(
-                'pattern' => '^/admin',
-                'http'    => true,
-                'users'   => array(
-                    // raw password is foo
-                    'admin' => array('ROLE_ADMIN', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg=='),
-                ),
-            ),
-        )
-    )
-);
 
 // SESSION SERVICE
 $app->register(new \Silex\Provider\SessionServiceProvider());
@@ -51,7 +38,7 @@ $app->register(new \Silex\Provider\SessionServiceProvider());
 // ROUTES
 // login
 $app->get(
-    '/',
+    PATH_HOME,
     function (Request $request) use ($app)
     {
         $loggedIn      = false;
@@ -72,12 +59,28 @@ $app->get(
             'index.twig',
             array(
 
-                'title' => "Welcome",
-                'error' => $error_message,
-                'user'  => $_SESSION['user'],
-                'host'  => $_SESSION['host'],
+                'title'      => "Welcome",
+                'error'      => $error_message,
+                'user'       => $_SESSION['user'],
+                'host'       => $_SESSION['host'],
+                'PATH_LOGIN' => PATH_HOME,
             )
         );
+    }
+);
+
+// login
+$app->post(
+    PATH_LOGIN,
+    function (Request $request) use ($app)
+    {
+        $loggedIn      = false;
+        $error_message = null;
+        session_start();
+
+        require_once("login.inc.php");
+
+        return $app->redirect(PATH_HOME);
     }
 );
 
