@@ -16,6 +16,9 @@
     {% block header %}{% endblock %}
     <!-- Add your site or application content here -->
     {% block content %}{% endblock %}
+    {% block footer %}
+      {% include "snippets/footer.twig" %}
+    {% endblock %}
   </div>
 </body>
 </html>
