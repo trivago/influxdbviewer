@@ -53,7 +53,6 @@ function redirectTo($path)
 
 function getListOfDatabases()
 {
-	$host = $session->get('host');
     $url        = "http://" . $_SESSION['host'] . "/db/?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
     print ("URRREL " . $url);
     $httpResult = getUrlContent($url);
