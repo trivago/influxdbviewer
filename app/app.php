@@ -30,7 +30,7 @@ $app->get(
     function (Request $request) use ($app)
     {
         $loggedIn = false;
-
+        
         require_once("login.inc.php");
 
         if ($loggedIn)
@@ -44,7 +44,8 @@ $app->get(
             'index.twig',
             array(
                 'title'  => "AdminfluxDB",
-                'colors' => array("red", "green", "yellow"),
+                'colors' => array("red", "green", "yellow"),// TODO do we need this?
+
             )
         );
     }
@@ -69,12 +70,17 @@ $app->get(
     'databases',
     function (Request $request) use ($app)
     {
+        $databases = null;
+        $redirect = false;
         require_once("list_databases.inc.php");
+        if($redirect){ // Database has been selected and stored in the session
+            return $app->redirect('/query');
+        }
         return $app['twig']->render(
             'databases.twig',
             array(
                 'title' => 'databases',
-                'databases' => [1,2,3,4,5],
+                'databases' => $databases,
             )
         );
     }
