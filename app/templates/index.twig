@@ -18,11 +18,13 @@
                 </div>
             {% endif %}
             <label for="textinput-username" class="label-username">
-                <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username" placeholder="Username">
+                <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username"
+                       placeholder="Username">
             </label>
             <strong class="separator at">@</strong>
             <label for="textinput-host" class="label-host">
-                <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host" placeholder="localhost">
+                <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host"
+                       placeholder="localhost">
             </label>
             <strong class="separator port">:8086</strong>
             <label for="passwordinput" class="label-password">
@@ -90,25 +92,30 @@
                 </tbody>
             </table>
 
- </div>
+        </div>
     </section>
 {% endblock content %}
 
 {% block javascripts %}
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             listPreviousLogins();
             onClickPreviousLogins();
 
             function listPreviousLogins() {
-                var last_logins = readCookie("last_logins"),
-                    logins      = last_logins.split("|"),
-                    list        = $('#js_prev_logins_list');
+                var last_logins = readCookie("last_logins");
 
-                for (var i = logins.length - 1; i >= 0; i--) {
-                    list.append('<li><a href="#" class="login_link"></a></li><').innerHTML(logins[i]);
+                if (!undefined === last_logins) {
+                    var logins = last_logins.split("|"),
+                        list = $('#js_prev_logins_list');
+
+                    for (var i = logins.length - 1; i >= 0; i--) {
+                        list.append('<li><a href="#" class="login_link"></a></li><');
+                        $('.login_link').innerHTML = logins[i];
+                    }
                 }
+
             }
 
             function readCookie(name) {
@@ -121,16 +128,20 @@
             }
 
             function onClickPreviousLogins() {
-                var link      = $('.login_link'),
-                    link_data = link.innerHTML().split('@');
+                var link = $('.login_link');
 
-                link.on('click', function (){
-                    $('#user').val(link_data[0]);
-                    $('#host').val(link_data[1]);
-                })
+                if (!undefined === link) {
+                    var link_data = link.innerHTML.split('@');
+
+                    link.on('click', function () {
+                        $('#user').val(link_data[0]);
+                        $('#host').val(link_data[1]);
+                    })
+                }
+
             }
 
         });
     </script>
-
+{% endblock javascripts %}
 
