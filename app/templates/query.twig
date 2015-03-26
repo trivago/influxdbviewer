@@ -13,7 +13,7 @@
 {% block content %}
     <script language="javascript">
         function listPreviousQueries(){
-    var last_commands = readCookie("last_commands");
+    var last_commands = urldecode(readCookie("last_commands"));
     // document.write(urldecode(last_commands));
     var show_max = 1; // TODO 30
     var commandlist = last_commands.split("|")
