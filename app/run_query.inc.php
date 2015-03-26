@@ -45,8 +45,8 @@ function getDatabaseResults($query)
         {
             $json            = json_decode($httpResult['results']);
             print_r($json[0]);
-            $columns         = $json['columns'];
-            $datapoints      = $json['points'];
+            $columns         = $json[0]->columns;
+            $datapoints      = $json[0]->points;
             $results         = ['columns' => $columns, 'datapoints' => $datapoints];
             $number_of_pages = count($datapoints);
             $feedback        = [
