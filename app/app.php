@@ -69,7 +69,7 @@ $app->get(
 );
 
 $app->post(
-    '/',
+    '/login',
     function (Request $request) use ($app)
     {
         $loggedIn      = false;
