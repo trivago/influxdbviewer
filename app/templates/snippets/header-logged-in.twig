@@ -4,8 +4,8 @@
 
 		<div class="logout-wrapper">
 			<a href="logout.php" class="btn btn-secondary btn-medium">logout</a>
-			<h2><a href="databases.php">{{ user }}@{{ host }}</a>
-			{% if database %}:{{ database }}{% endif %}
+			<h2>{{ user }}@{{ host }}
+			{% if database %}:<a href="databases.php">{{ database }}</a>{% endif %}
 			</h2>
 		</div>
 	</div>
