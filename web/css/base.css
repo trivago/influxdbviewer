@@ -575,7 +575,7 @@ html, body {
 input[type='text'], input[type='password'] {
   max-width: 100%;
   min-height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   padding: 6px 2%;
   border: 0;
   line-height: 2.25; }
@@ -644,8 +644,7 @@ input[type='text'], input[type='password'] {
   background: linear-gradient(to bottom, #585a62 2%, #30353f 100%);
   /* W3C */ }
   .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
-    text-shadow: 0px 1px 0 #000;
-    outline: 1px solid red; }
+    text-shadow: 0px 1px 0 #000; }
 
 .site-header {
   padding: 0 4%;
@@ -685,16 +684,28 @@ input[type='text'], input[type='password'] {
   text-align: center;
   background: #2c70b7; }
   .loginform .btn {
-    width: 10%;
-    height: 56px; }
+    margin: 20px 0 30px; }
+    @media only screen and (min-width: 1024px) {
+      .loginform .btn {
+        width: 10%;
+        height: 56px;
+        margin: 0; } }
   .loginform .label-username,
   .loginform .label-password,
   .loginform .label-host {
-    width: 20%;
-    margin: 0 .5%; }
+    display: inline-block;
+    width: 96%;
+    margin-bottom: 15px; }
+    @media only screen and (min-width: 1024px) {
+      .loginform .label-username,
+      .loginform .label-password,
+      .loginform .label-host {
+        width: 20%;
+        margin: 0 .5%; } }
   .loginform .textinput-username,
   .loginform .passwordinput,
   .loginform .textinput-host {
+    width: 96%;
     height: 56px;
     font-size: 1.375rem;
     line-height: 1.81818; }
@@ -711,18 +722,25 @@ input[type='text'], input[type='password'] {
     font-size: 1.375rem;
     line-height: 1.81818; }
   .loginform .label-host {
-    width: 26%; }
+    width: 96%; }
+    @media only screen and (min-width: 1024px) {
+      .loginform .label-host {
+        width: 26%; } }
 
 .at-seperator {
   display: inline-block;
   width: 3%;
   min-width: 40px;
-  height: 60px;
-  margin: 0 0.4%;
+  height: 30px;
+  margin: 0 0.4% 10px;
   color: #fff;
   font-size: 2rem;
   vertical-align: bottom;
   line-height: 1.1;
   font-weight: normal; }
+  @media only screen and (min-width: 1024px) {
+    .at-seperator {
+      height: 60px;
+      margin-bottom: 0; } }
 
 /*# sourceMappingURL=base.css.map */

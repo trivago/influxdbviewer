@@ -6,20 +6,32 @@
 	background: $main-color-01;
 
 	.btn {
-		width: 10%;
-		height: 56px;
+		margin: 20px 0 30px;
+
+		@include respond-to(ipad-landscape) {
+			width: 10%;
+			height: 56px;
+			margin: 0;
+		}
 	}
 
 	.label-username,
 	.label-password,
 	.label-host {
-		width: 20%;
-		margin: 0 .5%;
+		display: inline-block;
+		width: 96%;
+		margin-bottom: 15px;
+
+		@include respond-to(ipad-landscape) {
+			width: 20%;
+			margin: 0 .5%;
+		}
 	}
 
 	.textinput-username,
 	.passwordinput,
 	.textinput-host {
+		width: 96%;
 		height: 56px;
 		font-size: 1.375rem;
 		line-height: 1.81818;
@@ -31,7 +43,11 @@
 	}
 
 	.label-host {
-		width: 26%;
+		width: 96%;
+
+		@include respond-to(ipad-landscape) {
+			width: 26%;
+		}
 	}
 }
 
@@ -40,11 +56,16 @@
 	display: inline-block;
 	width: 3%;
 	min-width: 40px;
-	height: 60px;
-	margin: 0 0.4%;
+	height: 30px;
+	margin: 0 0.4% 10px;
 	color: $white;
 	font-size: 2rem;
 	vertical-align: bottom;
 	line-height: 1.1;
 	font-weight: normal;
+
+	@include respond-to(ipad-landscape) {
+		height: 60px;
+		margin-bottom: 0;
+	}
 }
