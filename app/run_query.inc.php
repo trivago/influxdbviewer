@@ -93,11 +93,11 @@ function getDatabaseResults($query)
 function addCommandToCookie($command, $ts, $number_of_pages){
     $cookie_name = "last_commands";
     $saveMe = $ts . DELIMITER_COMMANDCOOKIE_INTERNAL . $number_of_pages . DELIMITER_COMMANDCOOKIE_INTERNAL. $command;
-    print "New cookie section: " . $saveMe . "<br>";
+    #print "New cookie section: " . $saveMe . "<br>";
     $oldValue = readCookie($cookie_name);
     if(!cookieContainsCommand($oldValue, $command)){
     $newValue = $oldValue . DELIMITER_COMMANDCOOKIE_EXTERNAL . $saveMe;
-    print "Old cookie section: " . $oldValue . "<br>";
+   # print "Old cookie section: " . $oldValue . "<br>";
     print "Full cookie section: " . $newValue . "<br>";
 
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
@@ -113,11 +113,11 @@ function cookieContainsCommand($oldValue, $str){
     $commands = explode(DELIMITER_COMMANDCOOKIE_EXTERNAL, $oldValue);
 
     foreach($commands as $command){
-            print "cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL . "<br>";
+        #    print "cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL . "<br>";
         $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
-        print_r($tokens);
+        #print_r($tokens);
 
-         print "cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
+       #  print "cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
         if ($tokens[2] == $str){
             return true;
         }
