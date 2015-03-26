@@ -2,6 +2,8 @@
 
 define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
 define('RESULTS_PER_PAGE', 50);
+define('DELIMITER_COMMANDCOOKIE_INTERNAL', "#");
+define('DELIMITER_COMMANDCOOKIE_EXTERNAL', "|");
 
 if (!empty($_REQUEST['query']))
 {
@@ -90,17 +92,30 @@ function getDatabaseResults($query)
 
 function addCommandToCookie($command, $ts, $number_of_pages){
     $cookie_name = "last_commands";
-    $saveMe = $ts . "/" . $number_of_pages . "/" . $command;
+    $saveMe = $ts . DELIMITER_COMMANDCOOKIE_INTERNAL . $number_of_pages . DELIMITER_COMMANDCOOKIE_INTERNAL. $command;
     print "New cookie section: " . $saveMe . "<br>";
     $oldValue = readCookie($cookie_name);
-    $newValue = $oldValue . "|" . $saveMe;
+    if(!cookieContainsCommand($oldValue, $command){
+    $newValue = $oldValue . DELIMITER_COMMANDCOOKIE_EXTERNAL . $saveMe;
     print "Old cookie section: " . $oldValue . "<br>";
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
+    }
 }
 
 function readCookie($cookie_name){
     return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
 
+}
+
+function cookieContainsCommand($oldValue, $command){
+    $commands = split($oldValue, DELIMITER_COMMANDCOOKIE_EXTERNAL);
+    for($command in $commands){
+        $tokens = split($command, DELIMITER_COMMANDCOOKIE_INTERNAL);
+        if ($token[2] == $command){
+            return true;
+        }
+    }
+    return false;
 }
 
 function isSeriesList($query)
