@@ -356,4 +356,8 @@ td,
 th {
   padding: 0; }
 
+.site-header {
+  background-color: blue;
+  min-height: 300px; }
+
 /*# sourceMappingURL=base.css.map */
