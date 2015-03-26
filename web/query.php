@@ -32,13 +32,6 @@ try
 
     require_once("../app/run_query.inc.php");
 
-        return $app['twig']->render(
-            'query.twig',
-            array(
-               
-            )
-        );
-
     // set template variables
     // render template
     echo $template->render(
