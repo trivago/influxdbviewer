@@ -1,4 +1,4 @@
-<?
+<?php
 if($_POST){
  $b = checkLoginValid();
  if ($b){
@@ -22,6 +22,6 @@ function redirectToDatabasePage(){
 	}
 
 function checkLoginValid(){
-	
+
 }
 ?>

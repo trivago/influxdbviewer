@@ -29,7 +29,15 @@ $app->get(
     '/',
     function (Request $request) use ($app)
     {
+        $loggedIn = false;
+
         require_once("login.inc.php");
+
+        if ($loggedIn)
+        {
+            return $app->redirect('/databases');
+        }
+
 
         //$message = $request->get('message');
         return $app['twig']->render(
@@ -51,7 +59,7 @@ $app->get(
         // destroy session
         // etc
 
-        return $app->redirect('/hello');
+        return $app->redirect('/');
     }
 );
 
