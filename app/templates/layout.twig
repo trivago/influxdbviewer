@@ -15,7 +15,9 @@
   <div class="page-wrapper">
     {% block header %}{% endblock %}
     <!-- Add your site or application content here -->
-    {% block content %}{% endblock %}
+    <main>
+      {% block content %}{% endblock %}
+    </main>
     {% block footer %}
       {% include "snippets/footer.twig" %}
     {% endblock %}

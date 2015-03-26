@@ -1,0 +1,11 @@
+html, body {
+    height: 100%;
+}
+
+.page-wrapper {
+    min-height: 100%;
+}
+
+main {
+    @extend .clearfix;
+}
