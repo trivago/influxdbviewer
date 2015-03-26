@@ -69,7 +69,7 @@ function getListOfDatabases()
         	print_r($value). "<br>";  // TODO
 
         	// 	print "Key " . $key . " -> val " . $value . "<br>";  // TODO
-                    $result[] = $value;
+                  //   $result[] = $value;
         }
 
         return $result;
