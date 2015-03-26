@@ -82,16 +82,7 @@ $app->post(
             return $app->redirect('/databases');
         }
 
-        return $app['twig']->render(
-            'index.twig',
-            array(
-
-                'title'    => "AdminfluxDB",
-                'error'    => $error_message,
-                'user' => $_SESSION['user'],
-                'host'     => $_SESSION['host'],
-            )
-        );
+        return $app->redirect('/');
     }
 );
 
