@@ -30,5 +30,18 @@
 }
 
 .btn-secondary {
+	/* replace with mixin later on! */
+	outline: 1px solid rgba(256, 256, 256, .5);
+	background: #585a62; /* Old browsers */
+	background: -moz-linear-gradient(top,  #585a62 2%, #30353f 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(2%,#585a62), color-stop(100%,#30353f)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #585a62 2%,#30353f 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #585a62 2%,#30353f 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #585a62 2%,#30353f 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #585a62 2%,#30353f 100%); /* W3C */
 
+	@include link-pseudos-hover {
+		text-shadow: 0px 1px 0 $black;
+		outline: 1px solid red;
+	}
 }
