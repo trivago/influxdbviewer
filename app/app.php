@@ -67,7 +67,7 @@ $app->get(
             'index.twig',
             array(
 
-                'title' => "AdminfluxDB",
+                'title' => "Welcome",
                 'error' => $error_message,
                 'user'  => $_SESSION['user'],
                 'host'  => $_SESSION['host'],
@@ -107,7 +107,7 @@ $app->get(
         return $app['twig']->render(
             'databases.twig',
             array(
-                'title'     => 'databases',
+                'title'     => 'Databases',
                 'databases' => $databases,
             )
         );
