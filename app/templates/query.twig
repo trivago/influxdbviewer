@@ -15,11 +15,11 @@
         function listPreviousQueries(){
     var last_commands = urldecode(readCookie("last_commands"));
     // document.write(urldecode(last_commands));
-    var show_max = 1; // TODO 30
+    var show_max = 2; // TODO 30
     var commandlist = last_commands.split("|")
     var found = commandlist.length ;
     for (i = found -1; i >= found - show_max; i--){
-       document.write(i + " : " + commandlist + "<br>");
+       document.write(i + " : " + commandlist + "<br><br><br>");
     }}
 
     function urldecode(str) {
