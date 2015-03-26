@@ -58,7 +58,7 @@ function getDatabaseResults($query)
     if ($feedback['error_message'] == null)
     {
         $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-        $limitedResult = limitResult($_REQUEST['page'], $feedback);
+        $limitedResult = limitResult($_REQUEST['page'], $feedback['results']);
 
         if ($limitedResult != null)
         {
