@@ -87,7 +87,7 @@ function addLoginToCookie(){
     $cookie_name = "last_logins";
     $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
     $oldValue = readCookie($cookie_name);
-    if(!cookieContainsCommand($oldValue, $saveMe)){
+    if(!cookieContainsLogin($oldValue, $saveMe)){
         $newValue = $oldValue .DELIMITER_LOGINCOOKIE_EXTERNAL . $saveMe;
         setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
     }
