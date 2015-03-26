@@ -2,7 +2,7 @@
 //$app = require __DIR__.'/../app/app.php';
 // $app->run();
 
-include 'Twig/Autoloader.php';
+include 'vendor/twig/twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();
 session_start();
 $_SESSION['host'] = "horst";
