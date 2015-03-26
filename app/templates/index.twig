@@ -24,6 +24,7 @@
 	    </label>
         <input type="submit" class="btn btn-secondary">
     </form>
+    <!-- Hello kay! Beginning of box :D -->
     <script language="javascript">
 
     listPreviousLogins();
@@ -39,19 +40,6 @@
             return ca[i].replace(name, '');
     }
 
-/**
-    function saveCredentials(){
-        var loginForm = document.getElementByID("loginform");
-        var saveMe = loginForm.user + "@" + loginForm.host;
-        var oldValue = readCookie("last_logins");
-        var newValue = oldValue + "|" + saveMe;
-        saveCookie("last_logins", newValue);
-    }
-
-    function saveCookie(key, value){
-    // TODO remove this and form event because we moved it to the php side
-    } */
-
     function listPreviousLogins(){
     var last_logins = readCookie("last_logins");
     for (var logins = last_logins.split("|"), i = logins.length -1; i >= 0; i--){
@@ -59,5 +47,8 @@
     }}
 
     </script>
+
+    <!-- kay: end of content -->
+
 {% endblock %}
 
