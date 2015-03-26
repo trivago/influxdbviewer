@@ -4,6 +4,8 @@ require __DIR__ . '/bootstrap.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+Request::enableHttpMethodParameterOverride();
+
 $app = new Silex\Application();
 session_start();
 
@@ -65,14 +67,6 @@ $app->get(
                 'host'  => $_SESSION['host'],
             )
         );
-    }
-);
-
-$app->post(
-    '/login',
-    function (Request $request) use ($app)
-    {
-        return new Response('login', 201);
     }
 );
 
