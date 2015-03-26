@@ -12,19 +12,19 @@ $error_message = null;
 if ($_POST)
 {
     echo "Hello wurst";
-    
-   
-        $loggedIn = checkLoginValid();
 
-        if ($loggedIn)
-        {
-            storeToSession();
-            addLoginToCookie();
-            redirectTo("databases.php");
-        }
-       else
+
+    $loggedIn = checkLoginValid();
+
+    if ($loggedIn)
     {
-         $error_message = "Invalid login";
+        storeToSession();
+        addLoginToCookie();
+        redirectTo("databases.php");
+    }
+    else
+    {
+        $error_message    = "Invalid login";
         $_SESSION['host'] = "";
         $_SESSION['user'] = "";
         // does not redirect, will end up in loginform
@@ -87,17 +87,18 @@ function storeToSession()
 }
 
 
-function addLoginToCookie(){
+function addLoginToCookie()
+{
     $cookie_name = "last_logins";
-    $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
-    $oldValue = readCookie($cookie_name);
-    $newValue = $oldValue . "|" . $saveMe;
+    $saveMe      = $_SESSION['user'] . "@" . $_SESSION['host'];
+    $oldValue    = readCookie($cookie_name);
+    $newValue    = $oldValue . "|" . $saveMe;
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
 }
 
-function readCookie($cookie_name){
+function readCookie($cookie_name)
+{
     return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
-
 }
 
 function getUrlContent($url)
