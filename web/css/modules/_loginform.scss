@@ -2,16 +2,20 @@
 	@extend .clearfix;
 	@include center-x;
 	display: block;
+	margin-bottom: 0;
+	padding: 40px 2rem;
 	text-align: center;
 	background: $main-color-01;
 
 	.btn {
-		margin: 20px 0 30px;
+		float: right;
+		margin-top: 20px;
 
 		@include respond-to(ipad-landscape) {
+			float: none;
 			width: 10%;
 			height: 56px;
-			margin: 0;
+			margin-top: 0;
 		}
 	}
 
@@ -19,19 +23,19 @@
 	.label-password,
 	.label-host {
 		display: inline-block;
-		width: 96%;
+		width: 100%;
 		margin-bottom: 15px;
 
 		@include respond-to(ipad-landscape) {
 			width: 20%;
-			margin: 0 .5%;
+			margin: 0 1%;
 		}
 	}
 
 	.textinput-username,
 	.passwordinput,
 	.textinput-host {
-		width: 96%;
+		width: 100%;
 		height: 56px;
 		font-size: 1.375rem;
 		line-height: 1.81818;
@@ -43,8 +47,6 @@
 	}
 
 	.label-host {
-		width: 96%;
-
 		@include respond-to(ipad-landscape) {
 			width: 26%;
 		}
@@ -67,5 +69,6 @@
 	@include respond-to(ipad-landscape) {
 		height: 60px;
 		margin-bottom: 0;
+		line-height: 2.1;
 	}
 }

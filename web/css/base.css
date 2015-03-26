@@ -576,7 +576,7 @@ input[type='text'], input[type='password'] {
   max-width: 100%;
   min-height: 40px;
   margin-bottom: 0;
-  padding: 6px 2%;
+  padding: 6px 1rem;
   border: 0;
   line-height: 2.25; }
 
@@ -681,31 +681,35 @@ input[type='text'], input[type='password'] {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   display: block;
+  margin-bottom: 0;
+  padding: 40px 2rem;
   text-align: center;
   background: #2c70b7; }
   .loginform .btn {
-    margin: 20px 0 30px; }
+    float: right;
+    margin-top: 20px; }
     @media only screen and (min-width: 1024px) {
       .loginform .btn {
+        float: none;
         width: 10%;
         height: 56px;
-        margin: 0; } }
+        margin-top: 0; } }
   .loginform .label-username,
   .loginform .label-password,
   .loginform .label-host {
     display: inline-block;
-    width: 96%;
+    width: 100%;
     margin-bottom: 15px; }
     @media only screen and (min-width: 1024px) {
       .loginform .label-username,
       .loginform .label-password,
       .loginform .label-host {
         width: 20%;
-        margin: 0 .5%; } }
+        margin: 0 1%; } }
   .loginform .textinput-username,
   .loginform .passwordinput,
   .loginform .textinput-host {
-    width: 96%;
+    width: 100%;
     height: 56px;
     font-size: 1.375rem;
     line-height: 1.81818; }
@@ -721,11 +725,9 @@ input[type='text'], input[type='password'] {
   .loginform :-ms-input-placeholder {
     font-size: 1.375rem;
     line-height: 1.81818; }
-  .loginform .label-host {
-    width: 96%; }
-    @media only screen and (min-width: 1024px) {
-      .loginform .label-host {
-        width: 26%; } }
+  @media only screen and (min-width: 1024px) {
+    .loginform .label-host {
+      width: 26%; } }
 
 .at-seperator {
   display: inline-block;
@@ -741,6 +743,7 @@ input[type='text'], input[type='password'] {
   @media only screen and (min-width: 1024px) {
     .at-seperator {
       height: 60px;
-      margin-bottom: 0; } }
+      margin-bottom: 0;
+      line-height: 2.1; } }
 
 /*# sourceMappingURL=base.css.map */
