@@ -32,7 +32,7 @@ $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . "/config/config.y
 
 
 // SESSION SERVICE
-$app->register(new \Silex\Provider\SessionServiceProvider());
+// $app->register(new \Silex\Provider\SessionServiceProvider());
 
 
 // ROUTES
