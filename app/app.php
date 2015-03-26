@@ -49,6 +49,7 @@ $app->get(
     {
         $loggedIn      = false;
         $error_message = null;
+        session_start();
 
         require_once("login.inc.php");
 
