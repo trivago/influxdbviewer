@@ -19,7 +19,7 @@
     var commandlist = last_commands.split("|")
     var found = commandlist.length ;
     for (i = found -1; i >= found - show_max; i--){
-       document.write(i + " : " + commandlist + "<br><br><br>");
+       document.write(i + " : " + commandlist[i] + "<br><br><br>");
     }}
 
     function urldecode(str) {
