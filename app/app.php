@@ -40,13 +40,25 @@ $app->get(
             'databases.twig',
             array(
                 'title' => 'databases',
-
+                'databases' => [1,2,3,4,5],
             )
         );
     }
 );
 
-
 // query
+$app->get(
+    'query',
+    function () use ($app)
+    {
+        return $app['twig']->render(
+            'query.twig',
+            array(
+                'title' => 'databases',
+                'query' => "select * from i_heart_css",
+            )
+        );
+    }
+);
 
 return $app;
