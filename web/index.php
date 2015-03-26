@@ -6,33 +6,25 @@ require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
 
+$loggedIn      = false;
+$error_message = null;
+
 if ($_POST)
 {
-    $loggedIn      = false;
-    $error_message = null;
-    // session_start();
 
-    if ($_POST)
-    {
+    
+   
         $loggedIn = checkLoginValid();
 
         if ($loggedIn)
         {
             storeToSession();
             addLoginToCookie();
+            redirectTo("databases.php");
         }
-        else
-        {
-            $error_message = "Invalid login";
-        }
-    }
-
-    if ($loggedIn)
+       else
     {
-        redirectTo("databases.php");
-    }
-    else
-    {
+         $error_message = "Invalid login";
         $_SESSION['host'] = "";
         $_SESSION['user'] = "";
         // does not redirect, will end up in loginform
@@ -61,7 +53,7 @@ try
         array(
 
             'title' => "Welcome",
-            'error' => null,
+            'error' => $error_message,
             'user'  => $_SESSION['user'],
             'host'  => $_SESSION['host'],
         )
