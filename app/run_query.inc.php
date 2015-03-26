@@ -41,7 +41,7 @@ function getDatabaseResults($query)
     else
     {
         // if ($debug) print "Getting data from db. "; 
-        $now        = mktime();
+        $now        = time();
         $url        = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
 
@@ -118,7 +118,7 @@ function cookieContainsCommand($oldValue, $str){
         #print_r($tokens);
 
        #  print "cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
-        if ($tokens[2] == $str){
+        if ($tokens$tokens[2] == $str){ // TODO check if len() == 3
             return true;
         }
     }
@@ -148,7 +148,7 @@ function searchCache($query)
 
 function isFreshResult($timestamp)
 {
-    return mktime() - $timestamp < MAX_RESULT_AGE_CACHE_SECONDS;
+    return time() - $timestamp < MAX_RESULT_AGE_CACHE_SECONDS;
 }
 
 
