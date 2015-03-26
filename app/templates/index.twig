@@ -1,93 +1,88 @@
 {% extends "layout.twig" %}
 
 {% block title %}
-	{{ title }}
+    {{ title }}
 {% endblock %}
 
 {% block header %}
-	{% include "snippets/header-logged-in.twig" %}
+    {% include "snippets/header-logged-in.twig" %}
 {% endblock %}
 
 {% block content %}
+    <form class="loginform" action="" method="post" id="loginform">
+        <div class="centerwrapper">
+            {{ error }}
+            <label for="textinput-username" class="label-username">
+                <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username"
+                       placeholder="Username">
+            </label>
+            <strong class="separator at">@</strong>
+            <label for="textinput-host" class="label-host">
+                <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host"
+                       placeholder="localhost">
+            </label>
+            <strong class="separator port">:8086</strong>
+            <label for="passwordinput" class="label-password">
+                <input type="password" name="pw" value="" id="pw" class="passwordinput" placeholder="Password">
+            </label>
+            <input type="submit" class="btn btn-secondary">
+        </div>
+    </form>
 
-	<form class="loginform" action="" method="post" id="loginform">
-		<div class="centerwrapper">
-			{{ error }}
-			<label for="textinput-username" class="label-username">
-				<input type="text" name="user" value="{{ user }}" id="user" class="textinput-username" placeholder="Username">
-			</label>
-			<strong class="separator at">@</strong>
-			<label for="textinput-host" class="label-host">
-				<input type="text" name="host" value="{{ host }}" id="host" class="textinput-host" placeholder="localhost">
-			</label>
-			<strong class="separator port">:8086</strong>
-			<label for="passwordinput" class="label-password">
-				<input type="password" name="pw" value="" id="pw" class="passwordinput" placeholder="Password">
-			</label>
-			<input type="submit" class="btn btn-secondary">
-		</div>
-	</form>
+    <section class="sectionbox prev-logins">
+        <div class="sectionheader">
+            <h2>Previous Logins</h2>
+        </div>
 
-	<section class="sectionbox prev-logins">
-		<div class="sectionheader">
-			<h2>Previous Logins</h2>
-		</div>
+        <div class="sectionbody">
 
-		<div class="sectionbody">
-
-			<!-- replace this static list with the real data! -->
-			<ul class="prev-logins-list">
-				<li><a href="#">Lorem ipsum.</a></li>
-				<li><a href="#">Excepturi, itaque.</a></li>
-				<li><a href="#">Expedita, sunt.</a></li>
-				<li><a href="#">Architecto, vel.</a></li>
-				<li><a href="#">Optio, vero!</a></li>
-				<li><a href="#">Fuga, quos.</a></li>
-				<li><a href="#">Odio, repellat.</a></li>
-				<li><a href="#">Fugit, quibusdam.</a></li>
-				<li><a href="#">Delectus, minus.</a></li>
-				<li><a href="#">Amet, aperiam.</a></li>
-				<li><a href="#">Ipsa, quos.</a></li>
-				<li><a href="#">Beatae, ipsum.</a></li>
-			</ul>
-
-	<script language="javascript">
-
-	listPreviousLogins();
+            <!-- replace this static list with the real data! -->
+            <ul class="prev-logins-list" id="js_prev_logins_list">
+            </ul>
 
 
+        </div>
+    </section>
+{% endblock content %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
 
-	function readCookie(name) {
-	name += '=';
-	for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
-		if (!ca[i].indexOf(name))
-			return ca[i].replace(name, '');
-	}
+            listPreviousLogins();
+            onClickPreviousLogins();
 
-/**
-	function saveCredentials(){
-		var loginForm = document.getElementByID("loginform");
-		var saveMe = loginForm.user + "@" + loginForm.host;
-		var oldValue = readCookie("last_logins");
-		var newValue = oldValue + "|" + saveMe;
-		saveCookie("last_logins", newValue);
-	}
+            function listPreviousLogins() {
+                var last_logins = readCookie("last_logins"),
+                    logins      = last_logins.split("|"),
+                    list        = $('#js_prev_logins_list');
 
-	function saveCookie(key, value){
-	// TODO remove this and form event because we moved it to the php side
-	} */
+                for (var i = logins.length - 1; i >= 0; i--) {
+                    list.append('<li><a href="#" class="login_link"></a></li><').innerHTML(logins[i]);
+                }
+            }
 
-	function listPreviousLogins(){
-	var last_logins = readCookie("last_logins");
-	for (var logins = last_logins.split("|"), i = logins.length -1; i >= 0; i--){
-		document.write(logins + "<br>");
-	}}
+            function readCookie(name) {
+                name += '=';
+                var ca = document.cookie.split(/;\s*/);
 
-	</script>
-		</div>
-	</section>
-	<!-- kay: end of content -->
+                for (var i = ca.length - 1; i >= 0; i--)
+                    if (!ca[i].indexOf(name))
+                        return ca[i].replace(name, '');
+            }
 
-{% endblock %}
+            function onClickPreviousLogins() {
+                var link      = $('.login_link'),
+                    link_data = link.innerHTML().split('@');
+
+                link.on('click', function (){
+                    $('#user').val(link_data[0]);
+                    $('#host').val(link_data[1]);
+                })
+            }
+
+        });
+    </script>
+{% endblock javascripts %}
+
 
