@@ -3,8 +3,8 @@
 		<h1 class="sitelogo">{{ title }}</h1>
 
 		<div class="logout-wrapper">
-			<a href="#" class="btn btn-secondary btn-medium">logout</a>
-			<h2>{{ user }}@{{ host }}
+			<a href="logout.php" class="btn btn-secondary btn-medium">logout</a>
+			<h2><a href="databases.php">{{ user }}@{{ host }}</a>
 			{% if database %}:{{ database }}{% endif %}
 			</h2>
 		</div>
