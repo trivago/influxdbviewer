@@ -91,6 +91,8 @@ $app->get(
         $timestamp = 0;
         $is_cached = false;
         $error_message = null;
+        $page = 1;
+        $number_of_pages = 1;
 
         require_once("run_query.inc.php");
         return $app['twig']->render(
@@ -102,7 +104,9 @@ $app->get(
                 'is_series_list' => $is_series_list,
                 'timestamp' => $timestamp,
                 'is_cached' =>  $is_cached,
-                'error_message' => $error_message
+                'error_message' => $error_message,
+                'page' => $page,
+                'number_of_pages' => $number_of_pages
             )
         );
     }
