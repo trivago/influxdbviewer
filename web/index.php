@@ -1,7 +1,7 @@
 <?php
 //$app = require __DIR__.'/../app/app.php';
 // $app->run();
-
+define("DELIMITER_LOGINCOOKIE_EXTERNAL",  "|");
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
@@ -10,7 +10,7 @@ $loggedIn      = false;
 $error_message = null;
 
 if(!isset($_SESSION['host']) || !isset($_SESSION['user'])){
-     $_SESSION['host'] = "";
+    $_SESSION['host'] = "";
     $_SESSION['user'] = "";
 }
 
@@ -70,8 +70,8 @@ function checkLoginValid()
 {
     $url        = "http://" . $_POST['host'] . ":8086/db?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
     $httpResult = getUrlContent($url);
-    print "Url " . $url . " -> " ;
-    print_r($httpResult);
+    #print "Url " . $url . " -> " ;
+    #print_r($httpResult);
     return (200 == $httpResult['status_code']);
 }
 
@@ -87,8 +87,20 @@ function addLoginToCookie(){
     $cookie_name = "last_logins";
     $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
     $oldValue = readCookie($cookie_name);
-    $newValue = $oldValue . "|" . $saveMe;
-    setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
+    if(!cookieContainsCommand($oldValue, $saveMe)){
+        $newValue = $oldValue .DELIMITER_LOGINCOOKIE_EXTERNAL . $saveMe;
+        setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
+    }
+}
+
+function cookieContainsLogin($oldValue, $str){
+    $logins = split($oldValue, DELIMITER_LOGINCOOKIE_EXTERNAL);
+    for($login in $logins){
+        if ($login == $str){
+            return true;
+        }
+    }
+    return false;
 }
 
 function readCookie($cookie_name){
