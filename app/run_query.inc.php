@@ -44,7 +44,7 @@ function getDatabaseResults($query)
         if (200 == $httpResult['status_code'])
         {
             $json            = json_decode($httpResult['results']);
-            print_r($json[0]);
+           
             $columns         = $json[0]->columns;
             $datapoints      = $json[0]->points;
             $results         = ['columns' => $columns, 'datapoints' => $datapoints];
@@ -57,6 +57,7 @@ function getDatabaseResults($query)
                 'number_of_pages' => $number_of_pages,
                 'error_message'   => null
             ];
+             print_r($feedback);
             saveResultsToCache($query, $results, $now, $number_of_pages);
             addCommandToCookie($query, $now, $number_of_pages);
         }
