@@ -10,13 +10,19 @@
 
 {% block content %}
 
-    <form action="login" method="post" id="loginform">
+    <form class="loginform" action="" method="post" id="loginform">
         {{ error }}
-        <input type="text" name="user" value="{{ user }}" />
-        @
-        <input type="text" name="host" value="{{ host }}" />
-        <input type="password" name="pw" value="" />
-        <input type="submit" />
+	    <label for="textinput-username" class="label-username">
+            <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username" placeholder="Username">
+	    </label>
+	    <strong class="at-seperator">@</strong>
+	    <label for="textinput-host" class="label-host">
+            <input type="text" name="host" value="{{ host }}" id="host" class="textinput-host" placeholder="Host">
+	    </label>
+	    <label for="passwordinput" class="label-password">
+            <input type="password" name="pw" value="" id="pw" class="passwordinput" placeholder="Password">
+	    </label>
+        <input type="submit" class="btn btn-secondary">
     </form>
     <script language="javascript">
 

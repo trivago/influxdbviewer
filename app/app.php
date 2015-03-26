@@ -4,8 +4,10 @@ require __DIR__ . '/bootstrap.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+Request::enableHttpMethodParameterOverride();
+
 $app = new Silex\Application();
-session_start();
+// session_start();
 
 // TWIG EXTENSION
 $app->register(
@@ -68,24 +70,6 @@ $app->get(
     }
 );
 
-$app->post(
-    '/login',
-    function (Request $request) use ($app)
-    {
-        $loggedIn      = false;
-        $error_message = null;
-
-        require_once("login.inc.php");
-
-        if ($loggedIn)
-        {
-            return $app->redirect('/databases');
-        }
-
-        return $app->redirect('/');
-    }
-);
-
 // logout
 $app->get(
     '/logout',
@@ -102,7 +86,7 @@ $app->get(
 
 // databases
 $app->get(
-    'databases',
+    '/databases',
     function (Request $request) use ($app)
     {
         $databases = null;
@@ -126,7 +110,7 @@ $app->get(
 
 // query
 $app->get(
-    'query',
+    '/query',
     function (Request $request) use ($app)
     {
         $query           = "";

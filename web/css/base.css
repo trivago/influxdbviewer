@@ -514,10 +514,7 @@ input[type='text'], input[type='password'] {
 
 .site-header {
   padding: 0 4%;
-  background-color: #2c70b7;
-  min-height: 300px; }
-  .site-header .minimized {
-    min-height: 50px; }
+  background-color: #2c70b7; }
 
 .sitelogo {
   text-align: center;
@@ -528,14 +525,23 @@ input[type='text'], input[type='password'] {
   .minimized .sitelogo {
     font-size: 1rem; }
 
+.site-footer {
+  min-height: 200px;
+  background-color: #444;
+  color: #fff;
+  margin-top: 40px; }
+  .site-footer img {
+    width: 180px;
+    margin: 20px 0 0 20px; }
+
 .loginform {
   position: relative;
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   display: block;
-  width: auto;
-  text-align: center; }
+  text-align: center;
+  background: #2c70b7; }
   .loginform .btn {
     width: 10%;
     height: 56px; }
@@ -576,14 +582,5 @@ input[type='text'], input[type='password'] {
   vertical-align: bottom;
   line-height: 1.1;
   font-weight: normal; }
-
-.site-footer {
-  min-height: 200px;
-  background-color: #444;
-  color: #fff;
-  margin-top: 40px; }
-  .site-footer img {
-    width: 180px;
-    margin: 20px 0 0 20px; }
 
 /*# sourceMappingURL=base.css.map */
