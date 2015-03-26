@@ -41,7 +41,7 @@ $app->register(new \Silex\Provider\SessionServiceProvider());
 
 // ROUTES
 // login
-$app->get(
+$app->post(
     '/',
     function (Request $request) use ($app)
     {
