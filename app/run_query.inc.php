@@ -98,6 +98,8 @@ function addCommandToCookie($command, $ts, $number_of_pages){
     if(!cookieContainsCommand($oldValue, $command)){
     $newValue = $oldValue . DELIMITER_COMMANDCOOKIE_EXTERNAL . $saveMe;
     print "Old cookie section: " . $oldValue . "<br>";
+    print "Full cookie section: " . $newValue . "<br>";
+
     setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
     }
 }
