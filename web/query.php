@@ -30,7 +30,7 @@ try
     $page            = 1;
     $number_of_pages = 1;
 
-    require_once("run_query.inc.php");
+    require_once("../app/run_query.inc.php");
 
         return $app['twig']->render(
             'query.twig',
