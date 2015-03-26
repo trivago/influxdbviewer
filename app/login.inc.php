@@ -1,27 +1,26 @@
 <?php
-if($_POST){
- $b = checkLoginValid();
- if ($b){
- 	redirectToDatabasePage();
- } else {
-  $errorMessage = "Invalid credentials";
-  showLoginForm($errorMessage);
- }
-} else{
- showLoginForm();
+if ($_POST)
+{
+    $loggedIn = checkLoginValid();
+    if($loggedIn){
+        storeToSession();
+    } else {
+        $error_message = "Invalid login";
+    }
 }
 
 
-function showLoginForm($error = null){
-// TODO template rendern und falls error != null dann das form mit den vorherigen postdaten füllen und die fehlermeldung anzeigen
+
+function checkLoginValid()
+{
+
+    $url = "http://" + $_POST['host'] + "/db/?u=" + $_POST['user'] + "&p=" + $_POST['pw'];
+    $httpResult = getUrlContent($url);
+    return (200 == $httpResult['status_code']);
 }
 
-
-function redirectToDatabasePage(){
-// TODO redirect to other rute. Yes, rute.
-	}
-
-function checkLoginValid(){
-
+function storeToSession(){
+    $_SESSION['host'] = $_POST['host'];
+    $_SESSION['user'] = $_POST['user'];
+    $_SESSION['pw'] = $_POST['pw'];
 }
-?>

@@ -11,7 +11,7 @@ if($_REQUEST['database'] || !isset($_SESSION['database']) || empty($_SESSION['da
 
 
 function getListOfDatabases(){
-	$url = "http://" + $_SESSION['host'] + "/db/?u=" + $_SESSION['user'] + "&p=" + $_SESSION['pw'] + "&q=" + urlencode($query);
+	$url = "http://" + $_SESSION['host'] + "/db/?u=" + $_SESSION['user'] + "&p=" + $_SESSION['pw'] ;
 	$httpResult = getUrlContent($url);
 	if (200 == $httpResult['status_code']){
 

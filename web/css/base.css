@@ -425,17 +425,32 @@ th {
  * 2. The use of `table` rather than `block` is only necessary if using
  *    `:before` to contain the top-margins of child elements.
  */
-.clearfix:before, .site-header:before, .clearfix:after, .site-header:after {
+.clearfix:before, main:before, .site-header:before, .clearfix:after, main:after, .site-header:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */ }
-.clearfix:after, .site-header:after {
+.clearfix:after, main:after, .site-header:after {
   clear: both;
   height: 0;
   line-height: 0;
   font-size: 0;
   visibility: hidden; }
+
+html, body {
+  height: 100%; }
+
+.page-wrapper {
+  min-height: 100%; }
+
+.site-footer {
+  min-height: 200px;
+  background-color: #444;
+  color: #fff;
+  margin-top: 40px; }
+  .site-footer img {
+    width: 180px;
+    margin: 20px 0 0 20px; }
 
 .site-header {
   background-color: #2c70b7;
