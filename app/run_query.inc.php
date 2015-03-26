@@ -15,6 +15,7 @@ if (!empty($_REQUEST['query']))
     $number_of_pages = $feedback['number_of_pages'];
     $number_of_results = $feedback['number_of_results'];
     $error_message   = $feedback['error_message'];
+    print_r($feedback);
 }
 
 function getDatabaseResults($query)
@@ -60,7 +61,7 @@ function getDatabaseResults($query)
                 'number_of_results' => $number_of_results,
                 'error_message'   => null
             ];
-             print_r($feedback);
+            //  print_r($feedback);
             saveResultsToCache($query, $results, $now, $number_of_pages);
             addCommandToCookie($query, $now, $number_of_pages);
         }
