@@ -39,8 +39,4 @@
 	background: -o-linear-gradient(top,  #585a62 2%,#30353f 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #585a62 2%,#30353f 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #585a62 2%,#30353f 100%); /* W3C */
-
-	@include link-pseudos-hover {
-		text-shadow: 0px 1px 0 $black;
-	}
 }

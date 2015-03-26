@@ -12,9 +12,11 @@
 
     <form class="loginform" action="" method="post" id="loginform">
         <div class="centerwrapper">
-            <div class="hint error">
-                <strong>{{ error }}</strong>
-            </div>
+            {% if error %}
+                <div class="hint error">
+                    <strong>{{ error }}</strong>
+                </div>
+            {% endif %}
             <label for="textinput-username" class="label-username">
                 <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username"
                        placeholder="Username">
@@ -40,9 +42,55 @@
         <div class="sectionbody">
 
             <!-- replace this static list with the real data! -->
-            <ul class="no-bullet zebralist" id="js_prev_logins_list">
+            <ul class="no-bullet zebralist">
+                <li><a href="#">Lorem ipsum.</a></li>
+                <li><a href="#">Excepturi, itaque.</a></li>
+                <li><a href="#">Expedita, sunt.</a></li>
+                <li><a href="#">Architecto, vel.</a></li>
+                <li><a href="#">Optio, vero!</a></li>
+                <li><a href="#">Fuga, quos.</a></li>
+                <li><a href="#">Odio, repellat.</a></li>
+                <li><a href="#">Fugit, quibusdam.</a></li>
+                <li><a href="#">Delectus, minus.</a></li>
+                <li><a href="#">Amet, aperiam.</a></li>
+                <li><a href="#">Ipsa, quos.</a></li>
+                <li><a href="#">Beatae, ipsum.</a></li>
             </ul>
 
+            <table class="sectionbox">
+                <thead>
+                <tr>
+                    <th>Lorem</th>
+                    <th>Aspernatur</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="#" class="tablelink">Lorem.</a></td>
+                    <td><a href="#" class="tablelink">Praesentium.</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#" class="tablelink">Lorem.</a></td>
+                    <td><a href="#" class="tablelink">Dignissimos.</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#" class="tablelink">Lorem.</a></td>
+                    <td><a href="#" class="tablelink">Voluptatum.</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#" class="tablelink">Lorem.</a></td>
+                    <td><a href="#" class="tablelink">Architecto.</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#" class="tablelink">Lorem.</a></td>
+                    <td><a href="#" class="tablelink">Molestiae!</a></td>
+                </tr>
+                <tr>
+                    <td><a href="#" class="tablelink">Lorem.</a></td>
+                    <td><a href="#" class="tablelink">Pariatur!</a></td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
     </section>
@@ -95,6 +143,5 @@
 
         });
     </script>
-{% endblock javascripts %}
 
 
