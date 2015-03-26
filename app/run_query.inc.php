@@ -110,7 +110,7 @@ function readCookie($cookie_name){
 }
 
 function cookieContainsCommand($oldValue, $str){
-    $commands = split($oldValue, DELIMITER_COMMANDCOOKIE_EXTERNAL);
+    $commands = split(DELIMITER_COMMANDCOOKIE_EXTERNAL, $oldValue);
 
     foreach($commands as $command){
             print "cookieContainsCommand " . $command . " check<br>";
