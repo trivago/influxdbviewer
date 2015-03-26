@@ -6,6 +6,7 @@ if ($_POST)
     if ($loggedIn)
     {
         storeToSession();
+        addLoginToCookie();
     }
     else
     {
@@ -27,4 +28,18 @@ function storeToSession()
     $_SESSION['host'] = $_POST['host'];
     $_SESSION['user'] = $_POST['user'];
     $_SESSION['pw']   = $_POST['pw'];
+}
+
+
+function addLoginToCookie(){
+    $cookie_name = "last_logins";
+    $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
+    $oldValue = readCookie($cookie_name);
+    $newValue = $oldValue . "|" . $saveMe;
+    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/');
+}
+
+function readCookie($name){
+    return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
+
 }
