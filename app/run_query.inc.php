@@ -112,6 +112,12 @@ function getUrlContent($url)
 
 function limitResult($page, $data)
 {
-    // TODO fill in
-    return false;
+
+	if(empty($page) || !is_numeric($page) || $page < 1 ){
+		$page = 1;
+	}
+
+	$start = ($page - 1) * RESULTS_PER_PAGE;
+	return array_slice ( $data, $start, RESULTS_PER_PAGE );
+    
 }
