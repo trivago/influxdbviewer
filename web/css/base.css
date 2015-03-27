@@ -582,10 +582,15 @@ body {
 .logo {
   margin-top: 20px; }
 
-.logo-small {
+.logo-addon {
+  margin-right: 20px; }
+
+.logo-small,
+.logo-addon-small {
   margin: 16px; }
   @media only screen and (min-width: 768px) {
-    .logo-small {
+    .logo-small,
+    .logo-addon-small {
       float: left;
       margin-top: 26px; } }
 
