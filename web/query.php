@@ -168,7 +168,8 @@ function limitResult($page, $data)
 
     $start = ($page - 1) * RESULTS_PER_PAGE;
     print "Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE);
-    return array_slice($data, $start, RESULTS_PER_PAGE);
+    $subset = array_slice($data, $start, RESULTS_PER_PAGE);
+    print "Subset has " . sizeof($subset) . " results<br>"; 
 }
 
 function getUrlContent($url)
