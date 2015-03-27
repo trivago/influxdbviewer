@@ -865,6 +865,7 @@ input[type='text'], input[type='password'] {
 .sectionbox {
   width: 100%;
   max-width: 640px;
+  min-height: 180px;
   margin: 0 auto 32px;
   background: #fff; }
   .sectionbox.transparent {
