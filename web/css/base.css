@@ -1007,7 +1007,7 @@ table {
 
 .single-searchbar {
   max-width: 640px;
-  margin: 0 auto 48px; }
+  margin: 0 auto 16px; }
   .single-searchbar .textinput-query {
     width: 70%; }
   .single-searchbar .btn {
