@@ -24,7 +24,7 @@
 	}
 
 	@include link-pseudos-hover {
-		background-color: $main-color-01-hover;
+		background-color: rgba($main-color-01, .5);
 		cursor: pointer;
 	}
 }
@@ -42,6 +42,10 @@
 	background: -o-linear-gradient(top,  #585a62 2%,#30353f 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #585a62 2%,#30353f 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #585a62 2%,#30353f 100%); /* W3C */
+    
+    @include link-pseudos-hover {
+        background: rgba($black, .5);
+    }
 }
 
 /*
