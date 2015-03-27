@@ -167,7 +167,7 @@ function limitResult($page, $data)
     }
 
     $start = ($page - 1) * RESULTS_PER_PAGE;
-    print "Limiting result to " . $start . " - " . $start + RESULTS_PER_PAGE;
+    print "Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE);
     return array_slice($data, $start, RESULTS_PER_PAGE);
 }
 
