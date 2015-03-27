@@ -16,7 +16,12 @@ body {
 }
 
 .logo-small {
-    margin-top: 30px;
+    margin: $gutter;
+
+    @include respond-to(ipad) {
+        float: left;
+        margin-top: 26px;
+    }
 }
 
 
