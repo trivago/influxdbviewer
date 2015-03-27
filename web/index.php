@@ -6,7 +6,9 @@ require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
 
-$loggedIn      = false;
+define("DEBUG", true); // TODO 
+
+$credentialsOk      = false;
 $error_message = null;
 
 if (!isset($_SESSION['host']) || !isset($_SESSION['user']))
@@ -17,10 +19,11 @@ if (!isset($_SESSION['host']) || !isset($_SESSION['user']))
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    $loggedIn = checkLoginValid();
+    $credentialsOk = checkLoginValid();
 
-    if ($loggedIn)
+    if ($credentialsOk)
     {
+        debug("Credentials are ok");
         storeToSession();
         addLoginToCookie();
         redirectTo("databases.php");
@@ -61,18 +64,24 @@ catch (Exception $e)
     die ('ERROR: ' . $e->getMessage());
 }
 
+function debug($text){
+    if(DEBUG){
+        print $text . "<br>";
+    }
+}
+
+
 function redirectTo($path)
 {
+    if(!DEBUG){
     header("Location: " . $path);
-    exit();
+    exit();}
 }
 
 function checkLoginValid()
 {
     $url        = "http://" . $_POST['host'] . ":8086/db?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
     $httpResult = getUrlContent($url);
-    #print "Url " . $url . " -> " ;
-    #print_r($httpResult);
     return (200 == $httpResult['status_code']);
 }
 
@@ -88,11 +97,13 @@ function addLoginToCookie()
 {
     $cookie_name = "last_logins";
     $saveMe      = $_SESSION['user'] . "@" . $_SESSION['host'];
+    debug("New cookie value: " . $saveMe);
     $oldValue    = readCookie($cookie_name);
-
+    debug("Old cookie: " . $oldValue);
     if (!cookieContainsLogin($oldValue, $saveMe))
     {
         $newValue = $oldValue . DELIMITER_LOGINCOOKIE_EXTERNAL . $saveMe;
+        debug("Setting new cookie: " . $newValue);
         setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
     }
 }
@@ -100,11 +111,13 @@ function addLoginToCookie()
 function cookieContainsLogin($oldValue, $str)
 {
     $logins = explode(DELIMITER_LOGINCOOKIE_EXTERNAL, $oldValue);
-
+    debug("Found " . sizeof($logins) . " login cookie values: ");
     foreach ($logins as $login)
     {
+        debug($login);
         if ($login == $str)
         {
+            debug("Login already stored");
             return true;
         }
     }

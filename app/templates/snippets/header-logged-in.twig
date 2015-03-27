@@ -1,11 +1,11 @@
 <header class="site-header logged-in">
 	<div class="centerwrapper">
-		<h1 class="sitelogo">{{ title }}</h1>
+		<img src="img/adminflux_logo-s.png" alt="logo" class="logo-small">
 
 		<div class="logout-wrapper">
 			<a href="logout.php" class="btn btn-secondary btn-medium">logout</a>
 			<h2>{{ user }}@{{ host }}
-			{% if database %}:<a href="databases.php">{{ database }}</a>{% endif %}
+			{% if database %}: <a href="databases.php" class="invertlink">{{ database }}</a>{% endif %}
 			</h2>
 		</div>
 	</div>

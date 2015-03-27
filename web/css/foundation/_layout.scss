@@ -11,6 +11,15 @@ body {
 	background-color: $main-color-02;
 }
 
+.logo {
+    margin-top: 20px;
+}
+
+.logo-small {
+    margin-top: 30px;
+}
+
+
 /*
  * centerwrapper centers content on fixed max-width.
  */
@@ -59,11 +68,23 @@ h2 {
  * Links
  */
 a {
+    text-decoration: none;
+
     @include link-pseudos {
         color: $main-color-01;
     }
 
     @include link-pseudos-hover {
-        color: $main-color-01-hover;
+        color: rgba($main-color-01, .5);
+    }
+}
+
+.invertlink {
+    @include link-pseudos {
+        color: $white;
+    }
+
+    @include link-pseudos-hover {
+        color: rgba($white, .5);
     }
 }

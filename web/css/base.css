@@ -579,6 +579,12 @@ body {
   min-height: 100%;
   background-color: #eff8ff; }
 
+.logo {
+  margin-top: 20px; }
+
+.logo-small {
+  margin-top: 30px; }
+
 /*
  * centerwrapper centers content on fixed max-width.
  */
@@ -616,17 +622,24 @@ h2 {
 /*
  * Links
  */
-a:link, a:visited, a:hover, a:focus, a:active {
-  color: #2c70b7; }
-a:hover, a:focus, a:active {
-  color: red; }
+a {
+  text-decoration: none; }
+  a:link, a:visited, a:hover, a:focus, a:active {
+    color: #2c70b7; }
+  a:hover, a:focus, a:active {
+    color: rgba(44, 112, 183, 0.5); }
+
+.invertlink:link, .invertlink:visited, .invertlink:hover, .invertlink:focus, .invertlink:active {
+  color: #fff; }
+.invertlink:hover, .invertlink:focus, .invertlink:active {
+  color: rgba(255, 255, 255, 0.5); }
 
 input[type='text'], input[type='password'] {
   max-width: 100%;
   min-height: 40px;
   margin-bottom: 0;
   padding: 6px 1rem;
-  border: 0;
+  border: 1px solid rgba(44, 112, 183, 0.4);
   line-height: 2.25; }
 
 ::-webkit-input-placeholder {
@@ -672,9 +685,12 @@ input[type='text'], input[type='password'] {
     color: #fff;
     outline: 0; }
   .btn:hover, .btn:focus, .btn:active {
-    background-color: red;
+    background-color: rgba(44, 112, 183, 0.5);
     cursor: pointer; }
 
+/*
+ * Button styles
+ */
 .btn-secondary {
   /* replace with mixin later on! */
   outline: 1px solid rgba(255, 255, 255, 0.5);
@@ -692,6 +708,15 @@ input[type='text'], input[type='password'] {
   /* IE10+ */
   background: linear-gradient(to bottom, #585a62 2%, #30353f 100%);
   /* W3C */ }
+  .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
+    background: rgba(0, 0, 0, 0.5); }
+
+/*
+ * Button sizes
+ */
+.btn-medium {
+  height: 36px;
+  padding: .6rem 1rem; }
 
 .site-header {
   padding: 0 32px;
@@ -718,11 +743,11 @@ input[type='text'], input[type='password'] {
       margin: 16px 0;
       text-align: left; } }
   .logout-wrapper .btn {
-    margin-bottom: 16px;
-    padding: 1rem 32px; }
+    margin-bottom: 16px; }
     @media only screen and (min-width: 768px) {
       .logout-wrapper .btn {
-        float: right; } }
+        float: right;
+        margin-top: 4px; } }
   .logout-wrapper h2 {
     font-size: 1rem;
     color: #fff; }
@@ -851,7 +876,8 @@ input[type='text'], input[type='password'] {
   .sectionbox .sectionbody {
     padding: 0 16px; }
   .sectionbox.sectionbox-info {
-    padding: 10px; }
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15); }
 
 .main-content {
   position: relative;
@@ -962,5 +988,16 @@ table {
   .single-searchbar .btn {
     float: right;
     width: 26%; }
+
+.pagination {
+  text-align: center; }
+  .pagination .legend {
+    font-weight: normal; }
+  .pagination a {
+    display: inline-block;
+    margin: 0 8px; }
+    .pagination a.activepage {
+      color: #000;
+      font-weight: bold; }
 
 /*# sourceMappingURL=base.css.map */

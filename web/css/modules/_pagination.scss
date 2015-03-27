@@ -1,0 +1,17 @@
+.pagination {
+    text-align: center;
+
+    .legend  {
+        font-weight: normal;
+    }
+    
+    a {
+        display: inline-block;
+        margin: 0 $gutter-half;
+
+        &.activepage {
+            color: $black;
+            font-weight: bold;
+        }
+    }
+}
