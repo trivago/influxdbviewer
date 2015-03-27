@@ -6,7 +6,7 @@ require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
 
-define("DEBUG", false);
+define("DEBUG", true);
 
 $credentialsOk      = false;
 $error_message = null;
