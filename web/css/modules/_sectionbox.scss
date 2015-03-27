@@ -15,9 +15,13 @@
         color: $white;
     }
 
-    .sectionbody {
-        @extend .clearfix;
-        padding: 0 $gutter;
-        min-height: 300px; /* remove later! */
-    }
+	.sectionbody {
+		@extend .clearfix;
+		padding: 0 $gutter;
+		min-height: 300px; /* remove later! */
+	}
+
+	&.sectionbox-info {
+		padding: 10px;
+	}
 }
