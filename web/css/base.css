@@ -849,6 +849,8 @@ input[type='text'], input[type='password'] {
     padding: 0 16px;
     min-height: 300px;
     /* remove later! */ }
+  .sectionbox.sectionbox-info {
+    padding: 10px; }
 
 .main-content {
   position: relative;
