@@ -17,15 +17,16 @@ Requires a webserver with php.
 * query input field needs styling
 * list of last commands needs to be wider
 * when no cookie for last commands is stored, it says undefined
+* css class for highlighting the active page is not working/implemented
+* Logo missing in title (various templates)
 
 
 # TODO
 
-* test pagination
+* presentation
 * test cache
 * remove obsolete classes and rearrange folder structure
 * add links to results if is a "list series" result
-* display date of retrieval and cache-flag
 * add new logo if we get one
 * search TODOs in code :)
 * remove all print statements from code
