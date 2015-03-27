@@ -73,8 +73,9 @@ function debug($text){
 
 function redirectTo($path)
 {
+    if(!DEBUG){
     header("Location: " . $path);
-    exit();
+    exit();}
 }
 
 function checkLoginValid()
