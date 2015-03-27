@@ -18,8 +18,10 @@
             var commandlist = last_commands.split("|")
             var found = commandlist.length;
             for (i = found - 1; i >= found - show_max; i--) {
+                if(found != undefined && found != "undefined"){
                 var tokens = commandlist[i].split("#");
                 document.write("<li><a href=\"javascript:setCommand('" + tokens[2] + "');\">" + tokens[2] + "</a></li>");
+                }
             }
         }
 
@@ -83,7 +85,7 @@
             </tbody>
         </table>
          Pages
-         {% for i in 0..number_of_pages %}
+         {% for i in 1..number_of_pages %}
             <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="active_page"{% endif %} >{{ i }}</a>
         {% endfor %}
     </section>
