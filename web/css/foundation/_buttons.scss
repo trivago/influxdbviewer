@@ -29,6 +29,9 @@
 	}
 }
 
+/*
+ * Button styles
+ */
 .btn-secondary {
 	/* replace with mixin later on! */
 	outline: 1px solid rgba(256, 256, 256, .5);
@@ -39,4 +42,12 @@
 	background: -o-linear-gradient(top,  #585a62 2%,#30353f 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  #585a62 2%,#30353f 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #585a62 2%,#30353f 100%); /* W3C */
+}
+
+/*
+ * Button sizes
+ */
+.btn-medium {
+    height: 36px;
+    padding: .6rem 1rem;
 }

@@ -572,6 +572,9 @@ html:after {
 html, body {
   height: 100%; }
 
+body {
+  overflow-x: hidden; }
+
 .page-wrapper {
   min-height: 100%;
   background-color: #eff8ff; }
@@ -613,38 +616,45 @@ h2 {
 /*
  * Links
  */
-a:link, a:visited, a:hover, a:focus, a:active {
-  color: #2c70b7; }
-a:hover, a:focus, a:active {
-  color: red; }
+a {
+  text-decoration: none; }
+  a:link, a:visited, a:hover, a:focus, a:active {
+    color: #2c70b7; }
+  a:hover, a:focus, a:active {
+    color: rgba(44, 112, 183, 0.5); }
+
+.invertlink:link, .invertlink:visited, .invertlink:hover, .invertlink:focus, .invertlink:active {
+  color: #fff; }
+.invertlink:hover, .invertlink:focus, .invertlink:active {
+  color: rgba(255, 255, 255, 0.5); }
 
 input[type='text'], input[type='password'] {
   max-width: 100%;
   min-height: 40px;
   margin-bottom: 0;
   padding: 6px 1rem;
-  border: 0;
+  border: 1px solid rgba(44, 112, 183, 0.4);
   line-height: 2.25; }
 
 ::-webkit-input-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 :-moz-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 ::-moz-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 :-ms-input-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 .btn {
   display: inline-block;
@@ -672,6 +682,9 @@ input[type='text'], input[type='password'] {
     background-color: red;
     cursor: pointer; }
 
+/*
+ * Button styles
+ */
 .btn-secondary {
   /* replace with mixin later on! */
   outline: 1px solid rgba(255, 255, 255, 0.5);
@@ -689,6 +702,13 @@ input[type='text'], input[type='password'] {
   /* IE10+ */
   background: linear-gradient(to bottom, #585a62 2%, #30353f 100%);
   /* W3C */ }
+
+/*
+ * Button sizes
+ */
+.btn-medium {
+  height: 36px;
+  padding: .6rem 1rem; }
 
 .site-header {
   padding: 0 32px;
@@ -715,11 +735,11 @@ input[type='text'], input[type='password'] {
       margin: 16px 0;
       text-align: left; } }
   .logout-wrapper .btn {
-    margin-bottom: 16px;
-    padding: 1rem 32px; }
+    margin-bottom: 16px; }
     @media only screen and (min-width: 768px) {
       .logout-wrapper .btn {
-        float: right; } }
+        float: right;
+        margin-top: 4px; } }
   .logout-wrapper h2 {
     font-size: 1rem;
     color: #fff; }
@@ -836,7 +856,7 @@ input[type='text'], input[type='password'] {
 
 .sectionbox {
   width: 100%;
-  max-width: 48rem;
+  max-width: 640px;
   margin: 0 auto 32px;
   background: #fff; }
   .sectionbox.transparent {
@@ -846,9 +866,7 @@ input[type='text'], input[type='password'] {
     background-color: #2c70b7;
     color: #fff; }
   .sectionbox .sectionbody {
-    padding: 0 16px;
-    min-height: 300px;
-    /* remove later! */ }
+    padding: 0 16px; }
   .sectionbox.sectionbox-info {
     padding: 10px; }
 

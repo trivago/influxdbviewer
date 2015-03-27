@@ -32,11 +32,11 @@
 	}
 
 	.btn {
-		margin-bottom: $gutter;
-		padding: 1rem ($gutter*2);
+		margin-bottom: $gutter;;
 
 		@include respond-to(ipad) {
 			float: right;
+            margin-top: 4px;
 		}
 	}
 
