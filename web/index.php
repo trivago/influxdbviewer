@@ -109,7 +109,7 @@ function addLoginToCookie()
 function cookieContainsLogin($oldValue, $str)
 {
     $logins = explode(DELIMITER_LOGINCOOKIE_EXTERNAL, $oldValue);
-    debug("Found " . sizeof($logins) . " login cookie values: ";
+    debug("Found " . sizeof($logins) . " login cookie values: ");
     foreach ($logins as $login)
     {
         debug($login);
