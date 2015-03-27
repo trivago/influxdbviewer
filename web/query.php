@@ -49,7 +49,7 @@ try
     $datapoints        = [];
 
 
-
+print_r($_REQUEST);
 
 if (!empty($_REQUEST['query']))
 {
