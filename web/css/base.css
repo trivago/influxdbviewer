@@ -425,12 +425,12 @@ th {
  * 2. The use of `table` rather than `block` is only necessary if using
  *    `:before` to contain the top-margins of child elements.
  */
-.clearfix:before, .centerwrapper:before, main:before, .site-header:before, .logout-wrapper:before, .loginform:before, .sectionbox .sectionheader:before, .sectionbox .sectionbody:before, aside > header:before, .clearfix:after, .centerwrapper:after, main:after, .site-header:after, .logout-wrapper:after, .loginform:after, .sectionbox .sectionheader:after, .sectionbox .sectionbody:after, aside > header:after {
+.clearfix:before, .centerwrapper:before, main:before, .site-header:before, .logout-wrapper:before, .loginform:before, .sectionbox .sectionheader:before, .sectionbox .sectionbody:before, aside > header:before, .single-searchbar:before, .clearfix:after, .centerwrapper:after, main:after, .site-header:after, .logout-wrapper:after, .loginform:after, .sectionbox .sectionheader:after, .sectionbox .sectionbody:after, aside > header:after, .single-searchbar:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */ }
-.clearfix:after, .centerwrapper:after, main:after, .site-header:after, .logout-wrapper:after, .loginform:after, .sectionbox .sectionheader:after, .sectionbox .sectionbody:after, aside > header:after {
+.clearfix:after, .centerwrapper:after, main:after, .site-header:after, .logout-wrapper:after, .loginform:after, .sectionbox .sectionheader:after, .sectionbox .sectionbody:after, aside > header:after, .single-searchbar:after {
   clear: both;
   height: 0;
   line-height: 0;
@@ -839,6 +839,8 @@ input[type='text'], input[type='password'] {
   max-width: 48rem;
   margin: 0 auto 32px;
   background: #fff; }
+  .sectionbox.transparent {
+    background: transparent; }
   .sectionbox .sectionheader {
     padding: 0 16px;
     background-color: #2c70b7;
@@ -948,5 +950,14 @@ table {
     padding: 16px; }
   table tr:nth-of-type(2n+1) .tablelink {
     background: #eff8ff; }
+
+.single-searchbar {
+  max-width: 640px;
+  margin: 48px auto; }
+  .single-searchbar .textinput-query {
+    width: 70%; }
+  .single-searchbar .btn {
+    float: right;
+    width: 26%; }
 
 /*# sourceMappingURL=base.css.map */

@@ -6,3 +6,5 @@ vendor/
 /.idea
 bower_components/
 .DS_Store
+web/css/.sass-cache/
+web/css/base.css.map

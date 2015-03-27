@@ -1,23 +1,14 @@
-.sectionbox {
-    width: 100%;
-    max-width: 48rem;
-    margin: 0 auto ($gutter)*2;
-    background: $white;
-    
-    &.transparent {
-        background: transparent;
+.single-searchbar {
+    @extend .clearfix;
+    max-width: ($gutter)*40;
+    margin: ($gutter)*3 auto;
+
+    .textinput-query {
+        width: 70%;
     }
 
-    .sectionheader {
-        @extend .clearfix;
-        padding: 0 $gutter;
-        background-color: $main-color-01;
-        color: $white;
-    }
-
-    .sectionbody {
-        @extend .clearfix;
-        padding: 0 $gutter;
-        min-height: 300px; /* remove later! */
+    .btn {
+        float: right;
+        width: 26%;
     }
 }
