@@ -10,21 +10,16 @@ Requires a webserver with php.
 
 # Bugs
 
-* duplicate login cookies
-* css class for highlighting the active page is not working/implemented
-* Logo missing in title (various templates)
-* no animations yet when sending query or logging in
 * in table results for list series, hide timestamp or disable link on timestamp column
+* database name unterstrichen im header weil link
 
 # TODO
 
+* extract configurable stuff into config file -> documentation
 * detect timestamps and print them twice, with date format. MELANIE
-* test implementation of auto-limit
 * presentation
 * activate & test cache
 * remove obsolete classes and rearrange folder structure
-* add links to results if is a "list series" result
-* add new logo if we get one
 * search TODOs in code :)
 * remove all print statements from code
 * add config option to deactivate the cache entirely (put that in doku)
