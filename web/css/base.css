@@ -892,9 +892,10 @@ input[type='text'], input[type='password'] {
 .main-content {
   position: relative;
   transform: translate3d(0, 0, 0);
-  transition: transform .3s; }
+  transition: transform .3s;
+  background-color: #eff8ff; }
   .main-content.is-open {
-    transform: translate3d(520px, 0, 0); }
+    transform: translate3d(500px, 0, 0); }
 
 aside {
   width: 500px;
@@ -902,11 +903,7 @@ aside {
   aside > header {
     background-color: #2c70b7;
     height: 3rem;
-    padding-left: 1rem;
-    background-image: url(../img/tab_open.png);
-    background-repeat: no-repeat;
-    background-position: 480px 12px;
-    cursor: pointer; }
+    padding-left: 1rem; }
     aside > header > h3 {
       color: #fff;
       margin: 1rem 0; }
@@ -917,16 +914,22 @@ aside {
       list-style-type: none;
       padding: 0;
       margin: 0; }
-  aside.disabled {
-    width: 20px;
-    text-indent: -1000px;
-    z-index: 99; }
-    aside.disabled > header {
-      background-image: url(../img/tab_close.png);
-      background-repeat: no-repeat;
-      background-position: 5px 9px; }
-    aside.disabled .aside-content {
-      display: none; }
+
+.menu-toggle {
+  position: absolute;
+  left: 0;
+  background-image: url(../img/tab_close.png);
+  background-repeat: no-repeat;
+  background-position: 3px 10px;
+  background-color: #2c70b7;
+  height: 3rem;
+  padding-left: 1rem;
+  z-index: 9999;
+  cursor: pointer; }
+  .menu-toggle.is-active {
+    background-image: url(../img/tab_open.png);
+    background-repeat: no-repeat;
+    background-position: 0px 12px; }
 
 .hint {
   display: block;
