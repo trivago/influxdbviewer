@@ -5,7 +5,7 @@ require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
 
-define("DEBUG",true); // TODO
+define("DEBUG",false); // TODO
    define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
 define('RESULTS_PER_PAGE', 30);
 define("AUTO_LIMIT", true);
@@ -50,7 +50,7 @@ try
 
 
 // 
-    
+
 if (!empty($_REQUEST['query']))
 {
     $query             = $_REQUEST['query'];
