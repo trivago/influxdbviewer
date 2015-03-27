@@ -12,20 +12,24 @@
  <script language="javascript">
         function listPreviousLogins() {
             var last_logins = urldecode(readCookie("last_logins"));
-            document.write( "all : " + last_logins + "<br><br><br>");
+           // document.write( "all : " + last_logins + "<br><br><br>");
             var show_max = 30;
             var commandlist = last_logins.split("|")
             var found = commandlist.length;
             for (i = found - 1; i >= found - show_max; i--) {
-                //  var tokens =  commandlist[i].split("#");
-
-                document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
+                // 
+                if (commandlist[i] != undefined)
+                {
+                 document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
+                }
             }
         }
 
 
         function setLogin(command) {
-            document.getElementById("query").value = command;
+             var tokens =  command.split("@");
+            document.getElementById("user").value = tokens[0];
+            document.getElementById("host").value = tokens[1];
         }
 
         function urldecode(str) {
