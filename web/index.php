@@ -8,7 +8,7 @@ session_start();
 
 define("DEBUG", true); // TODO 
 
-$loggedIn      = false;
+$credentialsOk      = false;
 $error_message = null;
 
 if (!isset($_SESSION['host']) || !isset($_SESSION['user']))
@@ -19,10 +19,11 @@ if (!isset($_SESSION['host']) || !isset($_SESSION['user']))
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    $loggedIn = checkLoginValid();
+    $credentialsOk = checkLoginValid();
 
-    if ($loggedIn)
+    if ($credentialsOk)
     {
+        debug("Credentials are ok");
         storeToSession();
         addLoginToCookie();
         redirectTo("databases.php");
