@@ -2,8 +2,9 @@
 //$app = require __DIR__.'/../app/app.php';
 // $app->run();
 session_start();
-if(!isset($_SESSION['host']) || empty($_SESSION['host']) ){ // TODO same for username
-	redirectTo("index.php");
+if (!isset($_SESSION['host']) || empty($_SESSION['host']))
+{ // TODO same for username
+    redirectTo("index.php");
 }
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
@@ -36,7 +37,7 @@ try
         array(
             'title'     => "Databases",
             'databases' => $databases,
-            
+
             'user'      => $_SESSION['user'],
             'host'      => $_SESSION['host'],
         )
@@ -61,11 +62,11 @@ function getListOfDatabases()
     if (200 == $httpResult['status_code'])
     {
 
-        $json = json_decode($httpResult['results']);
+        $json   = json_decode($httpResult['results']);
         $result = array();
         foreach ($json as $value)
         {
-        	$result[] = $value->name;
+            $result[] = $value->name;
         }
 
         return $result;
@@ -78,14 +79,14 @@ function getListOfDatabases()
 
 function getUrlContent($url)
 {
-	    $ch = curl_init();
-	    curl_setopt($ch, CURLOPT_URL, $url);
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-	    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-	    $data       = curl_exec($ch);
-	    $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	    curl_close($ch);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    $data       = curl_exec($ch);
+    $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
-	    return ['status_code' => $statuscode, 'results' => $data];
+    return ['status_code' => $statuscode, 'results' => $data];
 }

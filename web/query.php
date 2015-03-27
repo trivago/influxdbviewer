@@ -18,18 +18,18 @@ try
     // load template
     $template = $twig->loadTemplate('query.twig');
 
-    $query           = "";
-    $results         = null;
-    $is_series_list  = false;
-    $timestamp       = 0;
-    $is_cached       = false;
-    $error_message   = null;
-    $page            = 1;
-    $number_of_pages = 1;
+    $query             = "";
+    $results           = null;
+    $is_series_list    = false;
+    $timestamp         = 0;
+    $is_cached         = false;
+    $error_message     = null;
+    $page              = 1;
+    $number_of_pages   = 1;
     $number_of_results = -1;
-    $columns = [];
-    $datapoints = [];
-    
+    $columns           = [];
+    $datapoints        = [];
+
 
     require_once("../app/run_query.inc.php");
 
@@ -37,20 +37,20 @@ try
     // render template
     echo $template->render(
         array(
-                'title'           => 'Results',
-                'query'           => $query,
-                'datapoints'         => $datapoints,
-                'columns'         => $columns,
-                'is_series_list'  => $is_series_list,
-                'timestamp'       => $timestamp,
-                'is_cached'       => $is_cached,
-                'error_message'   => $error_message,
-                'page'            => $page,
-                'number_of_pages' => $number_of_pages,
-                'number_of_results' => $number_of_results,
-                'user' => $_SESSION['user'],
-                'host' => $_SESSION['host'],
-                'database' => $_SESSION['database'],
+            'title'             => 'Results',
+            'query'             => $query,
+            'datapoints'        => $datapoints,
+            'columns'           => $columns,
+            'is_series_list'    => $is_series_list,
+            'timestamp'         => $timestamp,
+            'is_cached'         => $is_cached,
+            'error_message'     => $error_message,
+            'page'              => $page,
+            'number_of_pages'   => $number_of_pages,
+            'number_of_results' => $number_of_results,
+            'user'              => $_SESSION['user'],
+            'host'              => $_SESSION['host'],
+            'database'          => $_SESSION['database'],
         )
     );
 }

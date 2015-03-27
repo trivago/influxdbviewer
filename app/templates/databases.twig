@@ -11,10 +11,13 @@
 {% block content %}
     <h1>Please select a database:</h1>
 
-
     <ul>
         {% for database in databases %}
-            <li><a href="databases.php?database={{ database|url_encode }}">{{ database }}</a></li>
+            <li>
+                <a href="databases.php?database={{ database|url_encode }}">
+                    {{ database }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}

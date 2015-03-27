@@ -1,7 +1,7 @@
 <?php
 //$app = require __DIR__.'/../app/app.php';
 // $app->run();
-define("DELIMITER_LOGINCOOKIE_EXTERNAL",  "|");
+define("DELIMITER_LOGINCOOKIE_EXTERNAL", "|");
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
@@ -9,7 +9,8 @@ session_start();
 $loggedIn      = false;
 $error_message = null;
 
-if(!isset($_SESSION['host']) || !isset($_SESSION['user'])){
+if (!isset($_SESSION['host']) || !isset($_SESSION['user']))
+{
     $_SESSION['host'] = "";
     $_SESSION['user'] = "";
 }
@@ -24,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         addLoginToCookie();
         redirectTo("databases.php");
     }
-   else
+    else
     {
-         $error_message = "Invalid login";
+        $error_message = "Invalid login";
         // does not redirect, will end up in loginform
     }
 }
@@ -83,29 +84,37 @@ function storeToSession()
 }
 
 
-function addLoginToCookie(){
+function addLoginToCookie()
+{
     $cookie_name = "last_logins";
-    $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
-    $oldValue = readCookie($cookie_name);
-    if(!cookieContainsLogin($oldValue, $saveMe)){
-        $newValue = $oldValue .DELIMITER_LOGINCOOKIE_EXTERNAL . $saveMe;
+    $saveMe      = $_SESSION['user'] . "@" . $_SESSION['host'];
+    $oldValue    = readCookie($cookie_name);
+
+    if (!cookieContainsLogin($oldValue, $saveMe))
+    {
+        $newValue = $oldValue . DELIMITER_LOGINCOOKIE_EXTERNAL . $saveMe;
         setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
     }
 }
 
-function cookieContainsLogin($oldValue, $str){
+function cookieContainsLogin($oldValue, $str)
+{
     $logins = explode(DELIMITER_LOGINCOOKIE_EXTERNAL, $oldValue);
-    foreach($logins as $login){
-        if ($login == $str){
+
+    foreach ($logins as $login)
+    {
+        if ($login == $str)
+        {
             return true;
         }
     }
+
     return false;
 }
 
-function readCookie($cookie_name){
+function readCookie($cookie_name)
+{
     return (isset($_COOKIE[$cookie_name])) ? $_COOKIE[$cookie_name] : "";
-
 }
 
 function getUrlContent($url)

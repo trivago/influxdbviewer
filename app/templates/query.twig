@@ -3,7 +3,7 @@
 {% block title %}
     {{ title }}
 {% endblock %}
-     
+
 {% block header %}
     {% include "snippets/header-logged-in.twig" %}
 {% endblock %}
@@ -11,38 +11,40 @@
 {% block content %}
 
     <script language="javascript">
-        function listPreviousQueries(){
-    var last_commands = urldecode(readCookie("last_commands"));
-    //document.write( "all : " + last_commands + "<br><br><br>");
-    var show_max = 2; // TODO 30
-    var commandlist = last_commands.split("|")
-    var found = commandlist.length ;
-    for (i = found -1; i >= found - show_max; i--){
-       var tokens =  commandlist[i].split("#");
-       document.write("<li><a href=\"javascript:setCommand('" + tokens[2] + "');\">" + tokens[2] + "</a></li>");
-    }}
+        function listPreviousQueries() {
+            var last_commands = urldecode(readCookie("last_commands"));
+            //document.write( "all : " + last_commands + "<br><br><br>");
+            var show_max = 2; // TODO 30
+            var commandlist = last_commands.split("|")
+            var found = commandlist.length;
+            for (i = found - 1; i >= found - show_max; i--) {
+                var tokens = commandlist[i].split("#");
+                document.write("<li><a href=\"javascript:setCommand('" + tokens[2] + "');\">" + tokens[2] + "</a></li>");
+            }
+        }
 
-    function setCommand(command){
-    document.getElementById("query").value = command;
-    }
+        function setCommand(command) {
+            document.getElementById("query").value = command;
+        }
 
-    function urldecode(str) {
-   return decodeURIComponent((str+'').replace(/\+/g, '%20'));
-}
+        function urldecode(str) {
+            return decodeURIComponent((str + '').replace(/\+/g, '%20'));
+        }
 
-    function readCookie(name) {
-    name += '=';
-    for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
-        if (!ca[i].indexOf(name))
-            return ca[i].replace(name, '');
-    }
+        function readCookie(name) {
+            name += '=';
+            for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
+                if (!ca[i].indexOf(name))
+                    return ca[i].replace(name, '');
+        }
     </script>
 
     <form action="" method="get">
         <div class="centerwrapper">
             {#{{ error }}#}
             <label for="query" class="label-query">
-                <input type="text" name="query" value="{{ query }}" id="query" class="textinput-query" placeholder="select * from xxx">
+                <input type="text" name="query" value="{{ query }}" id="query" class="textinput-query"
+                       placeholder="select * from xxx">
             </label>
             <input type="submit" class="btn btn-secondary">
         </div>
@@ -56,25 +58,31 @@
             <header>
                 <h3>last commands</h3>
             </header>
-            <section class="aside-content"><ul>
-                <script language="javascript">listPreviousQueries();
+            <section class="aside-content">
+                <ul>
+                    <script language="javascript">listPreviousQueries();
 
-                </script></ul>
+                    </script>
+                </ul>
             </section>
             <!-- -->
         </aside>
 
         <table>
-             {% for c in columns %}
-                <th>{{ c }}</th>
-            {% endfor %}
-             {% for row in datapoints %}
-             <tr>
-                {% for cell in row %}
-                <td>{{ cell }}</td>
-                 {% endfor %}
-                 </tr>
-            {% endfor %}
+            <thead>
+                {% for c in columns %}
+                    <th>{{ c }}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+                {% for row in datapoints %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </section>
 {% endblock %}

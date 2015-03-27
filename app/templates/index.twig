@@ -17,6 +17,7 @@
                     <strong>{{ error }}</strong>
                 </div>
             {% endif %}
+
             <label for="textinput-username" class="label-username">
                 <input type="text" name="user" value="{{ user }}" id="user" class="textinput-username"
                        placeholder="Username">
@@ -42,39 +43,43 @@
         <div class="sectionbody">
 
             <!-- replace this static list with the real data! -->
-            <ul class="no-bullet zebralist"> <script language="javascript">listPreviousLogins();</script></ul>
+            <ul class="no-bullet zebralist">
+                <script language="javascript">listPreviousLogins();</script>
+            </ul>
         </div>
     </section>
+
     <script language="javascript">
-      function listPreviousLogins(){
-    var last_logins = urldecode(readCookie("last_logins"));
-    //document.write( "all : " + last_logins + "<br><br><br>");
-    var show_max = 30;
-    var commandlist = last_logins.split("|")
-    var found = commandlist.length ;
-    for (i = found -1; i >= found - show_max; i--){
-     //  var tokens =  commandlist[i].split("#");
-      
-       document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
-    }}
+        function listPreviousLogins() {
+            var last_logins = urldecode(readCookie("last_logins"));
+            //document.write( "all : " + last_logins + "<br><br><br>");
+            var show_max = 30;
+            var commandlist = last_logins.split("|")
+            var found = commandlist.length;
+            for (i = found - 1; i >= found - show_max; i--) {
+                //  var tokens =  commandlist[i].split("#");
+
+                document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
+            }
+        }
 
 
-    function setLogin(command){
-    document.getElementById("query").value = command;
-    }
+        function setLogin(command) {
+            document.getElementById("query").value = command;
+        }
 
-    function urldecode(str) {
-   return decodeURIComponent((str+'').replace(/\+/g, '%20'));
-}
+        function urldecode(str) {
+            return decodeURIComponent((str + '').replace(/\+/g, '%20'));
+        }
 
-    function readCookie(name) {
-    name += '=';
-    for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
-        if (!ca[i].indexOf(name))
-            return ca[i].replace(name, '');
-    }
+        function readCookie(name) {
+            name += '=';
+            for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
+                if (!ca[i].indexOf(name))
+                    return ca[i].replace(name, '');
+        }
     </script>
-   
+
 {% endblock content %}
 
 
