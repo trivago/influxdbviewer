@@ -8,15 +8,18 @@ session_start();
 define("DEBUG",true); // TODO
    define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
 define('RESULTS_PER_PAGE', 30);
+define("AUTO_LIMIT", true);
+define("AUTO_LIMIT_VALUE", 1000);
+
 
 // ----------------------- End of configuration ----------------------------------
-
-
 
 if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['user']) || empty($_SESSION['user']) || !isset($_SESSION['pw']) || empty($_SESSION['pw']) )
 { 
     redirectTo("index.php");
 }
+
+
 
 
 define('DELIMITER_COMMANDCOOKIE_INTERNAL', "#");
@@ -51,6 +54,7 @@ try
 if (!empty($_REQUEST['query']))
 {
     $query             = $_REQUEST['query'];
+    $query = autoLimit($query);
     $feedback          = getDatabaseResults($query);
     $columns           = $feedback['results']['columns'];
     $datapoints        = $feedback['results']['datapoints'];
@@ -96,6 +100,28 @@ function redirectTo($path)
     die();
 }
 
+function autoLimit($query){
+    
+    if (AUTO_LIMIT && isSelectQuery($query) && !isLimited($query)){
+        $query .= " LIMIT " . AUTO_LIMIT_VALUE;
+    }
+    return $query; 
+}
+
+function isSelectQuery($query){
+    return preg_match('/select .*/i', $query)>0;
+}
+
+function isLimited($query){
+    return preg_match('/select .* limit \d+/i', $query)>0;
+}
+
+function isSeriesList($query)
+{
+    // return strrpos(strtolower($query), "list series") !== false;
+    return preg_match('/list series.*/i', $query)>0;
+}
+
 
 function addCommandToCookie($command, $ts, $number_of_pages)
 {
@@ -137,12 +163,7 @@ function cookieContainsCommand($oldValue, $str)
     return false;
 }
 
-function isSeriesList($query)
-{
-    $i = strrpos(strtolower($query), "list series");
 
-    return $i !== false;
-}
 
 
 function saveResultsToCache($query, $results, $timestamp, $number_of_pages)
@@ -232,6 +253,7 @@ function getDatabaseResults($query)
             $results           = ['columns' => $columns, 'datapoints' => $datapoints];
             $number_of_results = count($datapoints);
             $number_of_pages   = ceil($number_of_results / RESULTS_PER_PAGE);
+            debug("Got ". $number_of_results . " results.");
             $feedback          = [
                 'timestamp'         => $now,
                 'results'           => $results,
