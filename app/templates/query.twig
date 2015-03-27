@@ -18,7 +18,7 @@
             var commandlist = last_commands.split("|")
             var found = commandlist.length;
             for (i = found - 1; i >= found - show_max; i--) {
-                if(found != undefined && found != "undefined"){
+                if(commandlist[i] != undefined && commandlist[i] != "undefined"){
                 var tokens = commandlist[i].split("#");
                 document.write("<li><a href=\"javascript:setCommand('" + tokens[2] + "');\">" + tokens[2] + "</a></li>");
                 }
