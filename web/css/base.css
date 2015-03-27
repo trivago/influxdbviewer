@@ -770,6 +770,8 @@ input[type='text'], input[type='password'] {
       .logout-wrapper h2 {
         float: right;
         margin: 16px 16px 0 0; } }
+  .logout-wrapper .invertlink {
+    text-decoration: underline; }
 
 .site-footer {
     /*
