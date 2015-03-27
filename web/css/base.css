@@ -610,6 +610,14 @@ h2 {
   padding: 0;
   list-style: none; }
 
+/*
+ * Links
+ */
+a:link, a:visited, a:hover, a:focus, a:active {
+  color: #2c70b7; }
+a:hover, a:focus, a:active {
+  color: red; }
+
 input[type='text'], input[type='password'] {
   max-width: 100%;
   min-height: 40px;
