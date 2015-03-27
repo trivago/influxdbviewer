@@ -9,15 +9,21 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Please select a database:</h1>
+    <div class="sectionbox">
+        <div class="sectionheader">
+            <h2>Please select a database:</h2>
+        </div>
 
-    <ul>
-        {% for database in databases %}
-            <li>
-                <a href="databases.php?database={{ database|url_encode }}">
-                    {{ database }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+        <div class="sectionbody">
+            <ul class="no-bullet zebralist">
+                {% for database in databases %}
+                    <li class="listitem">
+                        <a href="databases.php?database={{ database|url_encode }}" class="celllink">
+                            {{ database }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}

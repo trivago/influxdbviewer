@@ -1,5 +1,6 @@
 .site-header {
 	@extend .clearfix;
+    margin-bottom: ($gutter)*3;
 	padding: 0 ($gutter)*2;
 	background-color: $main-color-01;
 }

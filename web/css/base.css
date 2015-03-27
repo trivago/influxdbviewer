@@ -719,6 +719,7 @@ input[type='text'], input[type='password'] {
   padding: .6rem 1rem; }
 
 .site-header {
+  margin-bottom: 48px;
   padding: 0 32px;
   background-color: #2c70b7; }
 
@@ -786,7 +787,7 @@ input[type='text'], input[type='password'] {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   display: block;
-  margin-bottom: 60px;
+  margin: -48px 0 60px;
   padding: 40px 32px;
   text-align: center;
   background: #2c70b7; }
@@ -865,7 +866,6 @@ input[type='text'], input[type='password'] {
 .sectionbox {
   width: 100%;
   max-width: 640px;
-  min-height: 180px;
   margin: 0 auto 32px;
   background: #fff; }
   .sectionbox.transparent {
@@ -983,7 +983,7 @@ table {
 
 .single-searchbar {
   max-width: 640px;
-  margin: 48px auto; }
+  margin: 0 auto 48px; }
   .single-searchbar .textinput-query {
     width: 70%; }
   .single-searchbar .btn {
