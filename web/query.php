@@ -259,7 +259,7 @@ function getDatabaseResults($query)
 
         $limitedResult = limitResult($page, $feedback['results']['datapoints']);
 
-        if ($limitedResult != null)
+        if (!empty($limitedResult))
         {
             print "Setting limited result<br>"; 
             $feedback['page']    = $page;
