@@ -106,13 +106,15 @@
             </tbody>
         </table>
 
-         Pages
+        <nav class="sectionbox transparent pagination">
+         <strong class="legend">Pages:</strong>
          {% for i in 1..number_of_pages %}
-            <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="active_page"{% endif %} >{{ i }}</a>
+            <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="activepage"{% endif %} >{{ i }}</a>
         {% endfor %}
         {% else %}
         No results found.
         {% endif %}
+        </nav>
 
     </section>
 {% endblock %}
