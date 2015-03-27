@@ -170,6 +170,7 @@ function limitResult($page, $data)
     print "Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE);
     $subset = array_slice($data, $start, RESULTS_PER_PAGE);
     print "Subset has " . sizeof($subset) . " results<br>"; 
+    print_r($subset);
 }
 
 function getUrlContent($url)
