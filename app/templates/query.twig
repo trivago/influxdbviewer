@@ -59,38 +59,14 @@
             <header>
                 <h3>last commands</h3>
             </header>
-<<<<<<< HEAD
             <section class="aside-content"><ul>
                 <script language="javascript">listPreviousQueries();</script></ul>
-=======
-            <section class="aside-content">
-                <ul>
-                    <script language="javascript">listPreviousQueries();
-
-                    </script>
-                </ul>
->>>>>>> 11297bae0ef15b50fe5211555aea6eac3a46492b
             </section>
             <!-- -->
         </aside>
 
         <table>
-<<<<<<< HEAD
-             {% for c in columns %}
-                <th>{{ c }}</th>
-            {% endfor %}
-             {% for row in datapoints %}
-             <tr>
-                {% for cell in row %}
-                <td>{{ cell }}</td>
-                 {% endfor %}
-                 </tr>
-            {% endfor %}
-        </table> Pages
-         {% for i in 0..number_of_pages %}
-            <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="active_page"{% endif %} >{{ i }}</a>
-        {% endfor %}
-=======
+
             <thead>
                 {% for c in columns %}
                     <th>{{ c }}</th>
@@ -106,6 +82,9 @@
                 {% endfor %}
             </tbody>
         </table>
->>>>>>> 11297bae0ef15b50fe5211555aea6eac3a46492b
+         Pages
+         {% for i in 0..number_of_pages %}
+            <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="active_page"{% endif %} >{{ i }}</a>
+        {% endfor %}
     </section>
 {% endblock %}
