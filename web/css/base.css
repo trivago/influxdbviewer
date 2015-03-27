@@ -629,22 +629,22 @@ input[type='text'], input[type='password'] {
 ::-webkit-input-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 :-moz-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 ::-moz-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 :-ms-input-placeholder {
   color: #666;
   font-weight: 100;
-  line-height: 1.25; }
+  line-height: 2.25; }
 
 .btn {
   display: inline-block;
@@ -836,7 +836,7 @@ input[type='text'], input[type='password'] {
 
 .sectionbox {
   width: 100%;
-  max-width: 48rem;
+  max-width: 640px;
   margin: 0 auto 32px;
   background: #fff; }
   .sectionbox.transparent {

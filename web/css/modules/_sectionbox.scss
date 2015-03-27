@@ -1,6 +1,6 @@
 .sectionbox {
     width: 100%;
-    max-width: 48rem;
+    max-width: ($gutter)*40;
     margin: 0 auto ($gutter)*2;
     background: $white;
     
