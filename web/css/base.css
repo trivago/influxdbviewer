@@ -846,9 +846,7 @@ input[type='text'], input[type='password'] {
     background-color: #2c70b7;
     color: #fff; }
   .sectionbox .sectionbody {
-    padding: 0 16px;
-    min-height: 300px;
-    /* remove later! */ }
+    padding: 0 16px; }
   .sectionbox.sectionbox-info {
     padding: 10px; }
 
