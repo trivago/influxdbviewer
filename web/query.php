@@ -5,7 +5,7 @@ require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
 
-
+define("DEBUG",true); // TODO
    define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
 define('RESULTS_PER_PAGE', 30);
 
@@ -101,13 +101,13 @@ function addCommandToCookie($command, $ts, $number_of_pages)
 {
     $cookie_name = "last_commands";
     $saveMe      = $ts . DELIMITER_COMMANDCOOKIE_INTERNAL . $number_of_pages . DELIMITER_COMMANDCOOKIE_INTERNAL . $command;
-    #print "New cookie section: " . $saveMe . "<br>";
+    #debug("New cookie section: " . $saveMe . "<br>";
     $oldValue = readCookie($cookie_name);
     if (!cookieContainsCommand($oldValue, $command))
     {
         $newValue = $oldValue . DELIMITER_COMMANDCOOKIE_EXTERNAL . $saveMe;
-        # print "Old cookie section: " . $oldValue . "<br>";
-        #print "Full cookie section: " . $newValue . "<br>";
+        # debug("Old cookie section: " . $oldValue . "<br>";
+        #debug("Full cookie section: " . $newValue . "<br>";
 
         setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
     }
@@ -124,11 +124,11 @@ function cookieContainsCommand($oldValue, $str)
 
     foreach ($commands as $command)
     {
-        #    print "cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL . "<br>";
+        #    debug("cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL . "<br>";
         $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
         #print_r($tokens);
 
-        #  print "cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
+        #  debug("cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
         if ($tokens[2] == $str)
         { // TODO check if len() == 3
             return true;
@@ -174,9 +174,9 @@ function limitResult($page, $data)
     }
 
     $start = ($page - 1) * RESULTS_PER_PAGE;
-    print "Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE);
+    debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
     $subset = array_slice($data, $start, RESULTS_PER_PAGE);
-    print "Subset has " . sizeof($subset) . " results<br>"; 
+    debug("Subset has " . sizeof($subset) . " results"); 
     print_r($subset);
 }
 
@@ -198,7 +198,7 @@ function getUrlContent($url)
 
 function getDatabaseResults($query)
 {
-    // $debug = true; // TODO
+    
     $feedback                  = [];
     $feedback['error_message'] = null;
 
@@ -209,7 +209,7 @@ function getDatabaseResults($query)
     {
         if ($debug)
         {
-            print "Got data from cache. ";
+            debug("Got data from cache. ");
         }
         $feedback                  = $cache_results;
         $feedback['is_cached']     = true;
@@ -217,12 +217,12 @@ function getDatabaseResults($query)
     }
     else
     {
-        // if ($debug) print "Getting data from db. ";
+        debug("Getting data from db. ");
         $now = time();
         $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
 
-        //if($debug) print $url;
+       
         $httpResult = getUrlContent($url);
 
         if (200 == $httpResult['status_code'])
@@ -255,17 +255,25 @@ function getDatabaseResults($query)
     if ($feedback['error_message'] == null)
     {
         $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-        print "Page is " . $_REQUEST['page'] . " -> " .$page . "<br>";
+        debug("Page is " . $_REQUEST['page'] . " -> " .$page );
 
         $limitedResult = limitResult($page, $feedback['results']['datapoints']);
 
         if (!empty($limitedResult))
         {
-            print "Setting limited result<br>"; 
+            debug("Setting limited result"); 
             $feedback['page']    = $page;
             $feedback['results']['datapoints'] = $limitedResult;
+        } else {
+            debug("Subset creation failed, result empty");
         }
     }
 
     return $feedback;
+}
+
+function debug($text){
+    if(DEBUG){
+        print $text . "<br>";
+    }
 }
