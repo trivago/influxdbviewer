@@ -3,6 +3,7 @@
     max-width: ($gutter)*40;
     margin: 0 auto ($gutter)*2;
     background: $white;
+
     
     &.transparent {
         background: transparent;
@@ -25,3 +26,4 @@
 		border: 1px solid rgba(0,0,0,.15);
 	}
 }
+
