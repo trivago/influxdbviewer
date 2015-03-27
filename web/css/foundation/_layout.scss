@@ -15,7 +15,12 @@ body {
     margin-top: 20px;
 }
 
-.logo-small {
+.logo-addon {
+    margin-right: 20px;
+}
+
+.logo-small,
+.logo-addon-small{
     margin: $gutter;
 
     @include respond-to(ipad) {

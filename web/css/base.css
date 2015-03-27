@@ -582,10 +582,15 @@ body {
 .logo {
   margin-top: 20px; }
 
-.logo-small {
+.logo-addon {
+  margin-right: 20px; }
+
+.logo-small,
+.logo-addon-small {
   margin: 16px; }
   @media only screen and (min-width: 768px) {
-    .logo-small {
+    .logo-small,
+    .logo-addon-small {
       float: left;
       margin-top: 26px; } }
 
@@ -765,6 +770,8 @@ input[type='text'], input[type='password'] {
       .logout-wrapper h2 {
         float: right;
         margin: 16px 16px 0 0; } }
+  .logout-wrapper .invertlink {
+    text-decoration: underline; }
 
 .site-footer {
     /*
@@ -1000,7 +1007,7 @@ table {
 
 .single-searchbar {
   max-width: 640px;
-  margin: 0 auto 48px; }
+  margin: 0 auto 16px; }
   .single-searchbar .textinput-query {
     width: 70%; }
   .single-searchbar .btn {

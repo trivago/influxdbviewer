@@ -44,18 +44,7 @@
         }
     </script>
 
-    <form action="" method="get">
-        <section class="sectionbox transparent">
-            <div class="single-searchbar">
-                {#{{ error }}#}
-                <label for="query" class="label-query">
-                    <input type="text" name="query" value="{{ query }}" id="query" class="textinput-query"
-                           placeholder="select * from xxx" >
-                </label>
-                <input type="submit" class="btn btn-primary">
-            </div>
-        </section>
-    </form>
+
 
 {% endblock %}
 
@@ -83,6 +72,19 @@
             <!-- -->
         </div>
 
+        <form action="" method="get">
+            <section class="sectionbox transparent">
+                <div class="single-searchbar">
+                    {#{{ error }}#}
+                    <label for="query" class="label-query">
+                        <input type="text" name="query" value="{{ query }}" id="query" class="textinput-query"
+                               placeholder="select * from xxx" >
+                    </label>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </section>
+        </form>
+
         <div class="sectionbox sectionbox-info">
             {% if number_of_results > 0 %}
             Found {{ number_of_results }} results. Date of retrieval: {{ timestamp|date('Y-m-d H:i:s')  }}.
@@ -103,7 +105,8 @@
             {% for row in datapoints %}
                 <tr>
                     {% for cell in row %}
-                        <td>{% if is_series_list %}<a href='query.php?query=select%20*%20from%20"{{ cell }}"' class="tablelink">{% endif %}{{ cell }}{% if is_series_list %}</a>{% endif %}</td>
+                        <td><span class="tablelink">{% if is_series_list %}<a href='query.php?query=select%20*%20from%20"{{ cell }}"' class="tablelink">{% endif %}{{ cell }}{% if is_series_list %}</a>{% endif %}</span></td>
+
                     {% endfor %}
                 </tr>
             {% endfor %}
