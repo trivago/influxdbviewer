@@ -572,6 +572,9 @@ html:after {
 html, body {
   height: 100%; }
 
+body {
+  overflow-x: hidden; }
+
 .page-wrapper {
   min-height: 100%;
   background-color: #eff8ff; }
