@@ -61,7 +61,7 @@ if (!empty($_REQUEST['query']))
     $number_of_pages   = $feedback['number_of_pages'];
     $number_of_results = $feedback['number_of_results'];
     $error_message     = $feedback['error_message'];
-    print_r($results);
+    
 }
 
     // set template variables
@@ -124,13 +124,12 @@ function cookieContainsCommand($oldValue, $str)
 
     foreach ($commands as $command)
     {
-        #    debug("cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL . "<br>";
+        #    debug("cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL );
         $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
-        #print_r($tokens);
 
-        #  debug("cookieContainsCommand " . $tokens[2] . " vs " . $str . "<br>";
-        if ($tokens[2] == $str)
-        { // TODO check if len() == 3
+//         debug("cookieContainsCommand " . $tokens[2] . " vs " . $str );
+        if (sizeof($tokens) == 3 &&$tokens[2] == $str)
+        {
             return true;
         }
     }
@@ -177,7 +176,7 @@ function limitResult($page, $data)
     debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
     $subset = array_slice($data, $start, RESULTS_PER_PAGE);
     debug("Subset has " . sizeof($subset) . " results"); 
-    print_r($subset);
+    return $subset;
 }
 
 function getUrlContent($url)
@@ -207,10 +206,9 @@ function getDatabaseResults($query)
 
     if (!$ignore_cache && $cache_results = searchCache($query) != null)
     {
-        if ($debug)
-        {
-            debug("Got data from cache. ");
-        }
+        
+        debug("Got data from cache. ");
+        
         $feedback                  = $cache_results;
         $feedback['is_cached']     = true;
         $feedback['error_message'] = null;
@@ -243,7 +241,7 @@ function getDatabaseResults($query)
                 'number_of_results' => $number_of_results,
                 'error_message'     => null
             ];
-            //  print_r($feedback);
+          
             saveResultsToCache($query, $results, $now, $number_of_pages);
             addCommandToCookie($query, $now, $number_of_pages);
         }
