@@ -1,52 +1,58 @@
 .site-header {
-	@extend .clearfix;
-	padding: 0 ($gutter)*2;
-	background-color: $main-color-01;
+    @extend .clearfix;
+    margin-bottom: ($gutter)*3;
+    padding: 0 ($gutter)*2;
+    background-color: $main-color-01;
+    text-align: center; /* center logo */
+
+    @include respond-to(ipad) {
+        text-align: left;
+    }
 }
 
 .sitelogo {
-	margin: $gutter 0;
-	text-align: center;
-	font-size: 3.75rem;
-	line-height: 1;
-	color: $white;
-	font-weight: normal;
+    margin: $gutter 0;
+    text-align: center;
+    font-size: 3.75rem;
+    line-height: 1;
+    color: $white;
+    font-weight: normal;
 
-	.logged-in & {
-		@include respond-to(ipad) {
-			float: left;
-			max-width: 30%;
-		}
-	}
+    .logged-in & {
+        @include respond-to(ipad) {
+            float: left;
+            max-width: 30%;
+        }
+    }
 }
 
 .logout-wrapper {
-	@extend .clearfix;
-	text-align: center;
+    @extend .clearfix;
+    text-align: center;
 
-	@include respond-to(ipad) {
-		float: right;
-		width: 60%;
-		margin: $gutter 0;
-		text-align: left;
-	}
+    @include respond-to(ipad) {
+        float: right;
+        width: 60%;
+        margin: $gutter 0;
+        text-align: left;
+    }
 
-	.btn {
-		margin-bottom: $gutter;;
+    .btn {
+        margin-bottom: $gutter;;
 
-		@include respond-to(ipad) {
-			float: right;
+        @include respond-to(ipad) {
+            float: right;
             margin-top: 4px;
-		}
-	}
+        }
+    }
 
-	h2 {
-		font-size: 1rem;
-		color: $white;
+    h2 {
+        font-size: 1rem;
+        color: $white;
 
-		@include respond-to(ipad) {
-			float: right;
-			margin: 16px $gutter 0 0;
-		}
-	}
+        @include respond-to(ipad) {
+            float: right;
+            margin: 16px $gutter 0 0;
+        }
+    }
 }

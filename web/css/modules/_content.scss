@@ -2,8 +2,10 @@
     position: relative;
     transform: translate3d(0,0,0);
     transition: transform .3s;
+    background-color: #eff8ff;
+    min-height: 600px;
 
     &.is-open {
-        transform: translate3d(520px,0,0);
+        transform: translate3d(500px,0,0);
     }
 }

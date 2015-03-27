@@ -1,7 +1,7 @@
 .single-searchbar {
     @extend .clearfix;
     max-width: ($gutter)*40;
-    margin: ($gutter)*3 auto;
+    margin: 0 auto ($gutter)*3;
 
     .textinput-query {
         width: 70%;
