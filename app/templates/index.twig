@@ -9,6 +9,36 @@
 {% endblock %}
 
 {% block content %}
+ <script language="javascript">
+        function listPreviousLogins() {
+            var last_logins = urldecode(readCookie("last_logins"));
+            document.write( "all : " + last_logins + "<br><br><br>");
+            var show_max = 30;
+            var commandlist = last_logins.split("|")
+            var found = commandlist.length;
+            for (i = found - 1; i >= found - show_max; i--) {
+                //  var tokens =  commandlist[i].split("#");
+
+                document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
+            }
+        }
+
+
+        function setLogin(command) {
+            document.getElementById("query").value = command;
+        }
+
+        function urldecode(str) {
+            return decodeURIComponent((str + '').replace(/\+/g, '%20'));
+        }
+
+        function readCookie(name) {
+            name += '=';
+            for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
+                if (!ca[i].indexOf(name))
+                    return ca[i].replace(name, '');
+        }
+    </script>
 
     <form class="loginform" action="" method="post" id="loginform">
         <div class="centerwrapper">
@@ -49,37 +79,7 @@
         </div>
     </section>
 
-    <script language="javascript">
-        function listPreviousLogins() {
-            var last_logins = urldecode(readCookie("last_logins"));
-            document.write( "all : " + last_logins + "<br><br><br>");
-            var show_max = 30;
-            var commandlist = last_logins.split("|")
-            var found = commandlist.length;
-            for (i = found - 1; i >= found - show_max; i--) {
-                //  var tokens =  commandlist[i].split("#");
-
-                document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
-            }
-        }
-
-
-        function setLogin(command) {
-            document.getElementById("query").value = command;
-        }
-
-        function urldecode(str) {
-            return decodeURIComponent((str + '').replace(/\+/g, '%20'));
-        }
-
-        function readCookie(name) {
-            name += '=';
-            for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
-                if (!ca[i].indexOf(name))
-                    return ca[i].replace(name, '');
-        }
-    </script>
-
+   
 {% endblock content %}
 
 
