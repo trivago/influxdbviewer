@@ -10,16 +10,16 @@ Requires a webserver with php.
 
 # Bugs
 
-* database list needs css wrapper KAY
+* duplicate login cookies
 * css class for highlighting the active page is not working/implemented
 * Logo missing in title (various templates)
 * no animations yet when sending query or logging in
-
+* in table results for list series, hide timestamp or disable link on timestamp column
 
 # TODO
 
 * detect timestamps and print them twice, with date format. MELANIE
-* implement auto-limit
+* test implementation of auto-limit
 * presentation
 * activate & test cache
 * remove obsolete classes and rearrange folder structure
@@ -30,7 +30,6 @@ Requires a webserver with php.
 * add config option to deactivate the cache entirely (put that in doku)
 * test what happens if you send an invalid query / test error message
 * add support for version 0.9
-* order database names alphabetically MELANIE
 * switch to HTTPS
 * auto logout does not work when session variables are empty (query.php, maybe others)
 * remove warning about time formatting (query template): [12:24:57] <Kay Drechsler> Found 64 results. Date of retrieval: 
