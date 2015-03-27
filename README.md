@@ -11,7 +11,8 @@ Requires a webserver with php.
 # Bugs
 
 * in table results for list series, hide timestamp or disable link on timestamp column
-* database name unterstrichen im header weil link
+* command history mit " drin funzt nicht, muss escaped werden im js
+* ausgeklappt-state muss persistiert werden in einem cookie
 
 # TODO
 
