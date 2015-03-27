@@ -27,3 +27,5 @@ Requires a webserver with php.
 * add links to results if is a "list series" result
 * display date of retrieval and cache-flag
 * add new logo if we get one
+* search TODOs in code :)
+* remove all print statements from code
