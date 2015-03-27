@@ -1,17 +1,24 @@
 <?php
-//$app = require __DIR__.'/../app/app.php';
-// $app->run();
+
 
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 session_start();
+
+
+   define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
+define('RESULTS_PER_PAGE', 30);
+
+// ----------------------- End of configuration ----------------------------------
+
+
+
 if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['user']) || empty($_SESSION['user']) || !isset($_SESSION['pw']) || empty($_SESSION['pw']) )
 { 
     redirectTo("index.php");
 }
 
-    define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
-define('RESULTS_PER_PAGE', 50);
+
 define('DELIMITER_COMMANDCOOKIE_INTERNAL', "#");
 define('DELIMITER_COMMANDCOOKIE_EXTERNAL', "|");
 
