@@ -19,6 +19,7 @@ Requires a webserver with php.
 # TODO
 
 * detect timestamps and print them twice, with date format.
+* implement auto-limit
 * presentation
 * activate & test cache
 * remove obsolete classes and rearrange folder structure
@@ -27,3 +28,5 @@ Requires a webserver with php.
 * search TODOs in code :)
 * remove all print statements from code
 * add config option to deactivate the cache entirely (put that in doku)
+* test what happens if you send an invalid query / test error message
+* add support for version 0.9
