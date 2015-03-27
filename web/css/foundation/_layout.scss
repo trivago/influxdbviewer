@@ -50,3 +50,16 @@ h2 {
     padding: 0;
     list-style: none;
 }
+
+/*
+ * Links
+ */
+a {
+    @include link-pseudos {
+        color: $main-color-01;
+    }
+
+    @include link-pseudos-hover {
+        color: $main-color-01-hover;
+    }
+}
