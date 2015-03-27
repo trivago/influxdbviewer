@@ -249,10 +249,12 @@ function getDatabaseResults($query)
     {
         $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
         print "Page is " . $_REQUEST['page'] . " -> " .$page . "<br>";
+
         $limitedResult = limitResult($page, $feedback['results']['datapoints']);
 
         if ($limitedResult != null)
         {
+            print "Setting limited result<br>"; 
             $feedback['page']    = $page;
             $feedback['results']['datapoints'] = $limitedResult;
         }
