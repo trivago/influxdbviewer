@@ -884,9 +884,6 @@ input[type='text'], input[type='password'] {
   max-width: 640px;
   margin: 0 auto 32px;
   background: #fff; }
-  .is-open .sectionbox {
-    margin: 0 0 32px;
-    margin-left: 30px; }
   .sectionbox.transparent {
     background: transparent; }
   .sectionbox .sectionheader {

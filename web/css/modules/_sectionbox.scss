@@ -4,10 +4,6 @@
     margin: 0 auto ($gutter)*2;
     background: $white;
 
-	.is-open & {
-		margin: 0 0 ($gutter)*2;
-		margin-left: 30px;
-	}
     
     &.transparent {
         background: transparent;
