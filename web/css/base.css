@@ -626,7 +626,7 @@ input[type='text'], input[type='password'] {
   min-height: 40px;
   margin-bottom: 0;
   padding: 6px 1rem;
-  border: 0;
+  border: 1px solid rgba(44, 112, 183, 0.4);
   line-height: 2.25; }
 
 ::-webkit-input-placeholder {
