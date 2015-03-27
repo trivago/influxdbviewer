@@ -59,11 +59,23 @@ h2 {
  * Links
  */
 a {
+    text-decoration: none;
+
     @include link-pseudos {
         color: $main-color-01;
     }
 
     @include link-pseudos-hover {
-        color: $main-color-01-hover;
+        color: rgba($main-color-01, .5);
+    }
+}
+
+.invertlink {
+    @include link-pseudos {
+        color: $white;
+    }
+
+    @include link-pseudos-hover {
+        color: rgba($white, .5);
     }
 }
