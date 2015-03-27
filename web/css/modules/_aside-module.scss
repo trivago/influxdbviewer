@@ -6,9 +6,10 @@ aside {
         height: 3rem;
         padding-left: 1rem;
         @extend .clearfix;
-        background-image: url(../img/bullets-closed.png);
+        background-image: url(../img/tab_open.png);
         background-repeat: no-repeat;
-        background-position: 175px 8px;
+        background-position: 175px 12px;
+        cursor: pointer;
 
         > h3 {
             color: $white;
@@ -32,9 +33,9 @@ aside {
         text-indent: -1000px;
 
         > header {
-            background-image: url(../img/bullets-opened.png);
+            background-image: url(../img/tab_close.png);
             background-repeat: no-repeat;
-            background-position: 5px 8px;
+            background-position: 5px 9px;
         }
 
         .aside-content {

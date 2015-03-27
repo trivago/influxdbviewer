@@ -1,26 +1,30 @@
 $(document).ready(function() {
 
-    $("#js_sidebar").click(function() {
-        if(!$(this).hasClass('disabled'))
+    var _sidebar = $('#js_sidebar');
+    var _header = $('#js_sidebar header');
+
+    _header.click(function() {
+
+        if(!_sidebar.hasClass('disabled'))
         {
-            /*
-            $("#js_sidebar").animate({
+
+            _sidebar.animate({
                 width: 20
             }, 100, function() {
-                $("#js_sidebar").removeAttr('style');
+                _sidebar.removeAttr('style');
             });
-            $(this).addClass('disabled');
-            */
+            _sidebar.addClass('disabled');
+
         }
         else
         {
 
-            $("#js_sidebar").animate({
-                width: 200
+            _sidebar.animate({
+                width: 250
             }, 100, function() {
                 // Animation complete.
-                $(this).removeClass('disabled');
-                $("#js_sidebar").removeAttr('style');
+                _sidebar.removeClass('disabled');
+                _sidebar.removeAttr('style');
             });
         }
     });

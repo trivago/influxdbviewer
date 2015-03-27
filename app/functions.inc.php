@@ -12,4 +12,4 @@ function getUrlContent($url)
 
     return ['status_code' => $statuscode, 'results' => $data];
 }
-?>
+
