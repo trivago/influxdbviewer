@@ -849,13 +849,15 @@ input[type='text'], input[type='password'] {
     /* remove later! */ }
 
 .main-content {
-  position: relative; }
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  transition: transform .3s; }
+  .main-content.is-open {
+    transform: translate3d(520px, 0, 0); }
 
 aside {
   width: 500px;
-  position: absolute;
-  left: 0;
-  top: 10px; }
+  position: absolute; }
   aside > header {
     background-color: #2c70b7;
     height: 3rem;
@@ -876,7 +878,8 @@ aside {
       margin: 0; }
   aside.disabled {
     width: 20px;
-    text-indent: -1000px; }
+    text-indent: -1000px;
+    z-index: 99; }
     aside.disabled > header {
       background-image: url(../img/tab_close.png);
       background-repeat: no-repeat;

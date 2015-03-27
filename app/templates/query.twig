@@ -56,12 +56,12 @@
 {% endblock %}
 
 {% block maincontent %}
-    <section class="main-content">
-        <aside id="js_sidebar">
-            <header>
-                <h3>last commands</h3>
-            </header>
-            <section class="aside-content"><ul>
+
+    <aside id="js_sidebar" class="disabled">
+        <header>
+            <h3>last commands</h3>
+        </header>
+        <section class="aside-content"><ul>
                 <script language="javascript">listPreviousQueries();</script></ul>
             </section>
             <!-- -->
@@ -69,7 +69,11 @@
         {% if error_message %}
         {{ error_message }}
         {% endif %}
+        </section>
+        <!-- -->
+    </aside>
 
+    <section class="main-content">
         {% if number_of_results > 0 %}
         Found {{ number_of_results }} results. Date of retrieval: {{ timestamp|date('Y-m-d H:i:s')  }}. 
             {% if is_cached %}
@@ -77,21 +81,25 @@
             {% endif %}
         <table>
 
+        <table class="sectionbox">
             <thead>
+                <tr>
                 {% for c in columns %}
                     <th>{{ c }}</th>
                 {% endfor %}
+                </tr>
             </thead>
             <tbody>
-                {% for row in datapoints %}
-                    <tr>
-                        {% for cell in row %}
-                            <td>{{ cell }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
+            {% for row in datapoints %}
+                <tr>
+                    {% for cell in row %}
+                        <td><a href="#" class="tablelink">{{ cell }}</a></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
+
          Pages
          {% for i in 1..number_of_pages %}
             <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="active_page"{% endif %} >{{ i }}</a>
