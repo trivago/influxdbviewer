@@ -66,7 +66,15 @@
             </section>
             <!-- -->
         </aside>
+        {% if error_message %}
+        {{ error_message }}
+        {% endif %}
 
+        {% if number_of_results > 0 %}
+        Found {{ number_of_results }} results. Date of retrieval: {{ timestamp }}. 
+            {% if is_cached %}
+                Taken from cache. <a href="query.php?query={{ query }}&page={{ page }}&ignore_cache=1">Refresh</a>
+            {% endif %}
         <table>
 
             <thead>
@@ -88,5 +96,9 @@
          {% for i in 1..number_of_pages %}
             <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="active_page"{% endif %} >{{ i }}</a>
         {% endfor %}
+        {% else %}
+        No results found.
+        {% endif %}
+
     </section>
 {% endblock %}
