@@ -7,18 +7,15 @@ $(document).ready(function() {
 
         if(!_sidebar.hasClass('disabled'))
         {
-
             _sidebar.animate({
                 width: 20
             }, 100, function() {
                 _sidebar.removeAttr('style');
             });
             _sidebar.addClass('disabled');
-
         }
         else
         {
-
             _sidebar.animate({
                 width: 250
             }, 100, function() {
