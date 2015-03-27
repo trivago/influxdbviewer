@@ -24,6 +24,11 @@ aside {
             margin: 0;
             max-height: 500px;
             overflow: auto;
+
+            > li {
+                line-height: 24px;
+
+            }
         }
     }
 }

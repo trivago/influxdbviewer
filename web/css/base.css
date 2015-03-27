@@ -917,6 +917,8 @@ aside {
       margin: 0;
       max-height: 500px;
       overflow: auto; }
+      aside .aside-content > ul > li {
+        line-height: 24px; }
 
 .menu-toggle {
   position: absolute;
