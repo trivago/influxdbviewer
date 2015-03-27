@@ -14,7 +14,7 @@
         function listPreviousQueries(){
     var last_commands = urldecode(readCookie("last_commands"));
     //document.write( "all : " + last_commands + "<br><br><br>");
-    var show_max = 2; // TODO 30
+    var show_max = 30;
     var commandlist = last_commands.split("|")
     var found = commandlist.length ;
     for (i = found -1; i >= found - show_max; i--){
@@ -57,9 +57,7 @@
                 <h3>last commands</h3>
             </header>
             <section class="aside-content"><ul>
-                <script language="javascript">listPreviousQueries();
-
-                </script></ul>
+                <script language="javascript">listPreviousQueries();</script></ul>
             </section>
             <!-- -->
         </aside>
@@ -75,6 +73,9 @@
                  {% endfor %}
                  </tr>
             {% endfor %}
-        </table>
+        </table> Pages
+         {% for i in 0..number_of_pages %}
+            <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="active_page"{% endif %} >{{ i }}</a>
+        {% endfor %}
     </section>
 {% endblock %}
