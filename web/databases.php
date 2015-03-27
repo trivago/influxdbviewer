@@ -68,7 +68,7 @@ function getListOfDatabases()
         {
             $result[] = $value->name;
         }
-
+        sort($result);
         return $result;
     }
     else
