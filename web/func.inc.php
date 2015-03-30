@@ -213,7 +213,7 @@ function getDatabaseResults($query)
         }
         else
         {
-        	debug("Error message! Status code: " . $httpResult['status_code']);
+        	debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
         	$json = json_decode($httpResult['results']);
         	debug ($json);
         	$feedback['error_message'] = $json;
