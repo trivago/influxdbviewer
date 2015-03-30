@@ -18,3 +18,4 @@ define('RESULTS_PER_PAGE', 30);
 define("AUTO_LIMIT", true);
 // the value for the auto-limit clause, if activated:
 define("AUTO_LIMIT_VALUE", 1000);
+?>
