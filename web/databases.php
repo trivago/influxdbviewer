@@ -1,11 +1,13 @@
 <?php
+require("config.inc.php");
+require("func.inc.php");
 
 session_start();
 if (!isset($_SESSION['host']) || empty($_SESSION['host']) !isset($_SESSION['user']) || empty($_SESSION['user']))
 {
     redirectTo("index.php");
 }
-require('../vendor/twig/twig/lib/Twig/Autoloader.php');
+require(VENDOR_PATH . 'twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
 
 $databases = getListOfDatabases();
@@ -47,45 +49,4 @@ catch (Exception $e)
     die ('ERROR: ' . $e->getMessage());
 }
 
-function redirectTo($path)
-{
-    header("Location: " . $path);
-    die();
-}
 
-function getListOfDatabases()
-{
-    $url        = "http://" . $_SESSION['host'] . ":8086/db?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
-    $httpResult = getUrlContent($url);
-
-    if (200 == $httpResult['status_code'])
-    {
-
-        $json   = json_decode($httpResult['results']);
-        $result = array();
-        foreach ($json as $value)
-        {
-            $result[] = $value->name;
-        }
-        sort($result);
-        return $result;
-    }
-    else
-    {
-        // TODO error handling
-    }
-}
-
-function getUrlContent($url)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    $data       = curl_exec($ch);
-    $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    return ['status_code' => $statuscode, 'results' => $data];
-}

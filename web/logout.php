@@ -1,8 +1,10 @@
 <?php
 
+require("config.inc.php");
+require("func.inc.php");
 
-require('../vendor/twig/twig/lib/Twig/Autoloader.php');
-Twig_Autoloader::register();
+//require(VENDOR_PATH . 'twig/twig/lib/Twig/Autoloader.php');
+// Twig_Autoloader::register();
 session_start();
 
 session_destroy();
