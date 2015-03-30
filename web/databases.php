@@ -3,7 +3,7 @@ require("config.inc.php");
 require("func.inc.php");
 
 session_start();
-if (!isset($_SESSION['host']) || empty($_SESSION['host']) !isset($_SESSION['user']) || empty($_SESSION['user']))
+if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['user']) || empty($_SESSION['user']))
 {
     redirectTo("index.php");
 }
