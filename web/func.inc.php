@@ -1,4 +1,4 @@
-<?
+<?php
 
 function redirectTo($path)
 {
