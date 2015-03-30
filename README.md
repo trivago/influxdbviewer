@@ -27,7 +27,7 @@ Requires a webserver with php.
 * test what happens if you send an invalid query / test error message
 * add support for version 0.9
 * switch to HTTPS
-* auto logout does not work when session variables are empty (query.php, maybe others)
+* test autologout after session timeout (on query.php and databases.php)
 * remove warning about time formatting (query template): [12:24:57] <Kay Drechsler> Found 64 results. Date of retrieval: 
 Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in/Users/kdrechsler/Sites/Adminfluxdb/vendor/twig/twig/lib/Twig/Extension/Core.phpon line 89
 2015-03-27 11:20:56.
