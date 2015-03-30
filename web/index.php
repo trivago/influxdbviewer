@@ -1,6 +1,5 @@
 <?php
-//$app = require __DIR__.'/../app/app.php';
-// $app->run();
+
 define("DELIMITER_LOGINCOOKIE_EXTERNAL", "|");
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
 Twig_Autoloader::register();
@@ -39,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 try
 {
     // specify where to look for templates
-    $loader = new Twig_Loader_Filesystem('../app/templates');
+    $loader = new Twig_Loader_Filesystem('templates');
 
     // initialize Twig environment
     $twig = new Twig_Environment($loader);

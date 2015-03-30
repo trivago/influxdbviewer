@@ -28,7 +28,7 @@ define('DELIMITER_COMMANDCOOKIE_EXTERNAL', "|");
 try
 {
     // specify where to look for templates
-    $loader = new Twig_Loader_Filesystem('../app/templates');
+    $loader = new Twig_Loader_Filesystem('templates');
 
     // initialize Twig environment
     $twig = new Twig_Environment($loader);

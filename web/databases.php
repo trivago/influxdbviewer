@@ -1,9 +1,8 @@
 <?php
-//$app = require __DIR__.'/../app/app.php';
-// $app->run();
+
 session_start();
-if (!isset($_SESSION['host']) || empty($_SESSION['host']))
-{ // TODO same for username
+if (!isset($_SESSION['host']) || empty($_SESSION['host']) !isset($_SESSION['user']) || empty($_SESSION['user']))
+{
     redirectTo("index.php");
 }
 require('../vendor/twig/twig/lib/Twig/Autoloader.php');
@@ -23,7 +22,7 @@ if (isset($_REQUEST['database']) && !empty($_REQUEST['database']))
 try
 {
     // specify where to look for templates
-    $loader = new Twig_Loader_Filesystem('../app/templates');
+    $loader = new Twig_Loader_Filesystem('templates');
 
     // initialize Twig environment
     $twig = new Twig_Environment($loader);
