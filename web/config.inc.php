@@ -1,6 +1,7 @@
 <?
 define('VENDOR_PATH', '../vendor/');
-
+echo VENDOR_PATH;
+exit();
 
 define("DEBUG",false);
 
