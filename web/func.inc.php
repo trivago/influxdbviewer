@@ -164,8 +164,8 @@ function getDatabaseResults($query)
     {
         
         debug("Got data from cache. ");
-        
-        $feedback                  = $cache_results;
+        print_r($cache_results); // TODO remove
+        $feedback['results']                 = $cache_results;
         $feedback['is_cached']     = true;
         $feedback['error_message'] = null;
     }
