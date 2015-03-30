@@ -159,9 +159,8 @@ function getDatabaseResults($query)
     $feedback['error_message'] = null;
 
 
-    $ignore_cache = true; // TODO isset($_REQUEST['ignore_cache']) && $_REQUEST['ignore_cache'];
-
-    if (!$ignore_cache && $cache_results = searchCache($query) != null)
+   
+    if (ACTIVATE_CACHE && !$ignore_cache && $cache_results = searchCache($query) != null)
     {
         
         debug("Got data from cache. ");
