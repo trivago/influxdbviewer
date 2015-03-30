@@ -166,9 +166,9 @@ function getDatabaseResults($query)
     if (ACTIVATE_CACHE && !$ignore_cache && $cache_results = searchCache($query) != null)
     {
         
-        debug("Got data from cache. ");
-      
-        print_r($cache_results); // TODO remove
+        debug("Got data from cache: ");
+        debug($cache_results); 
+
         $feedback['results']                 = $cache_results['results'];
         $feedback['is_cached']     = true;
         $feedback['timestamp'] = $cache_results['timestamp'];
@@ -240,7 +240,12 @@ function getDatabaseResults($query)
 
 function debug($text){
     if(DEBUG){
-        print $text . "<br>";
+    	if(is_scalar($text)){
+    		print $text;
+    	} else {
+    		print_r($text);
+    	}
+    	print "<br>";
     }
 }
 
