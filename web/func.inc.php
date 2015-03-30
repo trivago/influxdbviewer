@@ -114,9 +114,12 @@ function cookieContainsCommand($oldValue, $str)
 
 
 
-function saveResultsToCache($query, $results, $timestamp, $number_of_pages)
+function saveResultsToCache($query, $results, $timestamp, $number_of_results)
 {
-    $_SESSION['cache'][$query] = ['timestamp' => $timestamp, 'results' => $results, 'number_of_pages' => $number_of_pages];
+  
+  if(ACTIVATE_CACHE){
+   $_SESSION['cache'][$query] = ['timestamp' => $timestamp, 'results' => $results, 'number_of_results' => $number_of_results];
+  }
 }
 
 function searchCache($query)
@@ -164,9 +167,14 @@ function getDatabaseResults($query)
     {
         
         debug("Got data from cache. ");
+      
         print_r($cache_results); // TODO remove
-        $feedback['results']                 = $cache_results;
+        $feedback['results']                 = $cache_results['results'];
         $feedback['is_cached']     = true;
+        $feedback['timestamp'] = $cache_results['timestamp'];
+        $feedback['number_of_results'] = $cache_results['number_of_results'];
+        $feedback['number_of_pages'] = ceil($feedback['number_of_results'] / RESULTS_PER_PAGE);
+       
         $feedback['error_message'] = null;
     }
     else
@@ -199,11 +207,14 @@ function getDatabaseResults($query)
                 'error_message'     => null
             ];
           
-            saveResultsToCache($query, $results, $now, $number_of_pages);
+            saveResultsToCache($query, $results, $now, $number_of_results);
             addCommandToCookie($query, $now, $number_of_pages);
         }
         else
         {
+        	$json = json_decode($httpResult['results']);
+
+        	$feedback['error_message'] = $json;
             // TODO set error message if it contains any
         }
     }
