@@ -208,12 +208,14 @@ function getDatabaseResults($query)
             ];
           
             saveResultsToCache($query, $results, $now, $number_of_results);
+
             addCommandToCookie($query, $now, $number_of_pages);
         }
         else
         {
+        	debug("Error message! ");
         	$json = json_decode($httpResult['results']);
-
+        	debug ($json);
         	$feedback['error_message'] = $json;
             // TODO set error message if it contains any
         }
