@@ -177,7 +177,7 @@ function getDatabaseResults($query)
     {
 
         if(DEBUG){
-            debug("Content of cache: ");
+            debug("Content of cache at " . mktime() . " / " . gmdate("Y-m-d\TH:i:s\Z", mktime()));
             debugCacheContent();
         }
 
