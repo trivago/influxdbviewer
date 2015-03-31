@@ -177,6 +177,7 @@ function getDatabaseResults($query)
     {
 
         if(DEBUG){
+            debug("Content of cache: ");
             debugCacheContent();
         }
 
@@ -192,6 +193,8 @@ function getDatabaseResults($query)
             $feedback['number_of_pages'] = ceil($feedback['number_of_results'] / RESULTS_PER_PAGE);
            
             $feedback['error_message'] = null;
+        } else {
+            debug("Cache was empty.");
         }
     }
     if(!$feedback['is_cached'])
