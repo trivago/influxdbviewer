@@ -18,7 +18,7 @@
             var found = commandlist.length;
             for (i = found - 1; i >= found - show_max; i--) {
                 // 
-                if (commandlist[i] != undefined)
+                if (commandlist[i] != undefined &&  commandlist[i] != "undefined")
                 {
                  document.write("<li class='listitem'><a href=\"javascript:setLogin('" + commandlist[i] + "');\" class=\"celllink\">" + commandlist[i] + "</a></li>");
                 }
