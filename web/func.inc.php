@@ -159,8 +159,9 @@ function limitResult($page, $data)
 function getDatabaseResults($query)
 {
     
-    $feedback                  = [];
+    $feedback                  = []; // TODO make this into a class
     $feedback['error_message'] = null;
+    $feedback['is_cached']     = false;
 
     $ignore_cache = (isset($_REQUEST['is_cache']) && !empty($_REQUEST['is_cache']) ) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
    
