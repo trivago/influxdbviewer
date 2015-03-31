@@ -21,7 +21,7 @@
                 if(commandlist[i] != undefined && commandlist[i] != "undefined"){
                     var tokens = commandlist[i].split("#");
                     if (tokens[2] != undefined) {
-                        var safeLink = tokens[2].split('"').join('\\"'); // Select statement may contain quotation marks
+                        var safeLink = tokens[2].split('"').join("\\""); // Select statement may contain quotation marks
                         document.write("<li><a href=\"javascript:setCommand('" + safeLink + "');\">" + tokens[2] + "</a></li>");
                     }
                 }
