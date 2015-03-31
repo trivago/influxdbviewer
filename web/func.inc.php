@@ -121,9 +121,8 @@ function saveResultsToCache($query, $results, $timestamp, $number_of_results)
   if(ACTIVATE_CACHE){
    $newEntry = ['timestamp' => $timestamp, 'results' => $results, 'number_of_results' => $number_of_results];
    $_SESSION['cache'][$query] = $newEntry;
-   debug("Adding entry to cache for key " . $query );
-   debug($newEntry);
-
+   debug("Adding entry to cache for key " . $query . " with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp ) );
+  
   }
 }
 
@@ -157,16 +156,17 @@ function limitResult($page, $data)
 }
 
 function debugCacheContent(){
-
     foreach($_SESSION['cache'] as $query => $record){
         debug("Query " . $query . " with timestamp " . $record['timestamp']. " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
     }
 }
 
+function removeOldCacheEntries(){
+    // TODO implement
+}
 
 function getDatabaseResults($query)
-{
-    
+{    
     $feedback                  = []; // TODO make this into a class
     $feedback['error_message'] = null;
     $feedback['is_cached']     = false;
@@ -182,6 +182,10 @@ function getDatabaseResults($query)
         }
 
         $cache_results = searchCache($query);
+        if(mktime() % 10 == 0){
+            // randomly remove obsolete stuff from the cache every 10th access
+            removeOldCacheEntries();
+        }
         if(!empty($cache_results))
         {
             debug("Got data from cache. ");
