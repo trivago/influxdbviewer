@@ -123,7 +123,7 @@ function saveResultsToCache($query, $results, $timestamp, $number_of_results)
    $_SESSION['cache'][$query] = $newEntry;
    debug("Adding entry to cache for key " . $query );
    debug($newEntry);
-   die();
+   
   }
 }
 
