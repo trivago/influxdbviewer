@@ -219,7 +219,7 @@ function getDatabaseResults($query)
         if (200 == $httpResult['status_code'])
         {
             $json = json_decode($httpResult['results']);
-
+            debug($json);
             $columns           = $json[0]->columns;
             $datapoints        = $json[0]->points;
             $results           = ['columns' => $columns, 'datapoints' => $datapoints];
