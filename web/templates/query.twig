@@ -106,11 +106,11 @@
             {% for row in datapoints %}
                 <tr> {% set col_count = 0 %}
                     {% for cell in row %}
-                        <td>
+                        <td> <span class="tablelink">
                         {% if col_count == timestamp_column %}
                         {% set unix_ts = cell / 1000 %}
-                        <abbr title="~ {{ unix_ts|date('Y-m-d H:i:s:u') }}">{% endif %}
-                        <span class="tablelink">
+                        <abbr title="~ {{ unix_ts|date('Y-m-d H:i:s') }}">{% endif %}
+                       
                         {% if is_series_list %}
                             {% if cell != "0" %}
                         <a href='query.php?query=select%20*%20from%20"{{ cell }}"'>
@@ -122,8 +122,8 @@
                             </a>
                             {% endif %}
                         {% endif %}
-                        </span>
-                        {% if col_count == timestamp_column %}</abbr>{% endif %}
+                        
+                        {% if col_count == timestamp_column %}</abbr>{% endif %}</span>
                         </td>
                      {% set col_count = col_count + 1 %}
                     {% endfor %}
