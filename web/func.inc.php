@@ -123,7 +123,7 @@ function saveResultsToCache($query, $results, $timestamp, $number_of_results)
    $_SESSION['cache'][$query] = $newEntry;
    debug("Adding entry to cache for key " . $query );
    debug($newEntry);
-   
+
   }
 }
 
@@ -156,6 +156,12 @@ function limitResult($page, $data)
     return $subset;
 }
 
+function debugCacheContent(){
+
+    foreach($_SESSION['cache'] as $query => $record){
+        debug("Query " . $query . " with timestamp " . $record['timestamp']);
+    }
+}
 
 
 function getDatabaseResults($query)
@@ -169,12 +175,16 @@ function getDatabaseResults($query)
    
     if (ACTIVATE_CACHE && !$ignore_cache)
     {
+
+        if(DEBUG){
+            debugCacheContent();
+        }
+
         $cache_results = searchCache($query);
         if(!empty($cache_results))
         {
-            debug("Got data from cache: ");
-            debug($cache_results); 
-
+            debug("Got data from cache. ");
+        
             $feedback['results']                 = $cache_results['results'];
             $feedback['is_cached']     = true;
             $feedback['timestamp'] = $cache_results['timestamp'];
