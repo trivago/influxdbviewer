@@ -77,6 +77,7 @@ if (!empty($_REQUEST['query']))
             'user'              => $_SESSION['user'],
             'host'              => $_SESSION['host'],
             'database'          => $_SESSION['database'],
+            'timestamp_column'  => getTimestampColumn($columns)
         )
     );
 }
