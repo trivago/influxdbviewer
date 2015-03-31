@@ -946,12 +946,13 @@ aside {
 .hint {
   display: block;
   margin-bottom: 16px;
-  padding: 16px;
-  background: #ff7474;
-  border: 1px solid #d22828; }
-  .hint strong {
-    display: block;
+  padding: 16px; }
+  .hint.error {
+    background: #ff7474;
+    border: 1px solid #d22828;
     color: #fff; }
+  .hint strong {
+    display: block; }
 
 .zebralist .listitem {
   background: #fff; }
@@ -1026,5 +1027,3 @@ table {
       font-weight: bold; }
 
 /*# sourceMappingURL=base.css.map */
-
-
