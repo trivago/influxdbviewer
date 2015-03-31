@@ -220,9 +220,9 @@ function getDatabaseResults($query)
         {
         	debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
         	$json = json_decode($httpResult['results']);
-        	debug ($json);
-        	$feedback['error_message'] = $json;
-            // TODO set error message if it contains any
+        	debug ($httpResult['results']);
+        	$feedback['error_message'] = "Http status code " . $httpResult['status_code'];
+            // TODO if the json contains an actual error emessage: print it
         }
     }
     if ($feedback['error_message'] == null)
