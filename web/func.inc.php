@@ -219,6 +219,20 @@ function getDatabaseResults($query)
 
         if (200 == $httpResult['status_code'])
         {
+            
+            if ($httpResult['results'] == "[]") // Series is empty
+            {
+                return  [
+                'timestamp'         => $now,
+                'results'           => null,
+                'is_cached'         => false,
+                'page'              => 1,
+                'number_of_pages'   => 1,
+                'number_of_results' => $0,
+                'error_message'     => null
+                ];
+            }
+            
             $json = json_decode($httpResult['results']);
 
             debug("Response length from database: " . strlen($httpResult['results']));
