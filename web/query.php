@@ -59,6 +59,8 @@ if (!empty($_REQUEST['query']))
     
 }
 
+debug("Timestamp column is: " . getTimestampColumn($columns));
+
     // set template variables
     // render template
     echo $template->render(
