@@ -109,7 +109,7 @@
                         <td>
                         {% if col_count == timestamp_column %}
                         {% set unix_ts = cell / 1000 %}
-                        <abbr title="~ {{ unix_ts|date('Y-m-d H:i:s:u') }}">{% endif %}
+                        <abbr title="~ {{ unix_ts|date('Y-m-d H:i:s') }}">{% endif %}
                         <span class="tablelink">
                         {% if is_series_list %}
                             {% if cell != "0" %}
