@@ -258,7 +258,7 @@ function debug($text){
 
 function getTimestampColumn($cols){
     $i = 0;
-    for($cols as $name){
+    foreach($cols as $name){
         if($name == "time") return $i;
 
         $i ++;
