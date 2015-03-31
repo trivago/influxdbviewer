@@ -628,6 +628,11 @@ h2 {
   padding: 0;
   list-style: none; }
 
+abbr {
+  border-bottom: 1px dotted #000; }
+  abbr:hover, abbr:focus, abbr:active {
+    cursor: help; }
+
 /*
  * Links
  */

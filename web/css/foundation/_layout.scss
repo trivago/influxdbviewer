@@ -8,7 +8,7 @@ body {
 
 .page-wrapper {
     min-height: 100%;
-	background-color: $main-color-02;
+    background-color: $main-color-02;
 }
 
 .logo {
@@ -34,9 +34,9 @@ body {
  * centerwrapper centers content on fixed max-width.
  */
 .centerwrapper {
-	@extend .clearfix;
-	max-width: ($gutter)*60;
-	margin: 0 auto;
+    @extend .clearfix;
+    max-width: ($gutter)*60;
+    margin: 0 auto;
 }
 
 main {
@@ -58,11 +58,11 @@ h5,
 .h5,
 h6,
 .h6 {
-	font-weight: normal;
+    font-weight: normal;
 }
 
 h1 {
-	font-size: $font-size-h1;
+    font-size: $font-size-h1;
 }
 
 h2 {
@@ -72,6 +72,14 @@ h2 {
 .no-bullet {
     padding: 0;
     list-style: none;
+}
+
+abbr {
+    border-bottom: 1px dotted $black;
+
+    @include link-pseudos-hover {
+        cursor: help;
+    }
 }
 
 /*
