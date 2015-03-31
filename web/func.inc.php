@@ -165,7 +165,7 @@ function getDatabaseResults($query)
     $feedback['error_message'] = null;
     $feedback['is_cached']     = false;
 
-    $ignore_cache = (isset($_REQUEST['is_cache']) && !empty($_REQUEST['is_cache']) ) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
+    $ignore_cache = (isset($_REQUEST['ignore_cache']) && !empty($_REQUEST['ignore_cache']) ) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
    
     if (ACTIVATE_CACHE && !$ignore_cache)
     {
