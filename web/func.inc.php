@@ -228,7 +228,7 @@ function getDatabaseResults($query)
                 'is_cached'         => false,
                 'page'              => 1,
                 'number_of_pages'   => 1,
-                'number_of_results' => $0,
+                'number_of_results' => 0,
                 'error_message'     => null
                 ];
             }
