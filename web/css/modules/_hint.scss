@@ -2,8 +2,11 @@
     display: block;
     margin-bottom: $gutter;
     padding: $gutter;
-    background: $errorcolor-01;
-    border: 1px solid $errorcolor-02;
+   
+    .error {
+    	background: $errorcolor-01;
+   		border: 1px solid $errorcolor-02;
+    }
 
     strong {
         display: block;
