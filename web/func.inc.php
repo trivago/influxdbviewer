@@ -159,7 +159,7 @@ function limitResult($page, $data)
 function debugCacheContent(){
 
     foreach($_SESSION['cache'] as $query => $record){
-        debug("Query " . $query . " with timestamp " . $record['timestamp']);
+        debug("Query " . $query . " with timestamp " . $record['timestamp']. " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
     }
 }
 
