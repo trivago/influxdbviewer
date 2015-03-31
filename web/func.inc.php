@@ -300,11 +300,12 @@ function debug($text){
 
 function getTimestampColumn($cols){
     $i = 0;
+    if(!empty($cols)) {
     foreach($cols as $name){
         if($name == "time") return $i;
 
         $i ++;
-    }
+    }}
     return -1;
 }
 
