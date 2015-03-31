@@ -155,6 +155,19 @@ function limitResult($page, $data)
     return $subset;
 }
 
+function getPaginationStart($page, $number_of_pages){
+   if ($number_of_pages <= MAX_PAGINATION_PAGES) return 1:
+
+    $start = $page - floor(MAX_PAGINATION_PAGES / 2);
+    return ($start < 1)? 1 : $start;
+}
+
+function getPaginationEnd($page, $number_of_pages){
+   if ($number_of_pages <= MAX_PAGINATION_PAGES) return MAX_PAGINATION_PAGES:
+      $end = $page + ceil(MAX_PAGINATION_PAGES / 2);
+    return ($end < MAX_PAGINATION_PAGES)? MAX_PAGINATION_PAGES : $end;
+}
+
 function debugCacheContent(){
    if(ACTIVATE_CACHE && isset($_SESSION['cache'])) {
     foreach($_SESSION['cache'] as $query => $record){

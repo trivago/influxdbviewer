@@ -15,6 +15,7 @@ if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['u
 
 define('DELIMITER_COMMANDCOOKIE_INTERNAL', "#");
 define('DELIMITER_COMMANDCOOKIE_EXTERNAL', "|");
+define('MAX_PAGINATION_PAGES', 10);
 
 try
 {
