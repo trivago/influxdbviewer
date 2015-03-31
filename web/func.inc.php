@@ -162,12 +162,16 @@ function debugCacheContent(){
 }
 
 function removeOldCacheEntries(){
-    // TODO implement
+     foreach($_SESSION['cache'] as $query => $record){
+        if (! isFreshResult($record['timestamp'])){
+            unset($_SESSION['cache'][$query]);
+        }
+    }
 }
 
 function getDatabaseResults($query)
 {    
-    $feedback                  = []; // TODO make this into a class
+    $feedback                  = [];
     $feedback['error_message'] = null;
     $feedback['is_cached']     = false;
 
@@ -175,7 +179,6 @@ function getDatabaseResults($query)
    
     if (ACTIVATE_CACHE && !$ignore_cache)
     {
-
         if(DEBUG){
             debug("Content of cache at " . mktime() . " / " . gmdate("Y-m-d\TH:i:s\Z", mktime()));
             debugCacheContent();
