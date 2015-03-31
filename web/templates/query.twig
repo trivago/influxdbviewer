@@ -105,7 +105,19 @@
             {% for row in datapoints %}
                 <tr>
                     {% for cell in row %}
-                        <td><span class="tablelink">{% if is_series_list %}<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>{% endif %}{{ cell }}{% if is_series_list %}</a>{% endif %}</span></td>
+                        <td><span class="tablelink">
+                        {% if is_series_list %}
+                            {% if cell != 0 %}
+                        <a href='query.php?query=select%20*%20from%20"{{ cell }}"'>
+                            {% endif %}
+                        {% endif %}
+                        {{ cell }}
+                        {% if is_series_list %}
+                            {% if cell != 0 %}
+                            </a>
+                            {% endif %}
+                        {% endif %}
+                        </span></td>
 
                     {% endfor %}
                 </tr>
