@@ -14,7 +14,7 @@
             <h2>Please select a database:</h2>
         </div>
 
-        <div class="sectionbody">
+        <div class="sectionbody">{% if databases %}
             <ul class="no-bullet zebralist">
                 {% for database in databases %}
                     <li class="listitem">
@@ -23,7 +23,9 @@
                         </a>
                     </li>
                 {% endfor %}
-            </ul>
+            </ul>{% else %}
+                No databases found. Check your credentials and make sure that databases have been created.
+            {% endif %}
         </div>
     </div>
 {% endblock %}
