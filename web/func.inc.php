@@ -164,21 +164,24 @@ function getDatabaseResults($query)
 
     $ignore_cache = (isset($_REQUEST['is_cache']) && !empty($_REQUEST['is_cache']) ) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
    
-    if (ACTIVATE_CACHE && !$ignore_cache && $cache_results = searchCache($query) != null)
+    if (ACTIVATE_CACHE && !$ignore_cache)
     {
-        
-        debug("Got data from cache: ");
-        debug($cache_results); 
+        $cache_results = searchCache($query);
+        if(!empty($cache_results))
+        {
+            debug("Got data from cache: ");
+            debug($cache_results); 
 
-        $feedback['results']                 = $cache_results['results'];
-        $feedback['is_cached']     = true;
-        $feedback['timestamp'] = $cache_results['timestamp'];
-        $feedback['number_of_results'] = $cache_results['number_of_results'];
-        $feedback['number_of_pages'] = ceil($feedback['number_of_results'] / RESULTS_PER_PAGE);
-       
-        $feedback['error_message'] = null;
+            $feedback['results']                 = $cache_results['results'];
+            $feedback['is_cached']     = true;
+            $feedback['timestamp'] = $cache_results['timestamp'];
+            $feedback['number_of_results'] = $cache_results['number_of_results'];
+            $feedback['number_of_pages'] = ceil($feedback['number_of_results'] / RESULTS_PER_PAGE);
+           
+            $feedback['error_message'] = null;
+        }
     }
-    else
+    if(!$feedback['is_cached'])
     {
         debug("Getting data from db. ");
         $now = time();
