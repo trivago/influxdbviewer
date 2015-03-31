@@ -3,7 +3,7 @@
     margin-bottom: $gutter;
     padding: $gutter;
    
-    .error {
+    &.error {
     	background: $errorcolor-01;
    		border: 1px solid $errorcolor-02;
     }
