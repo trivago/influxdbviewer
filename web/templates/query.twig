@@ -107,7 +107,9 @@
                 <tr> {% set col_count = 0 %}
                     {% for cell in row %}
                         <td>
-                        {% if col_count == timestamp_column %}<abbr title="{{ cell|date('Y-m-d H:i:s:u') }}">{% endif %}
+                        {% if col_count == timestamp_column %}
+                        {% set unix_ts = cell / 1000 %}
+                        <abbr title="~ {{ unix_ts|date('Y-m-d H:i:s:u') }}">{% endif %}
                         <span class="tablelink">
                         {% if is_series_list %}
                             {% if cell != "0" %}
