@@ -219,9 +219,8 @@ function getDatabaseResults($query)
         else
         {
         	debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
-        	$json = json_decode($httpResult['results']);
         	debug ($httpResult['results']);
-        	$feedback['error_message'] = "Http status code " . $httpResult['status_code'];
+        	$feedback['error_message'] = "Http status code " . $httpResult['status_code'] . ". Error message: " . $httpResult['results'];
             // TODO if the json contains an actual error emessage: print it
         }
     }
