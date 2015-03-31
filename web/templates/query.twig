@@ -84,18 +84,15 @@
             </section>
         </form>
 
-        
+        <div class="sectionbox sectionbox-info {% if error_message %}hint error{% endif %}">
             {% if error_message %}
-            <div class="hint error">{{ error_message }}</div>
-           
+            {{ error_message }}
             {% elseif number_of_results > 0 %}
-            <div class="sectionbox sectionbox-info">
             Found {{ number_of_results }} results. Date of retrieval: {{ timestamp|date('Y-m-d H:i:s')  }}.
                 {% if is_cached %}
                     Taken from cache. <a href="query.php?query={{ query }}&page={{ page }}&ignore_cache=1">Refresh</a>
+            {% endif %}
         </div>
-                 {% endif %}
-   
 
         <table class="sectionbox">
             <thead>
