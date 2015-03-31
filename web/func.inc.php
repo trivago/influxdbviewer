@@ -26,7 +26,8 @@ function getListOfDatabases()
     }
     else
     {
-        // TODO error handling
+        debug("Error message! Maybe no database exists? Status code " . $httpResult['status_code'] . " with message " . $httpResult['results']);
+
     }
 }
 
@@ -122,6 +123,7 @@ function saveResultsToCache($query, $results, $timestamp, $number_of_results)
    $_SESSION['cache'][$query] = $newEntry;
    debug("Adding entry to cache for key " . $query );
    debug($newEntry);
+   die();
   }
 }
 
@@ -221,7 +223,7 @@ function getDatabaseResults($query)
         	debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
         	debug ($httpResult['results']);
         	$feedback['error_message'] = "Http status code " . $httpResult['status_code'] . ". Error message: " . $httpResult['results'];
-            // TODO if the json contains an actual error emessage: print it
+           
         }
     }
     if ($feedback['error_message'] == null)
