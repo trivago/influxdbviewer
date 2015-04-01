@@ -211,12 +211,12 @@ function getDatabaseResults($query)
     if (ACTIVATE_CACHE && !$ignore_cache)
     {
         if(DEBUG){
-            debug("Content of cache at " . mktime() . " / " . gmdate("Y-m-d\TH:i:s\Z", mktime()));
+            debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time()));
             debugCacheContent();
         }
 
         $cache_results = searchCache($query);
-        if(mktime() % 10 == 0){
+        if(time() % 10 == 0){
             // randomly remove obsolete stuff from the cache every 10th access
             removeOldCacheEntries();
         }
