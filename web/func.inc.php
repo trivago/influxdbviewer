@@ -16,6 +16,10 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
     $payload = createAnnotationBody($name, $timestamp, $tags, $text, $title);
     $precision = calculatePrecision($timestamp);
     $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&time_precision=". $precision;
+
+    $httpResult = getUrlContent($url);
+
+    return (200 == $httpResult['status_code'])? "" : $httpResult['results'];
 }
 
 function createAnnotationBody($name, $timestamp, $tags, $text, $title){
