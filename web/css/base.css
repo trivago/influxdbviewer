@@ -887,7 +887,7 @@ input[type='text'], input[type='password'] {
 
 .sectionbox {
   width: 100%;
-  max-width: 640px;
+  max-width: 800px;
   margin: 0 auto 32px;
   background: #fff; }
   .sectionbox.transparent {
@@ -990,7 +990,7 @@ table {
     color: #fff;
     vertical-align: bottom;
     text-align: left;
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     font-weight: normal; }
   table tbody:before {
     content: '-';
@@ -1013,13 +1013,13 @@ table {
     background: #eff8ff; }
 
 .single-searchbar {
-  max-width: 640px;
+  max-width: 800px;
   margin: 0 auto 16px; }
   .single-searchbar .textinput-query {
-    width: 70%; }
+    width: 84%; }
   .single-searchbar .btn {
     float: right;
-    width: 26%; }
+    width: 12%; }
 
 .pagination {
   text-align: center; }

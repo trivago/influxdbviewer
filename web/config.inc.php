@@ -1,7 +1,7 @@
 <?php
 define('VENDOR_PATH', '../vendor/');
 
-define("DEBUG",true);
+define("DEBUG",false);
 
 // If you often switch between resultsets, you might want to activate the cache so that recently polled data is re-used, without querying the database again.
 define('ACTIVATE_CACHE', true);
