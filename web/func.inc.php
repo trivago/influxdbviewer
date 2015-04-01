@@ -325,7 +325,15 @@ function getDatabaseResults($query)
         {
         	debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
         	debug ($httpResult['results']);
-        	$feedback['error_message'] = "Http status code " . $httpResult['status_code'] . ". Error message: " . $httpResult['results'];
+        	return  [
+                'timestamp'         => $now,
+                'results'           => null,
+                'is_cached'         => false,
+                'page'              => 1,
+                'number_of_pages'   => 1,
+                'number_of_results' => 0,
+                'error_message'     => "Http status code " . $httpResult['status_code'] . ". Error message: " . $httpResult['results']
+                ];
            
         }
     }
