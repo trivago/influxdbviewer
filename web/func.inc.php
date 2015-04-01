@@ -6,6 +6,41 @@ function redirectTo($path)
     die();
 }
 
+function sendAnnotation($timestamp, $tags, $text, $title, $name)
+{
+    /*
+        curl -X POST -d ''  'http://10.1.3.220:8086/db/annotations/series?u=root&p=root&time_precision=s'
+    */
+// TODO set $_SESSION['annotation_database']
+// TODO what is the name?
+    $payload = createAnnotationBody($name, $timestamp, $tags, $text, $title);
+    $precision = calculatePrecision($timestamp);
+    $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&time_precision=". $precision;
+}
+
+function createAnnotationBody($name, $timestamp, $tags, $text, $title){
+    return <<< FOO
+    [{ "name" : "$name",
+    "columns" : ["time", "tags", "text", "title"],
+    "points" : [      [$timestamp, "$tags", "$text", "$title"]    ]  }]
+FOO
+}
+
+function calculatePrecision($timestamp){
+    /* "If you write data with a time you should specify the precision, which can be done via the time_precision query parameter. It can be set to either s for seconds, ms for milliseconds, or u for microseconds." */
+    $length = strlen($timestamp);
+    if ($length <= 10){
+        // seconds 1417651191
+        return "s";
+    }
+    else if ($length <= 13){
+        // milliseconds 1417651191000
+        return "ms";
+    } else {
+        // must be microseconds then.
+        return "u";
+    } 
+}
 
 function getListOfDatabases()
 {
