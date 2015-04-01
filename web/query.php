@@ -15,7 +15,6 @@ if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['u
 
 define('DELIMITER_COMMANDCOOKIE_INTERNAL', "#");
 define('DELIMITER_COMMANDCOOKIE_EXTERNAL', "|");
-define('MAX_PAGINATION_PAGES', 10);
 
 try
 {
@@ -76,6 +75,8 @@ debug("Timestamp column is: " . getTimestampColumn($columns));
             'error_message'     => $error_message,
             'page'              => $page,
             'number_of_pages'   => $number_of_pages,
+            'start_pagination'  => getPaginationStart($page, $number_of_pages); # todo use
+            'end_pagination'    => getPaginationEnd($page, $number_of_pages); # TODO use
             'number_of_results' => $number_of_results,
             'user'              => $_SESSION['user'],
             'host'              => $_SESSION['host'],
