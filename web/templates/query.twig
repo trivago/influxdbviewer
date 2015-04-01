@@ -138,9 +138,15 @@
 
         <nav class="sectionbox transparent pagination">
          <strong class="legend">Pages:</strong>
+         {% if 1 < start_pagination %}
+              <a href="query.php?query={{ query }}&page=1">1</a> ... 
+           {% endif %}
          {% for i in start_pagination..end_pagination %}
             <a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="activepage"{% endif %} >{{ i }}</a>
-        {% endfor %}
+          {% endfor %}
+          {% if number_of_pages > end_pagination %}
+              ... <a href="query.php?query={{ query }}&page={{ number_of_pages }}">{{ number_of_pages }}</a>
+           {% endif %}
         {% else %}
         No results found.
         {% endif %}
