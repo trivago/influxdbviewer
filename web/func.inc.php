@@ -21,6 +21,7 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
     $success = 200 == $httpResult['status_code'];
     if (! $success){
         debug("Error when setting annotation: " . $url . " => " .$httpResult['status_code']." ".$httpResult['results']);
+        debug("Payload: " . $payload);
     }
     return ($success)? "" : $httpResult['results'];
 }
