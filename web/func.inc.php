@@ -156,16 +156,26 @@ function limitResult($page, $data)
 }
 
 function getPaginationStart($page, $number_of_pages){
-   if ($number_of_pages <= MAX_PAGINATION_PAGES) return 1;
-
-    $start = $page - floor(MAX_PAGINATION_PAGES / 2);
+   if ($number_of_pages <= MAX_PAGINATION_PAGES) {
+        debug("Pagination lower bound not limited";
+        return 1;
+    }
+    $half = floor(MAX_PAGINATION_PAGES / 2);
+    $start = $page - $half;
+    debug("Pagination lower bound: $page - $half -> $start";
     return ($start < 1)? 1 : $start;
 }
 
-function getPaginationEnd($page, $number_of_pages){
-   if ($number_of_pages <= MAX_PAGINATION_PAGES) return MAX_PAGINATION_PAGES;
-    $end = $page + ceil(MAX_PAGINATION_PAGES / 2);
+function getPaginationEnd($page, $number_of_pages, $start){
+   if ($number_of_pages <= MAX_PAGINATION_PAGES) {
+        debug("Pagination upper bound not limited";
+        return MAX_PAGINATION_PAGES;
+    }
+    //$end = $page + ceil(MAX_PAGINATION_PAGES / 2);
+    $end = $start + MAX_PAGINATION_PAGES;
+    debug("Pagination upper bound: $start - ".MAX_PAGINATION_PAGES." -> $end";
     return ($end > MAX_PAGINATION_PAGES)? MAX_PAGINATION_PAGES : $end;
+
 }
 
 function debugCacheContent(){
