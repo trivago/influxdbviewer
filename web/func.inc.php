@@ -174,7 +174,12 @@ function getPaginationEnd($page, $number_of_pages, $start){
     //$end = $page + ceil(MAX_PAGINATION_PAGES / 2);
     $end = $start + MAX_PAGINATION_PAGES;
     debug("Pagination upper bound: $start - ".MAX_PAGINATION_PAGES." -> $end");
-    return ($end > $number_of_pages)? $number_of_pages : $end;
+    if ($end > $number_of_pages){
+        debug("Resetting pagination upper bound to because calculated boundary $end > number of pages $number_of_pages");
+        return $number_of_pages;
+    } else {
+        return  $end;
+    }
 
 }
 
