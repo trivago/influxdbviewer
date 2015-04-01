@@ -11,25 +11,6 @@ body {
     background-color: $main-color-02;
 }
 
-.logo {
-    max-width: 100%;
-    margin-top: 20px;
-}
-
-.logo-addon {
-    margin-right: 20px;
-}
-
-.logo-small,
-.logo-addon-small{
-    margin: $gutter;
-
-    @include respond-to(ipad) {
-        float: left;
-        margin-top: 26px;
-    }
-}
-
 
 /*
  * centerwrapper centers content on fixed max-width.

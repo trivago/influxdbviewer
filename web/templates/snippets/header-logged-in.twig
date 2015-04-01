@@ -1,14 +1,15 @@
 <header class="site-header logged-in">
-
-	<nav id="js_menu" class="disabled" style="position:absolute;top:20px;left:20px;">
-        <section class="menuside-content">
-         <a href="query.php">Run query</a><br />
-         <a href="annotation.php">Add annotation</a>
-         </section>           
-    </nav>
-
 	<div class="centerwrapper">
 		<img src="img/adminflux_IconLogo-s.png" alt="logo" class="logo-small">
+
+		<nav id="js_menu" class="headermenu disabled">
+			<h2 class="visuallyhidden">Menu</h2>
+			<ul class="no-bullet clearfix">
+				<li class="listitem"><a href="query.php" class="menulink">Run query</a></li>
+				<li class="listitem"><a href="annotation.php" class="menulink">Add annotation</a></li>
+			</ul>
+		</nav>
+
 		<div class="logout-wrapper">
 			<a href="logout.php" class="btn btn-secondary btn-medium">logout</a>
 			<h2>{{ user }}@{{ host }}

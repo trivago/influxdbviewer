@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
  * 1. Set default font family to sans-serif.
@@ -579,22 +580,6 @@ body {
   min-height: 100%;
   background-color: #eff8ff; }
 
-.logo {
-  max-width: 100%;
-  margin-top: 20px; }
-
-.logo-addon {
-  margin-right: 20px; }
-
-.logo-small,
-.logo-addon-small {
-  margin: 16px; }
-  @media only screen and (min-width: 768px) {
-    .logo-small,
-    .logo-addon-small {
-      float: left;
-      margin-top: 26px; } }
-
 /*
  * centerwrapper centers content on fixed max-width.
  */
@@ -735,12 +720,12 @@ input[type='text'], input[type='password'] {
 
 .site-header {
   margin-bottom: 48px;
-  padding: 0 32px;
   background-color: #2c70b7;
   text-align: center;
   /* center logo */ }
   @media only screen and (min-width: 768px) {
     .site-header {
+      padding: 0 32px;
       text-align: left; } }
 
 .sitelogo {
@@ -755,29 +740,74 @@ input[type='text'], input[type='password'] {
       float: left;
       max-width: 30%; } }
 
+.logo {
+  max-width: 100%;
+  margin-top: 20px; }
+
+.logo-addon {
+  margin-right: 20px; }
+
+.logo-small,
+.logo-addon-small {
+  width: auto;
+  margin: 16px 0 8px; }
+  @media only screen and (min-width: 768px) {
+    .logo-small,
+    .logo-addon-small {
+      position: relative;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      position: absolute;
+      max-width: 28%;
+      margin-top: 26px; } }
+
 .logout-wrapper {
   text-align: center; }
   @media only screen and (min-width: 768px) {
     .logout-wrapper {
       float: right;
-      width: 60%;
+      width: 32%;
       margin: 16px 0;
       text-align: left; } }
   .logout-wrapper .btn {
-    margin-bottom: 16px; }
+    height: 1.75rem;
+    margin-bottom: 16px;
+    padding: 8px;
+    font-size: .75rem; }
     @media only screen and (min-width: 768px) {
       .logout-wrapper .btn {
         float: right;
-        margin-top: 4px; } }
+        margin-top: 8px; } }
   .logout-wrapper h2 {
-    font-size: 1rem;
+    font-size: .75rem;
     color: #fff; }
     @media only screen and (min-width: 768px) {
       .logout-wrapper h2 {
         float: right;
-        margin: 16px 16px 0 0; } }
+        margin: 16px 8px 0 0; } }
   .logout-wrapper .invertlink {
     text-decoration: underline; }
+
+.headermenu {
+  margin-bottom: 16px; }
+  @media only screen and (min-width: 768px) {
+    .headermenu {
+      margin-top: 16px;
+      position: absolute; } }
+  .headermenu .no-bullet {
+    margin: 0; }
+  .headermenu .listitem {
+    margin: 5.33333px 0; }
+  .headermenu .menulink {
+    display: inline-block;
+    font-size: .75rem; }
+    .headermenu .menulink:before {
+      content: '› '; }
+    .headermenu .menulink:link, .headermenu .menulink:visited, .headermenu .menulink:hover, .headermenu .menulink:focus, .headermenu .menulink:active {
+      color: #fff; }
+    .headermenu .menulink:hover, .headermenu .menulink:focus, .headermenu .menulink:active {
+      color: rgba(255, 255, 255, 0.5); }
 
 .site-footer {
     /*
