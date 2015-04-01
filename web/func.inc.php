@@ -19,11 +19,10 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
 }
 
 function createAnnotationBody($name, $timestamp, $tags, $text, $title){
-    return <<< FOO
-    [{ "name" : "$name",
+    return   <<< FOO [{ "name" : "$name",
     "columns" : ["time", "tags", "text", "title"],
     "points" : [      [$timestamp, "$tags", "$text", "$title"]    ]  }]
-FOO
+FOO;
 }
 
 function calculatePrecision($timestamp){
