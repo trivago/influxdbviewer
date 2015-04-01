@@ -211,7 +211,7 @@ function getDatabaseResults($query)
     if (ACTIVATE_CACHE && !$ignore_cache)
     {
         if(DEBUG){
-            debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time()));
+            debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time())); 
             debugCacheContent();
         }
 
