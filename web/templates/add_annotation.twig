@@ -12,6 +12,7 @@
     <div class="sectionbox">
         <div class="sectionheader">
             <h2>Annotation database:</h2>
+            <form action="" method="post">
             <label for="annotation_database" class="label-annotation_database">
                 <select id="annotation_database" name="annotation_database">
                     {% for db in databases %}
@@ -20,7 +21,6 @@
                 </select>
             </label>
         </div>
-         <form action="" method="post">
             <section class="sectionbox transparent">
                 <div class="single-searchbar">
                     {#{{ message }}#}
