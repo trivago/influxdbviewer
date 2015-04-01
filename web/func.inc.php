@@ -250,7 +250,7 @@ function getDatabaseResults($query)
 
             debug("Response length from database: " . strlen($httpResult['results']));
        //     debug($json);
-            debug("First 100 characters: " . substr($httpResult['results'], 0, 100));
+            debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
             $columns           = $json[0]->columns;
             $datapoints        = $json[0]->points;
             $results           = ['columns' => $columns, 'datapoints' => $datapoints];
