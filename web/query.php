@@ -75,8 +75,8 @@ debug("Timestamp column is: " . getTimestampColumn($columns));
             'error_message'     => $error_message,
             'page'              => $page,
             'number_of_pages'   => $number_of_pages,
-            'start_pagination'  => getPaginationStart($page, $number_of_pages); # todo use
-            'end_pagination'    => getPaginationEnd($page, $number_of_pages); # TODO use
+            'start_pagination'  => getPaginationStart($page, $number_of_pages),
+            'end_pagination'    => getPaginationEnd($page, $number_of_pages),
             'number_of_results' => $number_of_results,
             'user'              => $_SESSION['user'],
             'host'              => $_SESSION['host'],
