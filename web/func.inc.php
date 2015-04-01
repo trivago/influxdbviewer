@@ -18,8 +18,11 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
     $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&time_precision=". $precision;
 
     $httpResult = getUrlContent($url);
-
-    return (200 == $httpResult['status_code'])? "" : $httpResult['results'];
+    $success = 200 == $httpResult['status_code'];
+    if (! $success){
+        debug("Error when setting annotation: " . $url . " => " .$httpResult['status_code']." ".$httpResult['results']);
+    }
+    return ($success)? "" : $httpResult['results'];
 }
 
 function createAnnotationBody($name, $timestamp, $tags, $text, $title){
