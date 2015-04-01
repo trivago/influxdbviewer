@@ -12,20 +12,27 @@ Twig_Autoloader::register();
 
 $databases = getListOfDatabases();
 
-if (isset($_REQUEST['annotation_database']) && !empty($_REQUEST['annotation_database']))
-{
-    if (in_array($_REQUEST['annotation_database'], $databases))
-    {
-        $_SESSION['annotation_database'] = $_REQUEST['annotation_database'];
-          debug("Setting annotation database to " . $_REQUEST['annotation_database'] );
-       
-    }
-}
+
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $error = sendAnnotation($_POST['timestamp'], $_POST['tags'], $_POST['payload'], $_POST['title'], $_POST['seriesname']);
-    $message = (!$error) ? "Annotation added. " : "Failure when adding the annotation: " . $error;
+    debug("Received post data");
+    if (isset($_POST['annotation_database']) && !empty($_POST['annotation_database']))
+    {
+        if (in_array($_POST['annotation_database'], $databases))
+        {
+            $_SESSION['annotation_database'] = $_POST['annotation_database'];
+            debug("Setting annotation database to " . $_POST['annotation_database'] );
+            $error = sendAnnotation($_POST['timestamp'], $_POST['tags'], $_POST['payload'], $_POST['title'], $_POST['seriesname']);
+            $message = (!$error) ? "Annotation added. " : "Failure when adding the annotation: " . $error;
+        } else {
+            debug("Annotation database not valid, aborting: " . $_POST['annotation_database'] );
+        }
+    } else {
+        debug("Annotation database not found, aborting. ");
+    }
+    
+
 }
 
 if(!isset($_SESSION['annotation_database']) || empty($_SESSION['annotation_database'])){
