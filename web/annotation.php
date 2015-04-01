@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         }
     } else {
         debug("Annotation database not found, aborting. ");
+        debug($_POST);
     }
     
 
