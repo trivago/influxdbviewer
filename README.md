@@ -22,18 +22,16 @@ Requires a webserver with php.
 
 * twig >= 1.8
 
-# Bugs
+# Bugs & TODOs
 
-* remove warning about time formatting (query template): [12:24:57] <Kay Drechsler> Found 64 results. Date of retrieval: 
-Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in/Users/kdrechsler/Sites/Adminfluxdb/vendor/twig/twig/lib/Twig/Extension/Core.phpon line 89
-2015-03-27 11:20:56.
-=> not reproducable. TODO check on wednesday if Kay still has this message
-* Change title to InfluxDbViewer
+* Change Logo to InfluxDbViewer
+* add favicon
+* internal: test cache cleaner
+* show annotations which are already in the database
+* annotation template: display  message and error in different colours
 
 
 # IMPROVEMENTS & FEATURE SUGGESTIONS
-* pagination: number of pages listed must not exceed 10. If the number is higher: add left & right arrows or something
 * add support for version 0.9 => coming very soon
 * maybe add auto completion for queries?
-* internal: make the feedback object into a class
-* internal: test cache cleaner
+* add date/time picker to script for adding annotations
