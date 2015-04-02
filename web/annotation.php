@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             if(empty($result)){
                  $message = "Annotation added. ";
             } else {
-                 $error =  "Failure when adding the annotation: " . $result
+                 $error =  "Failure when adding the annotation: " . $result;
             }
             debug("Feedback from sendAnnotation: " . $result);
             debug("Output: " . $message);
