@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             $error = sendAnnotation($_POST['timestamp'], $_POST['tags'], $_POST['payload'], $_POST['title'], $_POST['seriesname']);
             $message = (!empty($error)) ? "Annotation added. " : "Failure when adding the annotation: " . $error;
             debug("Feedback from sendAnnotation: " . $error);
+            debug("Output: " . $message);
         } else {
             debug("Annotation database not valid, aborting: " . $_POST['annotation_database'] );
         }

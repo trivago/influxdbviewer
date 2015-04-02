@@ -11,8 +11,7 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
     /*
         curl -X POST -d ''  'http://10.1.3.220:8086/db/annotations/series?u=root&p=root&time_precision=s'
     */
-// TODO set $_SESSION['annotation_database']
-// TODO what is the name?
+
     $payload = createAnnotationBody($name, $timestamp, $tags, $text, $title);
     $precision = calculatePrecision($timestamp);
     $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&time_precision=". $precision;
