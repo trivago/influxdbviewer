@@ -21,6 +21,13 @@
                 </select>
             </label>
         </div>
+        <div class="sectionbox sectionbox-info {% if error_message %}hint error{% endif %}">
+            {% if error_message %}
+                {{ error_message }}
+            {% elseif message %}
+                {{ message }}
+            {% endif %}
+        </div>
             <section class="sectionbox transparent">
                 <div class="single-searchbar">
                     {#{{ message }}#}
