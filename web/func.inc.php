@@ -258,12 +258,15 @@ function debugCacheContent(){
 
 function removeOldCacheEntries(){
     if(ACTIVATE_CACHE && isset($_SESSION['cache'])) {
-     foreach($_SESSION['cache'] as $query => $record){
-        if (! isFreshResult($record['timestamp'])){
-            unset($_SESSION['cache'][$query]);
+        $i = 0;
+        foreach($_SESSION['cache'] as $query => $record){
+            if (! isFreshResult($record['timestamp'])){
+                $i++;
+                unset($_SESSION['cache'][$query]);
+            }
+        debug("Clean cache deleted $i entries");
         }
     }
-  }
 }
 
 function getDatabaseResults($query)
