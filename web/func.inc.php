@@ -263,9 +263,11 @@ function removeOldCacheEntries(){
             if (! isFreshResult($record['timestamp'])){
                 $i++;
                 unset($_SESSION['cache'][$query]);
+                debug("Clean cache deletes query $query with timestamp ". $record['timestamp']);
             }
-        debug("Clean cache deleted $i entries");
+
         }
+        debug("Clean cache deleted $i entries");
     }
 }
 
