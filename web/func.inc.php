@@ -17,7 +17,7 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
     $precision = calculatePrecision($timestamp);
     $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&time_precision=". $precision;
 
-    $httpResult = getUrlContent($url);
+    $httpResult = sendPostRequest($url, $payload);
     $success = 200 == $httpResult['status_code'];
     if (! $success){
         debug("Error when setting annotation: " . $url . " => " .$httpResult['status_code']." ".$httpResult['results']);
@@ -26,6 +26,15 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
     return ($success)? "" : $httpResult['results'];
 }
 
+
+
+/*
+curl -X POST -d '[{ "name" : "list_series_foo",
+    "columns" : ["time", "tags", "text", "title"],
+    "points" : [
+      [1427976200, "", "Di 24. Feb 12:57:54 CET 2015", "Run 1 Start"]
+     ]  }]'  'http://192.168.35.85:8086/db/events/series?u=root&p=root&time_precision=s'
+*/
 function createAnnotationBody($name, $timestamp, $tags, $text, $title){
     return  <<<FOO
     [{ "name" : "$name",
@@ -74,6 +83,21 @@ function getListOfDatabases()
     }
 }
 
+function sendPostRequest($url, $payload){
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS,$payload);
+    $data       = curl_exec($ch);
+    $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    return ['status_code' => $statuscode, 'results' => $data];
+}
 
 function getUrlContent($url)
 {

@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 
 if(!isset($_SESSION['annotation_database']) || empty($_SESSION['annotation_database'])){
-    $_SESSION['annotation_database'] = "events";
+    $_SESSION['annotation_database'] = DEFAULT_ANNOTATION_DATABASE;
     debug("Did not find an annotation database in the session, defaulting to 'events'");
 }
 

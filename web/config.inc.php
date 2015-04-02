@@ -18,3 +18,6 @@ define("AUTO_LIMIT", true);
 define("AUTO_LIMIT_VALUE", 1000);
 
 define('MAX_PAGINATION_PAGES', 10);
+
+// if you want to send annotations to the database and you dont want to have to select the database name every time: set it here.
+define(DEFAULT_ANNOTATION_DATABASE, "events");
