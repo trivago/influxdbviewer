@@ -14,6 +14,7 @@ $databases = getListOfDatabases();
 
 
 $message = "";
+$error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     debug("Received post data");
@@ -23,9 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         {
             $_SESSION['annotation_database'] = $_POST['annotation_database'];
             debug("Setting annotation database to " . $_POST['annotation_database'] );
-            $error = sendAnnotation($_POST['timestamp'], $_POST['tags'], $_POST['payload'], $_POST['title'], $_POST['seriesname']);
-            $message = (!empty($error)) ? "Annotation added. " : "Failure when adding the annotation: " . $error;
-            debug("Feedback from sendAnnotation: " . $error);
+            $result = sendAnnotation($_POST['timestamp'], $_POST['tags'], $_POST['payload'], $_POST['title'], $_POST['seriesname']);
+            if(empty($result)){
+                 $message = "Annotation added. ";
+            } else {
+                 $error =  "Failure when adding the annotation: " . $result
+            }
+            debug("Feedback from sendAnnotation: " . $result);
             debug("Output: " . $message);
         } else {
             debug("Annotation database not valid, aborting: " . $_POST['annotation_database'] );
@@ -63,7 +68,8 @@ try
             'annotation_database' => $_SESSION['annotation_database'],
             'user'      => $_SESSION['user'],
             'host'      => $_SESSION['host'],
-            'message' => $message // TODO use in template
+            'message' => $message,
+            'error_message' => $error
         )
     );
 }
