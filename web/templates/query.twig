@@ -110,7 +110,7 @@
 								{% endif %}
 								{% else %}
 								{% if col_count == timestamp_column %}
-								{% set unix_ts = cell / 1000 %}
+								{% set unix_ts = cell // 1000 %}
 								<abbr title="{{ unix_ts}} ~ {{ cell }} : {{ unix_ts|date('Y-m-d H:i:s') }}">{% endif %}
 									{% endif %}
 									{{ cell }}
