@@ -19,7 +19,9 @@ if (!isset($_SESSION['host']) || !isset($_SESSION['user']))
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
+    debug("Checking credentials.");
     $credentialsOk = checkLoginValid();
+
 
     if ($credentialsOk)
     {
@@ -34,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         // does not redirect, will end up in loginform
     }
 }
-
+else debug("No post data received.");
 
 try
 {
