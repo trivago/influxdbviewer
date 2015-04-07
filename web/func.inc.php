@@ -419,7 +419,7 @@ function getTimestampColumn($cols){
 
 function checkLoginValid()
 {
-    $url        = "http://" . $_POST['host'] . ":8086/db?u=" . $_POST['user'] . "&p=" . $_POST['pw'];
+    $url        = "http://" . $_POST['host'] . ":8086/db?u=" . $_POST['user'] . "&p=" . urlencode($_POST['pw']);
     $httpResult = getUrlContent($url);
     debug("Login check against $url returned: ");
     debug($httpResult);
