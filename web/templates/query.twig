@@ -111,7 +111,7 @@
 								{% else %}
 								{% if col_count == timestamp_column %}
 								{% set unix_ts = cell / 1000 %}
-								<abbr title="~ {{ unix_ts|number_format(0)|date('Y-m-d H:i:s') }}">{% endif %}
+								<abbr title="{{ unix_ts}} ~ {{ cell }}">{% endif %}
 									{% endif %}
 									{{ cell }}
 									{% if is_series_list %}
