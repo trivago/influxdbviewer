@@ -14,7 +14,7 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
 
     $payload = createAnnotationBody($name, $timestamp, $tags, $text, $title);
     $precision = calculatePrecision($timestamp);
-    $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&time_precision=". $precision;
+    $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" .urlencode( $_SESSION['user'] ). "&p=" . urlencode($_SESSION['pw']) . "&time_precision=". $precision;
 
     $httpResult = sendPostRequest($url, $payload);
     $success = 200 == $httpResult['status_code'];
@@ -60,7 +60,7 @@ function calculatePrecision($timestamp){
 
 function getListOfDatabases()
 {
-    $url        = "http://" . $_SESSION['host'] . ":8086/db?u=" . $_SESSION['user'] . "&p=" . $_SESSION['pw'];
+    $url        = "http://" . $_SESSION['host'] . ":8086/db?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']);
     $httpResult = getUrlContent($url);
 
     if (200 == $httpResult['status_code'])
@@ -311,7 +311,7 @@ function getDatabaseResults($query)
         debug("Getting data from db. ");
         $now = time();
         $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
-            . $_SESSION['user'] . "&p=" . $_SESSION['pw'] . "&q=" . urlencode($query);
+            . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&q=" . urlencode($query);
 
        
         $httpResult = getUrlContent($url);
@@ -419,7 +419,7 @@ function getTimestampColumn($cols){
 
 function checkLoginValid()
 {
-    $url        = "http://" . $_POST['host'] . ":8086/db?u=" . $_POST['user'] . "&p=" . urlencode($_POST['pw']);
+    $url        = "http://" . $_POST['host'] . ":8086/db?u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']);
     $httpResult = getUrlContent($url);
     debug("Login check against $url returned: ");
     debug($httpResult);
