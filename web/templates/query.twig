@@ -143,7 +143,9 @@
 		... <a href="query.php?query={{ query }}&page={{ number_of_pages }}">{{ number_of_pages }}</a>
 	{% endif %}
 {% else %}
+	{% if query != "" %}
 	No results found.
+	{% endif %}
 {% endif %}
         </nav>
 
