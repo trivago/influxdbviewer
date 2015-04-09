@@ -235,7 +235,7 @@ function getPaginationStart($page, $number_of_pages){
 function getPaginationEnd($page, $number_of_pages, $start){
    if ($number_of_pages <= MAX_PAGINATION_PAGES) {
         debug("Pagination upper bound not limited");
-        return MAX_PAGINATION_PAGES;
+        return $number_of_pages;
     }
     //$end = $page + ceil(MAX_PAGINATION_PAGES / 2);
     $end = $start + MAX_PAGINATION_PAGES;
