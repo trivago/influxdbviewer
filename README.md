@@ -22,17 +22,10 @@ Requires a webserver with php.
 
 * twig >= 1.8
 
-# Bugs & TODOs
-
-* Change Logo to InfluxDbViewer
-* add favicon
-* do not display "No results found. " when no query has been fired.
-* show annotations which are already in the database
-* annotation template: display  message and error in different colours
-
-
 # IMPROVEMENTS & FEATURE SUGGESTIONS
 * add support for version 0.9 => coming very soon
 * maybe add auto completion for queries?
 * add date/time picker to script for adding annotations
 * when selecting a query from the history: exchange text in result state box to "not run yet, invalid results" or something
+* show annotations which are already in the database
+* annotation template: display  message and error in different colours
