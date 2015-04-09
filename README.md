@@ -26,7 +26,7 @@ Requires a webserver with php.
 
 * Change Logo to InfluxDbViewer
 * add favicon
-* internal: test cache cleaner
+* do not display "No results found. " when no query has been fired.
 * show annotations which are already in the database
 * annotation template: display  message and error in different colours
 
@@ -35,3 +35,4 @@ Requires a webserver with php.
 * add support for version 0.9 => coming very soon
 * maybe add auto completion for queries?
 * add date/time picker to script for adding annotations
+* when selecting a query from the history: exchange text in result state box to "not run yet, invalid results" or something
