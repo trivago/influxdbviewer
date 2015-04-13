@@ -24,3 +24,7 @@ Requires a webserver with php.
 
 # IMPROVEMENTS & FEATURE SUGGESTIONS
 * add support for version 0.9 => coming very soon
+
+# Acknowledgements
+
+TODO
