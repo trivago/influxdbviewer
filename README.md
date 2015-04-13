@@ -27,4 +27,4 @@ Requires a webserver with php.
 
 # Acknowledgements
 
-TODO
+Melanie Patrick, Kay Drechsler, Christoph Reinartz, Inga Feick @ trivago GmbH
