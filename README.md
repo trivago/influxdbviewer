@@ -30,4 +30,4 @@ Requires a webserver with php.
 
 # Acknowledgements
 
-Melanie Patrick, Kay Drechsler, Christoph Reinartz, Inga Feick @ trivago GmbH
+Melanie Patrick, Kay Drechsler, Christoph Reinartz, Matthias Cieschinger & Inga Feick @ trivago GmbH
