@@ -2,6 +2,8 @@
 
 This tool allows easier access to influxdb databases. It offers pagination, caching, command and login history and browser back button functionality. Also adds LIMIT clauses to unlimited queries, for safety. Both the auto-limit and the cache can be deactivated in the config.
 
+![Query result screenshot](documentation/screenshot1.png)
+
 # Usage
 
 Requires a webserver with php.
