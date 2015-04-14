@@ -24,6 +24,7 @@ Requires a webserver with php.
 
 # IMPROVEMENTS & FEATURE SUGGESTIONS
 * add support for version 0.9 => coming very soon
+* display series name per datapoint if the select statement used a regex.
 
 # Acknowledgements
 
