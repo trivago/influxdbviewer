@@ -14,17 +14,17 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
 
     $payload = createAnnotationBody($name, $timestamp, $tags, $text, $title);
     $precision = calculatePrecision($timestamp);
-    $url        = "http://" . $_SESSION['host'] . ":8086/db/".$_SESSION['annotation_database']."/series?u=" .urlencode( $_SESSION['user'] ). "&p=" . urlencode($_SESSION['pw']) . "&time_precision=". $precision;
+    $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['annotation_database'] . "/series?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&time_precision=" . $precision;
 
     $httpResult = sendPostRequest($url, $payload);
     $success = 200 == $httpResult['status_code'];
-    if (! $success){
-        debug("Error when setting annotation: " . $url . " => " .$httpResult['status_code']." ".$httpResult['results']);
+    if (!$success)
+    {
+        debug("Error when setting annotation: " . $url . " => " . $httpResult['status_code'] . " " . $httpResult['results']);
         debug("Payload: " . $payload);
     }
-    return ($success)? "" : $httpResult['results'];
+    return ($success) ? "" : $httpResult['results'];
 }
-
 
 
 /*
@@ -34,55 +34,61 @@ curl -X POST -d '[{ "name" : "list_series_foo",
       [1427976200, "", "Di 24. Feb 12:57:54 CET 2015", "Run 1 Start"]
      ]  }]'  'http://192.168.35.85:8086/db/events/series?u=root&p=root&time_precision=s'
 */
-function createAnnotationBody($name, $timestamp, $tags, $text, $title){
-    return  <<<FOO
+function createAnnotationBody($name, $timestamp, $tags, $text, $title)
+{
+    return <<<FOO
     [{ "name" : "$name",
     "columns" : ["time", "tags", "text", "title"],
     "points" : [      [$timestamp, "$tags", "$text", "$title"]    ]  }]
 FOO;
 }
 
-function calculatePrecision($timestamp){
+function calculatePrecision($timestamp)
+{
     /* "If you write data with a time you should specify the precision, which can be done via the time_precision query parameter. It can be set to either s for seconds, ms for milliseconds, or u for microseconds." */
     $length = strlen($timestamp);
-    if ($length <= 10){
+    if ($length <= 10)
+    {
         // seconds 1417651191
         return "s";
-    }
-    else if ($length <= 13){
+    } else if ($length <= 13)
+    {
         // milliseconds 1417651191000
         return "ms";
-    } else {
+    } else
+    {
         // must be microseconds then.
         return "u";
-    } 
+    }
 }
 
 function getListOfDatabases()
 {
-    $url        = "http://" . $_SESSION['host'] . ":8086/db?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']);
+    $url = "http://" . $_SESSION['host'] . ":8086/db?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']);
     $httpResult = getUrlContent($url);
+
+    $result = [];
 
     if (200 == $httpResult['status_code'])
     {
 
-        $json   = json_decode($httpResult['results']);
-        $result = array();
+        $json = json_decode($httpResult['results']);
         foreach ($json as $value)
         {
             $result[] = $value->name;
         }
         sort($result);
-        return $result;
     }
     else
     {
         debug("Error message! Maybe no database exists? Status code " . $httpResult['status_code'] . " with message " . $httpResult['results']);
 
     }
+    return $result;
 }
 
-function sendPostRequest($url, $payload){
+function sendPostRequest($url, $payload)
+{
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -90,8 +96,8 @@ function sendPostRequest($url, $payload){
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS,$payload);
-    $data       = curl_exec($ch);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    $data = curl_exec($ch);
     $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
@@ -105,7 +111,7 @@ function getUrlContent($url)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    $data       = curl_exec($ch);
+    $data = curl_exec($ch);
     $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
@@ -113,35 +119,37 @@ function getUrlContent($url)
 }
 
 
+function autoLimit($query)
+{
 
-
-function autoLimit($query){
-    
-    if (AUTO_LIMIT && isSelectQuery($query) && !isLimited($query)){
+    if (AUTO_LIMIT && isSelectQuery($query) && !isLimited($query))
+    {
         $query .= " LIMIT " . AUTO_LIMIT_VALUE;
     }
-    return $query; 
+    return $query;
 }
 
-function isSelectQuery($query){
-    return preg_match('/select .*/i', $query)>0;
+function isSelectQuery($query)
+{
+    return preg_match('/select .*/i', $query) > 0;
 }
 
-function isLimited($query){
-    return preg_match('/select .* limit \d+/i', $query)>0;
+function isLimited($query)
+{
+    return preg_match('/select .* limit \d+/i', $query) > 0;
 }
 
 function isSeriesList($query)
 {
     // return strrpos(strtolower($query), "list series") !== false;
-    return preg_match('/list series.*/i', $query)>0;
+    return preg_match('/list series.*/i', $query) > 0;
 }
 
 
 function addCommandToCookie($command, $ts, $number_of_pages)
 {
     $cookie_name = "last_commands";
-    $saveMe      = $ts . DELIMITER_COMMANDCOOKIE_INTERNAL . $number_of_pages . DELIMITER_COMMANDCOOKIE_INTERNAL . $command;
+    $saveMe = $ts . DELIMITER_COMMANDCOOKIE_INTERNAL . $number_of_pages . DELIMITER_COMMANDCOOKIE_INTERNAL . $command;
     #debug("New cookie section: " . $saveMe . "<br>";
     $oldValue = readCookie($cookie_name);
     if (!cookieContainsCommand($oldValue, $command))
@@ -165,11 +173,9 @@ function cookieContainsCommand($oldValue, $str)
 
     foreach ($commands as $command)
     {
-        #    debug("cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL );
         $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
 
-//         debug("cookieContainsCommand " . $tokens[2] . " vs " . $str );
-        if (sizeof($tokens) == 3 &&$tokens[2] == $str)
+        if (sizeof($tokens) == 3 && $tokens[2] == $str)
         {
             return true;
         }
@@ -179,17 +185,16 @@ function cookieContainsCommand($oldValue, $str)
 }
 
 
-
-
 function saveResultsToCache($query, $results, $timestamp, $number_of_results)
 {
-  
-  if(ACTIVATE_CACHE && $number_of_results > 0 ){
-   $newEntry = ['timestamp' => $timestamp, 'results' => $results, 'number_of_results' => $number_of_results];
-   $_SESSION['cache'][$query] = $newEntry;
-   debug("Adding entry to cache for key " . $query . " with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp ) );
-  
-  }
+
+    if (ACTIVATE_CACHE && $number_of_results > 0)
+    {
+        $newEntry = ['timestamp' => $timestamp, 'results' => $results, 'number_of_results' => $number_of_results];
+        $_SESSION['cache'][$query] = $newEntry;
+        debug("Adding entry to cache for key " . $query . " with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
+
+    }
 }
 
 function searchCache($query)
@@ -198,6 +203,7 @@ function searchCache($query)
     {
         return $_SESSION['cache'][$query];
     }
+    return null;
 }
 
 function isFreshResult($timestamp)
@@ -217,53 +223,66 @@ function limitResult($page, $data)
     $start = ($page - 1) * RESULTS_PER_PAGE;
     debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
     $subset = array_slice($data, $start, RESULTS_PER_PAGE);
-    debug("Subset has " . sizeof($subset) . " results"); 
+    debug("Subset has " . sizeof($subset) . " results");
     return $subset;
 }
 
-function getPaginationStart($page, $number_of_pages){
-   if ($number_of_pages <= MAX_PAGINATION_PAGES) {
+function getPaginationStart($page, $number_of_pages)
+{
+    if ($number_of_pages <= MAX_PAGINATION_PAGES)
+    {
         debug("Pagination lower bound not limited");
         return 1;
     }
     $half = floor(MAX_PAGINATION_PAGES / 2);
     $start = $page - $half;
     debug("Pagination lower bound: $page - $half -> $start");
-    return ($start < 1)? 1 : $start;
+    return ($start < 1) ? 1 : $start;
 }
 
-function getPaginationEnd($page, $number_of_pages, $start){
-   if ($number_of_pages <= MAX_PAGINATION_PAGES) {
+function getPaginationEnd($number_of_pages, $start)
+{
+    if ($number_of_pages <= MAX_PAGINATION_PAGES)
+    {
         debug("Pagination upper bound not limited");
         return $number_of_pages;
     }
     //$end = $page + ceil(MAX_PAGINATION_PAGES / 2);
     $end = $start + MAX_PAGINATION_PAGES;
-    debug("Pagination upper bound: $start - ".MAX_PAGINATION_PAGES." -> $end");
-    if ($end > $number_of_pages){
+    debug("Pagination upper bound: $start - " . MAX_PAGINATION_PAGES . " -> $end");
+    if ($end > $number_of_pages)
+    {
         debug("Resetting pagination upper bound to because calculated boundary $end > number of pages $number_of_pages");
         return $number_of_pages;
-    } else {
-        return  $end;
+    } else
+    {
+        return $end;
     }
-
 }
 
-function debugCacheContent(){
-   if(ACTIVATE_CACHE && isset($_SESSION['cache'])) {
-    foreach($_SESSION['cache'] as $query => $record){
-        debug("Query " . $query . " with timestamp " . $record['timestamp']. " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
-    }}
+function debugCacheContent()
+{
+    if (ACTIVATE_CACHE && isset($_SESSION['cache']))
+    {
+        foreach ($_SESSION['cache'] as $query => $record)
+        {
+            debug("Query " . $query . " with timestamp " . $record['timestamp'] . " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
+        }
+    }
 }
 
-function removeOldCacheEntries(){
-    if(ACTIVATE_CACHE && isset($_SESSION['cache'])) {
+function removeOldCacheEntries()
+{
+    if (ACTIVATE_CACHE && isset($_SESSION['cache']))
+    {
         $i = 0;
-        foreach($_SESSION['cache'] as $query => $record){
-            if (! isFreshResult($record['timestamp'])){
+        foreach ($_SESSION['cache'] as $query => $record)
+        {
+            if (!isFreshResult($record['timestamp']))
+            {
                 $i++;
                 unset($_SESSION['cache'][$query]);
-                debug("Clean cache deletes query $query with timestamp ". $record['timestamp']);
+                debug("Clean cache deletes query $query with timestamp " . $record['timestamp']);
             }
 
         }
@@ -272,120 +291,123 @@ function removeOldCacheEntries(){
 }
 
 function getDatabaseResults($query)
-{    
-    $feedback                  = [];
+{
+    $feedback = [];
     $feedback['error_message'] = null;
-    $feedback['is_cached']     = false;
+    $feedback['is_cached'] = false;
 
-    $ignore_cache = (isset($_REQUEST['ignore_cache']) && !empty($_REQUEST['ignore_cache']) ) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
-   
+    $ignore_cache = (isset($_REQUEST['ignore_cache']) && !empty($_REQUEST['ignore_cache'])) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
+
     if (ACTIVATE_CACHE && !$ignore_cache)
     {
-        if(DEBUG){
-            debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time())); 
+        if (DEBUG)
+        {
+            debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time()));
             debugCacheContent();
         }
 
         $cache_results = searchCache($query);
-        if(time() % 10 == 0){
+        if (time() % 10 == 0)
+        {
             // randomly remove obsolete stuff from the cache every 10th access
             removeOldCacheEntries();
         }
-        if(!empty($cache_results))
+        if (!empty($cache_results))
         {
             debug("Got data from cache. ");
-        
-            $feedback['results']                 = $cache_results['results'];
-            $feedback['is_cached']     = true;
+
+            $feedback['results'] = $cache_results['results'];
+            $feedback['is_cached'] = true;
             $feedback['timestamp'] = $cache_results['timestamp'];
             $feedback['number_of_results'] = $cache_results['number_of_results'];
             $feedback['number_of_pages'] = ceil($feedback['number_of_results'] / RESULTS_PER_PAGE);
-           
+
             $feedback['error_message'] = null;
-        } else {
+        } else
+        {
             debug("Cache was empty.");
         }
     }
-    if(!$feedback['is_cached'])
+    if (!$feedback['is_cached'])
     {
         debug("Getting data from db. ");
         $now = time();
         $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
             . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&q=" . urlencode($query);
 
-       
+
         $httpResult = getUrlContent($url);
 
         if (200 == $httpResult['status_code'])
         {
-            
+
             if ($httpResult['results'] == "[]") // Series is empty
             {
-                return  [
-                'timestamp'         => $now,
-                'results'           => null,
-                'is_cached'         => false,
-                'page'              => 1,
-                'number_of_pages'   => 1,
-                'number_of_results' => 0,
-                'error_message'     => null
+                return [
+                    'timestamp' => $now,
+                    'results' => null,
+                    'is_cached' => false,
+                    'page' => 1,
+                    'number_of_pages' => 1,
+                    'number_of_results' => 0,
+                    'error_message' => null
                 ];
             }
-            
+
             $json = json_decode($httpResult['results']);
 
             debug("Response length from database: " . strlen($httpResult['results']));
-       //     debug($json);
+            //     debug($json);
             debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
-            $columns           = $json[0]->columns;
-            $datapoints        = $json[0]->points;
-            $results           = ['columns' => $columns, 'datapoints' => $datapoints];
+            $columns = $json[0]->columns;
+            $datapoints = $json[0]->points;
+            $results = ['columns' => $columns, 'datapoints' => $datapoints];
             $number_of_results = count($datapoints);
-            $number_of_pages   = ceil($number_of_results / RESULTS_PER_PAGE);
-            debug("Got ". $number_of_results . " results.");
-            $feedback          = [
-                'timestamp'         => $now,
-                'results'           => $results,
-                'is_cached'         => false,
-                'page'              => 1,
-                'number_of_pages'   => $number_of_pages,
+            $number_of_pages = ceil($number_of_results / RESULTS_PER_PAGE);
+            debug("Got " . $number_of_results . " results.");
+            $feedback = [
+                'timestamp' => $now,
+                'results' => $results,
+                'is_cached' => false,
+                'page' => 1,
+                'number_of_pages' => $number_of_pages,
                 'number_of_results' => $number_of_results,
-                'error_message'     => null
+                'error_message' => null
             ];
-          
+
             saveResultsToCache($query, $results, $now, $number_of_results);
 
             addCommandToCookie($query, $now, $number_of_pages);
-        }
-        else
+        } else
         {
-        	debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
-        	debug ($httpResult['results']);
-        	return  [
-                'timestamp'         => $now,
-                'results'           => null,
-                'is_cached'         => false,
-                'page'              => 1,
-                'number_of_pages'   => 1,
+            debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
+            debug($httpResult['results']);
+            return [
+                'timestamp' => $now,
+                'results' => null,
+                'is_cached' => false,
+                'page' => 1,
+                'number_of_pages' => 1,
                 'number_of_results' => 0,
-                'error_message'     => "Http status code " . $httpResult['status_code'] . ". Error message: " . $httpResult['results']
-                ];
-           
+                'error_message' => "Http status code " . $httpResult['status_code'] . ". Error message: " . $httpResult['results']
+            ];
+
         }
     }
     if ($feedback['error_message'] == null)
     {
-        $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-        debug("Page is " .$page );
+        $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
+        debug("Page is " . $page);
 
         $limitedResult = limitResult($page, $feedback['results']['datapoints']);
 
         if (!empty($limitedResult))
         {
-            debug("Setting limited result"); 
-            $feedback['page']    = $page;
+            debug("Setting limited result");
+            $feedback['page'] = $page;
             $feedback['results']['datapoints'] = $limitedResult;
-        } else {
+        } else
+        {
             debug("Subset creation failed, result empty");
         }
     }
@@ -393,33 +415,41 @@ function getDatabaseResults($query)
     return $feedback;
 }
 
-function debug($text){
-    if(DEBUG){
-    	if(is_scalar($text)){
-    		print $text;
-    	} else {
-    		print_r($text);
-    	}
-    	print "<br>";
+function debug($text)
+{
+    if (DEBUG)
+    {
+        if (is_scalar($text))
+        {
+            print $text;
+        } else
+        {
+            print_r($text);
+        }
+        print "<br>";
     }
 }
 
 
-function getTimestampColumn($cols){
+function getTimestampColumn($cols)
+{
     $i = 0;
-    if(!empty($cols)) {
-    foreach($cols as $name){
-        if($name == "time") return $i;
+    if (!empty($cols))
+    {
+        foreach ($cols as $name)
+        {
+            if ($name == "time") return $i;
 
-        $i ++;
-    }}
+            $i++;
+        }
+    }
     return -1;
 }
 
 
 function checkLoginValid()
 {
-    $url        = "http://" . $_POST['host'] . ":8086/db?u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']);
+    $url = "http://" . $_POST['host'] . ":8086/db?u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']);
     $httpResult = getUrlContent($url);
     debug("Login check against $url returned: ");
     debug($httpResult);
@@ -430,16 +460,16 @@ function storeLoginToSession()
 {
     $_SESSION['host'] = $_POST['host'];
     $_SESSION['user'] = $_POST['user'];
-    $_SESSION['pw']   = $_POST['pw'];
+    $_SESSION['pw'] = $_POST['pw'];
 }
 
 
 function addLoginToCookie()
 {
     $cookie_name = "last_logins";
-    $saveMe      = $_SESSION['user'] . "@" . $_SESSION['host'];
+    $saveMe = $_SESSION['user'] . "@" . $_SESSION['host'];
     debug("New cookie value: " . $saveMe);
-    $oldValue    = readCookie($cookie_name);
+    $oldValue = readCookie($cookie_name);
     debug("Old cookie: " . $oldValue);
     if (!cookieContainsLogin($oldValue, $saveMe))
     {

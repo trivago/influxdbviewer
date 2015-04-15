@@ -3,12 +3,12 @@ require("config.inc.php");
 require("func.inc.php");
 
 session_start();
+
 if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['user']) || empty($_SESSION['user']))
 {
     redirectTo("index.php");
 }
-require(VENDOR_PATH . 'twig/twig/lib/Twig/Autoloader.php');
-Twig_Autoloader::register();
+require __DIR__ . '/vendor/autoload.php';
 
 $databases = getListOfDatabases();
 
@@ -36,15 +36,14 @@ try
     // render template
     echo $template->render(
         array(
-            'title'     => "Databases",
+            'title' => "Databases",
             'databases' => $databases,
 
-            'user'      => $_SESSION['user'],
-            'host'      => $_SESSION['host'],
+            'user' => $_SESSION['user'],
+            'host' => $_SESSION['host'],
         )
     );
-}
-catch (Exception $e)
+} catch (Exception $e)
 {
     die ('ERROR: ' . $e->getMessage());
 }

@@ -2,13 +2,12 @@
 require("config.inc.php");
 require("func.inc.php");
 
-require(VENDOR_PATH . 'twig/twig/lib/Twig/Autoloader.php');
-Twig_Autoloader::register();
+require __DIR__ . '/vendor/autoload.php';
 session_start();
 
 define("DELIMITER_LOGINCOOKIE_EXTERNAL", "|");
 
-$credentialsOk      = false;
+$credentialsOk = false;
 $error_message = null;
 
 if (!isset($_SESSION['host']) || !isset($_SESSION['user']))
@@ -35,8 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $error_message = "Invalid login";
         // does not redirect, will end up in loginform
     }
-}
-else debug("No post data received.");
+} else debug("No post data received.");
 
 try
 {
@@ -56,12 +54,11 @@ try
 
             'title' => "Welcome",
             'error' => $error_message,
-            'user'  => $_SESSION['user'],
-            'host'  => $_SESSION['host'],
+            'user' => $_SESSION['user'],
+            'host' => $_SESSION['host'],
         )
     );
-}
-catch (Exception $e)
+} catch (Exception $e)
 {
     die ('ERROR: ' . $e->getMessage());
 }
