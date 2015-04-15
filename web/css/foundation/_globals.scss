@@ -1,0 +1,37 @@
+/*
+ * Colors
+ */
+$main-color-01: #2c70b7;
+$main-color-01-hover: red;
+$main-color-02: #eff8ff;
+
+$white: #fff;
+$black: #000;
+$errorcolor-01: #ff7474;
+$errorcolor-02: #d22828;
+
+$colorless-01: #666;
+$colorless-02: #999;
+$colorless-03: #ababab;
+$colorless-04: #bababa;
+$colorless-05: #cdcdcd;
+
+$sub-color-01: #37454D;
+/*
+### basic spacing
+*/
+$gutter: 16px !default;
+$gutter-half: ($gutter / 2) !default; // 8px
+$gutter-third:($gutter / 3) !default; // 4px
+$gutter-sixt: ($gutter / 6) !default; // 3px
+$gutter-doubled: ($gutter * 2) !default; // 32px
+
+$centerwrapper-width: 80rem; // 1280px
+
+/*
+ * Font sizes
+ */
+$font-size-h1: 2rem;
+$font-size-h2: 1.75rem;
+$font-size-h3: 1.5rem;
+$font-size-h4: 1.25rem;

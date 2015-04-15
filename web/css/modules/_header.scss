@@ -1,0 +1,121 @@
+.site-header {
+    @extend .clearfix;
+    margin-bottom: ($gutter)*3;
+    background-color: $main-color-01;
+    text-align: center; /* center logo */
+
+    @include respond-to(ipad) {
+	    padding: 0 ($gutter)*2;
+        text-align: left;
+    }
+}
+
+.sitelogo {
+    margin: $gutter 0;
+    text-align: center;
+    font-size: 3.75rem;
+    line-height: 1;
+    color: $white;
+    font-weight: normal;
+
+    .logged-in & {
+        @include respond-to(ipad) {
+            float: left;
+            max-width: 30%;
+        }
+    }
+}
+
+.logo {
+	max-width: 100%;
+	margin-top: 20px;
+}
+
+.logo-addon {
+	margin-right: 20px;
+}
+
+.logo-small,
+.logo-addon-small {
+	width: auto;
+	margin: $gutter 0 $gutter-half;
+
+	@include respond-to(ipad) {
+		@include center-x;
+		position: absolute;
+		max-width: 28%;
+		margin-top: 26px;
+	}
+}
+
+.logout-wrapper {
+    @extend .clearfix;
+    text-align: center;
+
+    @include respond-to(ipad) {
+        float: right;
+        width: 32%;
+        margin: $gutter 0;
+        text-align: left;
+    }
+
+    .btn {
+	    height: 1.75rem;
+        margin-bottom: $gutter;
+	    padding: $gutter-half;
+	    font-size: .75rem;
+
+        @include respond-to(ipad) {
+            float: right;
+            margin-top: 8px;
+        }
+    }
+
+    h2 {
+        font-size: .75rem;
+        color: $white;
+
+        @include respond-to(ipad) {
+            float: right;
+            margin: 16px $gutter-half 0 0;
+        }
+    }
+
+    .invertlink {
+        text-decoration: underline;
+    }
+}
+
+.headermenu {
+	margin-bottom: $gutter;
+
+	@include respond-to(ipad) {
+		margin-top: $gutter;
+		position: absolute;
+	}
+
+	.no-bullet {
+		margin: 0;
+	}
+
+	.listitem {
+		margin: $gutter-third 0;
+	}
+
+	.menulink {
+		display: inline-block;
+		font-size: .75rem;
+
+		&:before {
+			content: '› ';
+		}
+
+		@include link-pseudos {
+			color: $white;
+		}
+
+		@include link-pseudos-hover {
+			color: rgba($white, .5);
+		}
+	}
+}

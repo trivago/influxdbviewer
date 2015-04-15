@@ -1,0 +1,126 @@
+/*
+### mediaqueries
+*/
+$mq-iphone-landscape: 480px;
+$mq-handheld: 640px;
+$mq-below-ipad: 767px;
+$mq-ipad: 768px;
+$mq-ipad-landscape: 1024px;
+$mq-desktop-small: 1024px;
+$mq-below-desktop-big: 1280px;
+$mq-desktop-big: 1280px;
+
+@mixin respond-to($media) {
+	@if $media == iphone-landscape {
+		@media only screen and (min-width: $mq-iphone-landscape) {@content;}
+	}
+
+	@else if $media == handheld {
+		@media only screen and (min-width: $mq-handheld) {@content;}
+	}
+
+	@else if $media == below-ipad {
+		@media only screen and (max-width: $mq-below-ipad) {@content;}
+	}
+
+	@else if $media == ipad {
+		@media only screen and (min-width: $mq-ipad) {@content;}
+	}
+
+	@else if $media == ipad-landscape {
+		@media only screen and (min-width: $mq-ipad-landscape) {@content;}
+	}
+
+	@else if $media == desktop-small {
+		@media only screen and (min-width: $mq-desktop-small) {@content;}
+	}
+
+	@else if $media == below-desktop-big {
+		@media only screen and (max-width: $mq-below-desktop-big) {@content;}
+	}
+
+	@else if $media == desktop-big {
+		@media only screen and (min-width: $mq-desktop-big) {@content;}
+	}
+}
+
+/*
+### Media Query Ranges
+*/
+//sizes according to foundation framework
+$screen-small: 25.5em !default;
+$screen-medium: 32em !default;
+$screen-large:  43.5em !default;
+$screen-xlarge: 52.5em !default;
+$screen-xxlarge: 60em !default;
+
+$screen: "only screen" !default;
+
+$landscape: "#{$screen} and (orientation: landscape)" !default;
+$portrait: "#{$screen} and (orientation: portrait)" !default;
+
+/* change html pseudoclass contents depending on mediaqueries */
+html:after {
+	content: "xxlarge";
+	display: none;
+}
+
+/* Old Media Queries */
+@media only screen and (max-width: $screen-xlarge) {
+	html:after {
+		content: "xlarge";
+	}
+}
+
+@media only screen and (max-width: $screen-large) {
+	html:after {
+		content: "large";
+	}
+}
+
+@media only screen and (max-width: $screen-medium) {
+	html:after {
+		content: "medium";
+	}
+}
+
+@media only screen and (max-width: $screen-small) {
+	html:after {
+		content: "small";
+	}
+}
+
+/* for responsive menu */
+@media only screen and (max-width: $screen-large) {
+
+	//make header sticky
+	.mobile-sticky {
+		.header {
+			position: fixed;
+			top: 0;
+			z-index: 100;
+		}
+	}
+}
+
+@media only screen and (min-width: $screen-large) {
+
+	.mobile-hidden {
+		display: block;
+	}
+
+	.mobile-only {
+		display: block;
+	}
+}
+
+@media only screen and (max-width: $screen-large) {
+
+	.mobile-hidden {
+		display: none;
+	}
+
+	.mobile-only {
+		display: block;
+	}
+}

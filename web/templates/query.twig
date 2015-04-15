@@ -1,0 +1,153 @@
+{% extends "layout.twig" %}
+
+{% block title %}
+	InfluxDBViewer :: Query
+{% endblock %}
+
+{% block header %}
+	{% include "snippets/header-logged-in.twig" %}
+{% endblock %}
+
+{% block content %}
+
+	<script language="javascript">
+		function listPreviousQueries() {
+			var last_commands = urldecode(readCookie("last_commands"));
+			//document.write( "all : " + last_commands + "<br><br><br>");
+			var show_max = 30;
+			var commandlist = last_commands.split("|")
+			var found = commandlist.length;
+			for (i = found - 1; i >= found - show_max; i--) {
+				if(commandlist[i] != undefined && commandlist[i] != "undefined"){
+					var tokens = commandlist[i].split("#");
+					if (tokens[2] != undefined) {
+						var safeLink = tokens[2].split('"').join('&quot;'); // Select statement may contain quotation marks
+						document.write("<li><a href=\"javascript:setCommand('" + safeLink + "');\">" + tokens[2] + "</a></li>");
+					}
+				}
+			}
+		}
+
+
+		function setCommand(command) {
+			document.getElementById("query").value = command;
+		}
+
+		function urldecode(str) {
+			return decodeURIComponent((str + '').replace(/\+/g, '%20'));
+		}
+
+		function readCookie(name) {
+			name += '=';
+			for (var ca = document.cookie.split(/;\s*/), i = ca.length - 1; i >= 0; i--)
+				if (!ca[i].indexOf(name))
+					return ca[i].replace(name, '');
+		}
+	</script>
+
+
+
+{% endblock %}
+
+{% block maincontent %}
+
+    <aside id="js_sidebar" class="disabled">
+        <header>
+            <h3>last commands</h3>
+        </header>
+        <section class="aside-content"><ul>
+            <script language="javascript">listPreviousQueries();</script></ul>
+        </section>
+    </aside>
+
+    <section class="main-content">
+
+        <div class="menu-toggle">
+            <!-- -->
+        </div>
+
+        <form action="" method="get">
+            <section class="sectionbox transparent">
+                <div class="single-searchbar">
+                    
+                    <label for="query" class="label-query">
+                        <input type="text" name="query" value="{{ query }}" id="query" class="textinput-query"
+                               placeholder="select * from xxx" >
+                    </label>
+                    <input type="submit" class="btn btn-primary" value="Run">
+                </div>
+            </section>
+        </form>
+
+        <div class="sectionbox sectionbox-info {% if error_message %}hint error{% endif %}">
+            {% if error_message %}
+	{{ error_message }}
+{% elseif number_of_results > 0 %}
+	Found {{ number_of_results }} results. Date of retrieval: {{ timestamp|date('Y-m-d H:i:s')  }}.
+	{% if is_cached %}
+		Taken from cache. <a href="query.php?query={{ query }}&page={{ page }}&ignore_cache=1">Refresh</a>
+	{% endif %}
+	</div>
+
+	<table class="sectionbox">
+		<thead>
+		<tr>
+			{% for c in columns %}
+				<th>{{ c }}</th>
+			{% endfor %}
+		</tr>
+		</thead>
+		<tbody>
+		{% for row in datapoints %}
+			<tr> {% set col_count = 0 %}
+				{% for cell in row %}
+					<td> <span class="tablelink">
+                        
+                       
+                        {% if is_series_list %}
+							{% if cell != "0" %}
+							<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>
+								{% endif %}
+								{% else %}
+								{% if col_count == timestamp_column %}
+								{% set unix_ts = cell // 1000 %}
+								<abbr title="~ {{ unix_ts|date('Y-m-d H:i:s') }}">{% endif %}
+									{% endif %}
+									{{ cell }}
+									{% if is_series_list %}
+									{% if cell != "0" %}
+							</a>
+							{% endif %}
+                        {% else %}
+                            {% if col_count == timestamp_column %}</abbr>{% endif %}
+                        {% endif %}
+                        
+                        </span>
+					</td>
+					{% set col_count = col_count + 1 %}
+				{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<nav class="sectionbox transparent pagination">
+	<strong class="legend">Pages:</strong>
+	{% if 1 < start_pagination %}
+		<a href="query.php?query={{ query }}&page=1">1</a> ...
+	{% endif %}
+	{% for i in start_pagination..end_pagination %}
+		<a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="activepage"{% endif %} >{{ i }}</a>
+	{% endfor %}
+	{% if number_of_pages > end_pagination %}
+		... <a href="query.php?query={{ query }}&page={{ number_of_pages }}">{{ number_of_pages }}</a>
+	{% endif %}
+{% else %}
+	{% if query != "" %}
+	No results found.
+	{% endif %}
+{% endif %}
+        </nav>
+
+    </section>
+{% endblock %}

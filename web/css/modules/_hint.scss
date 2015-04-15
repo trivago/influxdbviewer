@@ -1,0 +1,15 @@
+.hint {
+    display: block;
+    margin-bottom: $gutter;
+    padding: $gutter;
+   
+    &.error {
+        background: $errorcolor-01;
+        border: 1px solid $errorcolor-02;
+        color: $white;
+    }
+
+    strong {
+        display: block;
+    }
+}

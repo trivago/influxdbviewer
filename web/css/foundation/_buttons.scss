@@ -1,0 +1,57 @@
+.btn {
+	display: inline-block;
+	width: auto;
+	height: 48px;
+	padding: 1rem;
+	white-space: nowrap;
+	text-align: center;
+	font-size: 1rem;
+	line-height: 1;
+	font-weight: normal;
+	text-decoration: none;
+	background-clip: padding-box;
+	background: $main-color-01;
+	cursor: pointer;
+	color: $white;
+	vertical-align: middle;
+	user-select: none;
+	border: 0;
+	outline: 0;
+
+	@include link-pseudos {
+		color: $white;
+		outline: 0;
+	}
+
+	@include link-pseudos-hover {
+		background-color: rgba($main-color-01, .5);
+		cursor: pointer;
+	}
+}
+
+/*
+ * Button styles
+ */
+.btn-secondary {
+	/* replace with mixin later on! */
+	outline: 1px solid rgba(256, 256, 256, .5);
+	background: #585a62; /* Old browsers */
+	background: -moz-linear-gradient(top,  #585a62 2%, #30353f 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(2%,#585a62), color-stop(100%,#30353f)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #585a62 2%,#30353f 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #585a62 2%,#30353f 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #585a62 2%,#30353f 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #585a62 2%,#30353f 100%); /* W3C */
+    
+    @include link-pseudos-hover {
+        background: rgba($black, .5);
+    }
+}
+
+/*
+ * Button sizes
+ */
+.btn-medium {
+    height: 36px;
+    padding: .6rem 1rem;
+}

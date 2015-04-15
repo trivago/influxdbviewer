@@ -1,0 +1,53 @@
+aside {
+    width: 500px;
+    position: absolute;
+
+    > header {
+        background-color: #2c70b7;
+        height: 3rem;
+        padding-left: 1rem;
+        @extend .clearfix;
+
+        > h3 {
+            color: $white;
+            margin: 1rem 0;
+        }
+    }
+
+    .aside-content {
+        background-color: #fff;
+        padding: 20px;
+
+        > ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 500px;
+            overflow: auto;
+
+            > li {
+                line-height: 24px;
+            }
+        }
+    }
+}
+
+.menu-toggle {
+    position: absolute;
+    left: 0;
+    background-image: url(../img/tab_close.png);
+    background-repeat: no-repeat;
+    background-position: 3px 10px;
+    background-color: $main-color-01;
+    height: 3rem;
+    padding-left: 1rem;
+    z-index: 9999;
+    cursor: pointer;
+
+    &.is-active {
+        background-image: url(../img/tab_open.png);
+        background-repeat: no-repeat;
+        background-position: 0px 12px;
+    }
+
+}

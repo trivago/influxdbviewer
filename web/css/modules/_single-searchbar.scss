@@ -1,0 +1,14 @@
+.single-searchbar {
+    @extend .clearfix;
+    max-width: ($gutter)*50;
+    margin: 0 auto ($gutter);
+
+    .textinput-query {
+        width: 84%;
+    }
+
+    .btn {
+        float: right;
+        width: 12%;
+    }
+}

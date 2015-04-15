@@ -1,0 +1,53 @@
+{% extends "layout.twig" %}
+
+{% block title %}
+   InfluxDBViewer :: Select database
+{% endblock %}
+
+{% block header %}
+    {% include "snippets/header-logged-in.twig" %}
+{% endblock %}
+
+{% block content %}
+    <div class="sectionbox">
+        <div class="sectionheader">
+            <h2>Annotation database:</h2>
+            <form action="" method="post">
+            <label for="annotation_database" class="label-annotation_database">
+                <select id="annotation_database" name="annotation_database">
+                    {% for db in databases %}
+                        <option value="{{ db }}" {% if db == annotation_database %}selected{% endif %}>{{ db }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+       
+            {% if error_message %} <div class="sectionbox sectionbox-info hint error">
+                {{ error_message }}  </div>
+            {% elseif message %} <div class="sectionbox sectionbox-info ">
+                {{ message }}  </div>
+            {% endif %}
+      
+            <section class="sectionbox transparent">
+                <div class="single-searchbar">
+                    {#{{ message }}#}
+                    <label for="title" class="label-title">
+                        <input type="text" name="title" value="" id="title_input" class="textinput-query"
+                               placeholder="Write the annotation title here" >
+                    </label>
+                     <label for="seriesname" class="label-seriesname">
+                        <input type="text" name="seriesname" value="" id="seriesname" class="textinput-query"
+                               placeholder="Annotation series name" >
+                    </label>
+                     <label for="tags" class="label-tags"><textarea id="tags" name="tags" placeholder="Tags go here&hellip;" ></textarea> </label>
+                     <label for="payload" class="label-payload"><textarea id="payload" name="payload" placeholder="Annotation text here&hellip;" ></textarea> </label>
+                     <label for="timestamp" class="label-timestamp"><input type="text" name="timestamp" value="" id="timestamp" class="textinput-query"
+                               placeholder="Insert a timestamp in seconds, milliseconds or microseconds" > </label>
+                     <input type="submit" class="btn btn-primary" value="Add">
+                </div>
+            </section>
+        </form>
+
+        
+    </div>
+{% endblock %}

@@ -1,0 +1,85 @@
+.loginform {
+    @extend .clearfix;
+    @include center-x;
+    display: block;
+    margin: -1*(($gutter)*3) 0 60px;
+    padding: 40px ($gutter)*2;
+    text-align: center;
+    background: $main-color-01;
+
+    .btn {
+        float: right;
+        margin-top: 20px;
+
+        @include respond-to(ipad-landscape) {
+            width: 10%;
+            height: 56px;
+            margin: 0;
+        }
+    }
+
+    .label-username,
+    .label-password,
+    .label-host {
+        width: 100%;
+        margin-bottom: 15px;
+
+        @include respond-to(ipad-landscape) {
+            float: left;
+            width: 24%;
+            margin: 0 1%;
+
+            &.label-username {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .textinput-username,
+    .passwordinput,
+    .textinput-host {
+        width: 100%;
+        height: 56px;
+        font-size: 1.375rem;
+        line-height: 1.81818;
+    }
+
+    @include placeholder {
+        font-size: 1.375rem;
+        line-height: 1.81818;
+    }
+
+}
+
+.separator {
+    display: block;
+    width: 100%;
+    min-width: 40px;
+    margin: 0 0.5%;
+    padding: 10px;
+    text-align: center;
+    color: $white;
+    font-size: 2rem;
+    vertical-align: bottom;
+    line-height: 1.1;
+    font-weight: normal;
+
+    @include respond-to(ipad-landscape) {
+        float: left;
+        width: 3%;
+        height: 60px;
+        padding: 0;
+        line-height: 2.1;
+    }
+
+    &.port {
+        padding-top: 20px;
+        font-size: 1.25rem;
+
+        @include respond-to(ipad-landscape) {
+            width: 6%;
+            padding-top: 9px;
+            text-align: left;
+        }
+    }
+}
