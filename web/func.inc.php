@@ -67,22 +67,24 @@ function getListOfDatabases()
     $url = "http://" . $_SESSION['host'] . ":8086/db?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']);
     $httpResult = getUrlContent($url);
 
+    $result = [];
+
     if (200 == $httpResult['status_code'])
     {
 
         $json = json_decode($httpResult['results']);
-        $result = array();
         foreach ($json as $value)
         {
             $result[] = $value->name;
         }
         sort($result);
-        return $result;
-    } else
+    }
+    else
     {
         debug("Error message! Maybe no database exists? Status code " . $httpResult['status_code'] . " with message " . $httpResult['results']);
 
     }
+    return $result;
 }
 
 function sendPostRequest($url, $payload)
@@ -171,10 +173,8 @@ function cookieContainsCommand($oldValue, $str)
 
     foreach ($commands as $command)
     {
-        #    debug("cookieContainsCommand " . $command . " to be split by " . DELIMITER_COMMANDCOOKIE_INTERNAL );
         $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
 
-//         debug("cookieContainsCommand " . $tokens[2] . " vs " . $str );
         if (sizeof($tokens) == 3 && $tokens[2] == $str)
         {
             return true;
@@ -203,6 +203,7 @@ function searchCache($query)
     {
         return $_SESSION['cache'][$query];
     }
+    return null;
 }
 
 function isFreshResult($timestamp)
@@ -239,7 +240,7 @@ function getPaginationStart($page, $number_of_pages)
     return ($start < 1) ? 1 : $start;
 }
 
-function getPaginationEnd($page, $number_of_pages, $start)
+function getPaginationEnd($number_of_pages, $start)
 {
     if ($number_of_pages <= MAX_PAGINATION_PAGES)
     {
@@ -257,7 +258,6 @@ function getPaginationEnd($page, $number_of_pages, $start)
     {
         return $end;
     }
-
 }
 
 function debugCacheContent()

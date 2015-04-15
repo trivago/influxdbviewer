@@ -5,7 +5,6 @@ require("func.inc.php");
 require __DIR__ . '/vendor/autoload.php';
 session_start();
 
-
 if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['user']) || empty($_SESSION['user']) || !isset($_SESSION['pw']) || empty($_SESSION['pw']))
 {
     redirectTo("index.php");
@@ -14,7 +13,6 @@ if (!isset($_SESSION['database']) || empty($_SESSION['database']))
 {
     redirectTo("databases.php");
 }
-
 
 define('DELIMITER_COMMANDCOOKIE_INTERNAL', "#");
 define('DELIMITER_COMMANDCOOKIE_EXTERNAL', "|");
@@ -77,7 +75,7 @@ try
             'page' => $page,
             'number_of_pages' => $number_of_pages,
             'start_pagination' => $pagination_start,
-            'end_pagination' => getPaginationEnd($page, $number_of_pages, $pagination_start),
+            'end_pagination' => getPaginationEnd($number_of_pages, $pagination_start),
             'number_of_results' => $number_of_results,
             'user' => $_SESSION['user'],
             'host' => $_SESSION['host'],
