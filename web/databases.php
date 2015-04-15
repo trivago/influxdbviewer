@@ -35,15 +35,14 @@ try
     // render template
     echo $template->render(
         array(
-            'title'     => "Databases",
+            'title' => "Databases",
             'databases' => $databases,
 
-            'user'      => $_SESSION['user'],
-            'host'      => $_SESSION['host'],
+            'user' => $_SESSION['user'],
+            'host' => $_SESSION['host'],
         )
     );
-}
-catch (Exception $e)
+} catch (Exception $e)
 {
     die ('ERROR: ' . $e->getMessage());
 }
