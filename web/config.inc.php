@@ -1,5 +1,4 @@
 <?php
-define('VENDOR_PATH', 'vendor/');
 
 define("DEBUG",false);
 

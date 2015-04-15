@@ -7,8 +7,7 @@ if (!isset($_SESSION['host']) || empty($_SESSION['host']) || !isset($_SESSION['u
 {
     redirectTo("index.php");
 }
-require(VENDOR_PATH . 'twig/twig/lib/Twig/Autoloader.php');
-Twig_Autoloader::register();
+require __DIR__ . '/vendor/autoload.php';
 
 $databases = getListOfDatabases();
 
