@@ -1,14 +1,14 @@
 # Purpose
 
-This tool allows easier access to influxdb databases. It offers pagination, caching, command and login history and browser back button functionality. Also adds LIMIT clauses to unlimited queries, for safety. Both the auto-limit and the cache can be deactivated in the config.
+This tool allows easier access to influx db databases. It offers pagination, caching, command and log history and browser back button functionality. Also adds LIMIT clauses to unlimited queries, for safety. Both the utility and the cache can be deactivated in the configure.
 
 ![Query result screenshot](documentation/screenshot1.png)
 
 # Usage
 
-Requires a webserver with php.
+Requires a web server with PP.
 
-1. Clone or download the InfluxDBviewer codebase
+1. Clone or download the InfluxDBviewer co debase
 2. Install Dependencies via Composer:  
     `$ curl -s http://getcomposer.org/installer | php`  
     `$ php composer.phar install`
