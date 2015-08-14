@@ -584,7 +584,7 @@ body {
  * centerwrapper centers content on fixed max-width.
  */
 .centerwrapper {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto; }
 
 /*
@@ -917,7 +917,7 @@ input[type='text'], input[type='password'] {
 
 .sectionbox {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto 32px;
   background: #fff; }
   .sectionbox.transparent {
@@ -1043,7 +1043,7 @@ table {
     background: #eff8ff; }
 
 .single-searchbar {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto 16px; }
   .single-searchbar .textinput-query {
     width: 84%; }
