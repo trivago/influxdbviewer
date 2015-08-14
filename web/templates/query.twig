@@ -108,33 +108,35 @@
 		</thead>
 		<tbody>
 		{% for row in datapoints %}
-			<tr> {% set col_count = 0 %}
-				{% for cell in row %}
-					<td> <span class="tablelink">
-
-
-                        {% if is_series_list %}
-							{% if cell != "0" %}
+			<tr> 
+			{% set col_count = 0 %}
+			{% for cell in row %}
+				<td> 
+					<span class="tablelink">
+                    {% if is_series_list %}
+						{% if col_count == 1 %}
 							<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>
-								{% endif %}
-								{% else %}
-								{% if col_count == timestamp_column %}
-								{% set unix_ts = cell // 1000 %}
-								<abbr title="~ {{ unix_ts|date('Y-m-d H:i:s') }}">{% endif %}
-									{% endif %}
-									{{ cell }}
-									{% if is_series_list %}
-									{% if cell != "0" %}
+						{% endif %}
+					{% else %}
+						{% if col_count == timestamp_column %}
+							{% set unix_ts = cell // 1000 %}
+							<abbr title="~ {{ unix_ts|date('Y-m-d H:i:s') }}">
+						{% endif %}
+					{% endif %}
+					{{ cell }}
+					{% if is_series_list %}
+						{% if cell != "0" %}
 							</a>
-							{% endif %}
-                        {% else %}
-                            {% if col_count == timestamp_column %}</abbr>{% endif %}
-                        {% endif %}
-
-                        </span>
-					</td>
-					{% set col_count = col_count + 1 %}
-				{% endfor %}
+						{% endif %}
+               		{% else %}
+                		{% if col_count == timestamp_column %}
+                    		</abbr>
+                   		 {% endif %}
+                    {% endif %}
+                    </span>
+				</td>
+				{% set col_count = col_count + 1 %}
+			{% endfor %}
 			</tr>
 		{% endfor %}
 		</tbody>
