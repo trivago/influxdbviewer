@@ -102,7 +102,9 @@
 		<thead>
 		<tr>
 			{% for c in columns %}
+				
 				<th>{{ c }}</th>
+				
 			{% endfor %}
 		</tr>
 		</thead>
@@ -111,28 +113,35 @@
 			<tr> 
 			{% set col_count = 0 %}
 			{% for cell in row %}
+				{% set unix_ts = cell // 1000 %}
 				<td> 
 					<span class="tablelink">
                     {% if is_series_list %}
-						{% if col_count == 1 %}
-							<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>
+                    	{% if col_count == "1" %}
+							<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>{{ cell }}</a>
+						{% endif %}
+						{% if col_count == "2" %}
+							<img src="img/{{ cell }}.png" width="20" height="20">
+						{% endif %}
+						{% if col_count == "3" %}
+							{% if cell > 0 %}
+								<abbr title="{{ cell }}">{{ unix_ts|date('Y-m-d H:i:s') }}</abbr>
+							{% else %}
+								never
+							{% endif %}
 						{% endif %}
 					{% else %}
 						{% if col_count == timestamp_column %}
-							{% set unix_ts = cell // 1000 %}
 							<abbr title="~ {{ unix_ts|date('Y-m-d H:i:s') }}">
 						{% endif %}
-					{% endif %}
-					{{ cell }}
-					{% if is_series_list %}
-						{% if cell != "0" %}
-							</a>
-						{% endif %}
-               		{% else %}
-                		{% if col_count == timestamp_column %}
+						{{ cell }}
+						{% if col_count == timestamp_column %}
                     		</abbr>
                    		 {% endif %}
-                    {% endif %}
+					{% endif %}
+					
+					
+					
                     </span>
 				</td>
 				{% set col_count = col_count + 1 %}
