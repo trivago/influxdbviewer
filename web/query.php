@@ -45,6 +45,10 @@ try
         $query = $_REQUEST['query'];
         $query = autoLimit($query);
         $feedback = getDatabaseResults($query);
+        
+        if($_REQUEST['show_timeliness'] == "true"){
+            addTimelinessColumn($feedback);
+        }
         $columns = $feedback['results']['columns'];
         $datapoints = $feedback['results']['datapoints'];
         $timestamp = $feedback['timestamp'];

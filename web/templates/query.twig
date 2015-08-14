@@ -69,7 +69,7 @@
         <form action="" method="get">
             <section class="sectionbox transparent">
                 <div class="single-searchbar">
-                    
+
                     <label for="query" class="label-query">
                         <input type="text" name="query" value="{{ query }}" id="query" class="textinput-query"
                                placeholder="select * from xxx" >
@@ -77,7 +77,7 @@
                     <input type="submit" class="btn btn-primary" value="Run">
                 </div>
             </section>
-        </form>
+        
 
         <div class="sectionbox sectionbox-info {% if error_message %}hint error{% endif %}">
             {% if error_message %}
@@ -87,8 +87,12 @@
 	{% if is_cached %}
 		Taken from cache. <a href="query.php?query={{ query }}&page={{ page }}&ignore_cache=1">Refresh</a>
 	{% endif %}
+	{% if is_series_list %}
+		<input type="checkbox" name="show_timeliness" value="true" id="timeliness_input"> <label for="timeliness_input">show live flags</label> 
+	{% endif %}
+	
 	</div>
-
+	</form>
 	<table class="sectionbox">
 		<thead>
 		<tr>
@@ -102,8 +106,8 @@
 			<tr> {% set col_count = 0 %}
 				{% for cell in row %}
 					<td> <span class="tablelink">
-                        
-                       
+
+
                         {% if is_series_list %}
 							{% if cell != "0" %}
 							<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>
@@ -121,7 +125,7 @@
                         {% else %}
                             {% if col_count == timestamp_column %}</abbr>{% endif %}
                         {% endif %}
-                        
+
                         </span>
 					</td>
 					{% set col_count = col_count + 1 %}

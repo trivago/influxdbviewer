@@ -1,5 +1,43 @@
 <?php
 
+function addTimelinessColumn(&$data){
+    $data['results']['columns'][] = "Last updated";
+    for($i = 0; $i < sizeof($data['results']['datapoints']); $i++){
+        $data['results']['datapoints'][$i] = addTimelinessToDatapoint($data['results']['datapoints'][$i]);
+    }
+}
+
+function getLastUpdate($datapoint){
+    return 0; # todo implement
+}
+
+function addTimelinessToDatapoint($datapoint){
+   
+    
+    $metricname = $datapoint[1]; // structure is like this: Array ( [0] => some time value [1] => metric name ) 
+
+     # Look into cache:
+    if(ACTIVATE_CACHE && isset($_SESSION['timeliness_cache']) && in_array($metricname, $_SESSION['timeliness_cache'])){
+        $entry = $_SESSION['timeliness_cache'][$metricname];
+        if(isFreshResult($entry['time'])){
+            return _appendTimeComment($datapoint, $entry['value']);
+        }
+    }
+    $timestamp = getLastUpdate($metricname);
+    if(ACTIVATE_CACHE){
+      $_SESSION['timeliness_cache'][$metricname] = array("value"=>$timestamp, "timestamp" => time());  
+    }
+    
+    return _appendTimeComment($datapoint, $timestamp);
+}
+
+function _appendTimeComment($datapoint , $timestamp){
+    // incoming structure is like this: Array ( [0] => some time value [1] => metric name ) 
+    // outgoing structure is like this: Array ( [0] => some time value [1] => metric name [2] => timestamp) 
+    $datapoint[] = $timestamp;
+    return $datapoint;
+}
+
 function redirectTo($path)
 {
     header("Location: " . $path);
@@ -191,7 +229,7 @@ function saveResultsToCache($query, $results, $timestamp, $number_of_results)
     if (ACTIVATE_CACHE && $number_of_results > 0)
     {
         $newEntry = ['timestamp' => $timestamp, 'results' => $results, 'number_of_results' => $number_of_results];
-        $_SESSION['cache'][$query] = $newEntry;
+        $_SESSION['resultcache'][$query] = $newEntry;
         debug("Adding entry to cache for key " . $query . " with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
 
     }
@@ -199,9 +237,9 @@ function saveResultsToCache($query, $results, $timestamp, $number_of_results)
 
 function searchCache($query)
 {
-    if (isset($_SESSION['cache'][$query]) && isFreshResult($_SESSION['cache'][$query]['timestamp']))
+    if (isset($_SESSION['resultcache'][$query]) && isFreshResult($_SESSION['resultcache'][$query]['timestamp']))
     {
-        return $_SESSION['cache'][$query];
+        return $_SESSION['resultcache'][$query];
     }
     return null;
 }
@@ -262,9 +300,9 @@ function getPaginationEnd($number_of_pages, $start)
 
 function debugCacheContent()
 {
-    if (ACTIVATE_CACHE && isset($_SESSION['cache']))
+    if (ACTIVATE_CACHE && isset($_SESSION['resultcache']))
     {
-        foreach ($_SESSION['cache'] as $query => $record)
+        foreach ($_SESSION['resultcache'] as $query => $record)
         {
             debug("Query " . $query . " with timestamp " . $record['timestamp'] . " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
         }
@@ -273,15 +311,15 @@ function debugCacheContent()
 
 function removeOldCacheEntries()
 {
-    if (ACTIVATE_CACHE && isset($_SESSION['cache']))
+    if (ACTIVATE_CACHE && isset($_SESSION['resultcache']))
     {
         $i = 0;
-        foreach ($_SESSION['cache'] as $query => $record)
+        foreach ($_SESSION['resultcache'] as $query => $record)
         {
             if (!isFreshResult($record['timestamp']))
             {
                 $i++;
-                unset($_SESSION['cache'][$query]);
+                unset($_SESSION['resultcache'][$query]);
                 debug("Clean cache deletes query $query with timestamp " . $record['timestamp']);
             }
 
