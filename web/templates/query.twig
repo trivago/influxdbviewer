@@ -88,7 +88,12 @@
 		Taken from cache. <a href="query.php?query={{ query }}&page={{ page }}&ignore_cache=1">Refresh</a>
 	{% endif %}
 	{% if is_series_list %}
-		<input type="checkbox" name="show_timeliness" value="true" id="timeliness_input"> <label for="timeliness_input">show live flags</label> 
+		{% if is_cached %}
+		<br />
+		{% endif %}
+		<input type="checkbox" name="show_timeliness" value="true" id="timeliness_input" 
+		{% if is_timeannotated %} checked {% endif %}
+		> <label for="timeliness_input">show live flags</label> 
 	{% endif %}
 	
 	</div>

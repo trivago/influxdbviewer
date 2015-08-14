@@ -33,6 +33,7 @@ try
     $is_series_list = false;
     $timestamp = 0;
     $is_cached = false;
+    $is_timeannotated = false;
     $error_message = null;
     $page = 1;
     $number_of_pages = 1;
@@ -48,6 +49,7 @@ try
         
         if($_REQUEST['show_timeliness'] == "true"){
             addTimelinessColumn($feedback);
+            $is_timeannotated = true;
         }
         $columns = $feedback['results']['columns'];
         $datapoints = $feedback['results']['datapoints'];
@@ -75,6 +77,7 @@ try
             'is_series_list' => $is_series_list,
             'timestamp' => $timestamp,
             'is_cached' => $is_cached,
+            'is_timeannotated' => $is_timeannotated,
             'error_message' => $error_message,
             'page' => $page,
             'number_of_pages' => $number_of_pages,
