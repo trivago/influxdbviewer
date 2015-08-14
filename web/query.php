@@ -45,15 +45,15 @@ try
         $query = $_REQUEST['query'];
         $query = autoLimit($query);
         $feedback = getDatabaseResults($query);
-        $columns = $feedback['results']['columns'];
-        $datapoints = $feedback['results']['datapoints'];
-        $timestamp = $feedback['timestamp'];
-        $is_cached = $feedback['is_cached'];
-        $page = $feedback['page'];
+        $columns = $feedback->results['columns'];
+        $datapoints = $feedback->results['datapoints'];
+        $timestamp = $feedback->timestamp;
+        $is_cached = $feedback->is_cached;
+        $page = $feedback->page;
         $is_series_list = isSeriesList($query);
-        $number_of_pages = $feedback['number_of_pages'];
-        $number_of_results = $feedback['number_of_results'];
-        $error_message = $feedback['error_message'];
+        $number_of_pages = $feedback->number_of_pages;
+        $number_of_results = $feedback->number_of_results;
+        $error_message = $feedback->error_message;
 
     }
 
