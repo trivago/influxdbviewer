@@ -9,7 +9,7 @@ This tool allows easier access to influxdb databases. It offers pagination, cach
 Requires a webserver with php.
 
 1. Clone or download the InfluxDBviewer codebase
-2. Install Dependencies via Composer:  
+2. Install Dependencies via Composer. In the web/ folder, run  
     `$ curl -s http://getcomposer.org/installer | php`  
     `$ php composer.phar install`
 3. Set date.timezone option in php.ini because otherwise the twig template engine might complain.
