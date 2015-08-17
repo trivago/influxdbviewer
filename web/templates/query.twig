@@ -117,13 +117,13 @@
 				<td> 
 					<span class="tablelink">
                     {% if is_series_list %}
-                    	{% if col_count == "1" %}
+                    	{% if col_count == "0" %}
 							<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>{{ cell }}</a>
 						{% endif %}
-						{% if col_count == "2" %}
+						{% if col_count == "1" %}
 							<img src="img/{{ cell }}.png" width="20" height="20">
 						{% endif %}
-						{% if col_count == "3" %}
+						{% if col_count == "2" %}
 							{% if cell > 0 %}
 								<abbr title="{{ cell }}">{{ unix_ts|date('Y-m-d H:i:s') }}</abbr>
 							{% else %}

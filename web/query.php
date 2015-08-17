@@ -1,6 +1,7 @@
 <?php
 require("config.inc.php");
 require("func.inc.php");
+require("func.query.inc.php");
 
 require __DIR__ . '/vendor/autoload.php';
 session_start();
@@ -45,18 +46,23 @@ try
     {
         $query = $_REQUEST['query'];
         $query = autoLimit($query);
+        $is_series_list = isSeriesList($query);
         $feedback = getDatabaseResults($query);
         
         if($_REQUEST['show_timeliness'] == "true"){
             addTimelinessColumn($feedback);
             $is_timeannotated = true;
         }
+        if($is_series_list){
+            remove_time_column($feedback);
+        }
+
         $columns = $feedback['results']['columns'];
         $datapoints = $feedback['results']['datapoints'];
         $timestamp = $feedback['timestamp'];
         $is_cached = $feedback['is_cached'];
         $page = $feedback['page'];
-        $is_series_list = isSeriesList($query);
+       
         $number_of_pages = $feedback['number_of_pages'];
         $number_of_results = $feedback['number_of_results'];
         $error_message = $feedback['error_message'];
