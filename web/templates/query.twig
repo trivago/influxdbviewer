@@ -85,7 +85,7 @@
 {% elseif number_of_results > 0 %}
 	Found {{ number_of_results }} results. Date of retrieval: {{ timestamp|date('Y-m-d H:i:s')  }}.
 	{% if is_cached %}
-		Taken from cache. <a href="query.php?query={{ query }}&page={{ page }}&ignore_cache=1">Refresh</a>
+		Taken from cache. <a href="query.php?query={{ query }}&page={{ page }}&ignore_cache=1&show_timeliness={{ is_timeannotated }}">Refresh</a>
 	{% endif %}
 	{% if is_series_list %}
 		{% if is_cached %}
@@ -157,10 +157,10 @@
 		<a href="query.php?query={{ query }}&page=1">1</a> ...
 	{% endif %}
 	{% for i in start_pagination..end_pagination %}
-		<a href="query.php?query={{ query }}&page={{ i }}" {% if i == page %}class="activepage"{% endif %} >{{ i }}</a>
+		<a href="query.php?query={{ query }}&page={{ i }}&show_timeliness={{ is_timeannotated }}" {% if i == page %}class="activepage"{% endif %} >{{ i }}</a>
 	{% endfor %}
 	{% if number_of_pages > end_pagination %}
-		... <a href="query.php?query={{ query }}&page={{ number_of_pages }}">{{ number_of_pages }}</a>
+		... <a href="query.php?query={{ query }}&page={{ number_of_pages }}&show_timeliness={{ is_timeannotated }}">{{ number_of_pages }}</a>
 	{% endif %}
 {% else %}
 	{% if query != "" %}

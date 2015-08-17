@@ -49,7 +49,7 @@ try
         $is_series_list = isSeriesList($query);
         $feedback = getDatabaseResults($query);
         
-        if($_REQUEST['show_timeliness'] == "true"){
+        if($_REQUEST['show_timeliness'] == "true" || $_REQUEST['show_timeliness'] == "1"){
             addTimelinessColumn($feedback);
             $is_timeannotated = true;
         }

@@ -62,25 +62,31 @@ function getLastUpdate($metricname){
 }
 
 function addTimelinessToDatapoint($datapoint){
-   
-    
     $metricname = $datapoint[1]; // structure is like this: Array ( [0] => some time value [1] => metric name ) 
 
      # Look into cache:
-    if(ACTIVATE_CACHE && isset($_SESSION['timeliness_cache']) && in_array($metricname, $_SESSION['timeliness_cache'])){
-        $entry = $_SESSION['timeliness_cache'][$metricname];
-        debug("Found entry in cache for metric " . $metricname ." with value " .$entry['value']." and cache time " . $entry['time'] ); // TODO cache does not work yet.
-        if(isFreshResult($entry['time'])){
-            debug("entry was fresh");
-            return _appendTimeComment($datapoint, $entry['value']);
+    if(ACTIVATE_CACHE && isset($_SESSION['lu_cache'])){
+        #debug("Checking for cache entry " . $metricname);
+        $in_cache = isset($_SESSION['lu_cache'][$metricname]);
+        if($in_cache) {
+            $entry = $_SESSION['lu_cache'][$metricname];
+            if($entry){
+              #  debug("Found entry in lu_cache for metric " . $metricname ." with value " .$entry['value']." and cache time " . $entry['time'] ); // TODO cache does not work yet.
+                if(isFreshResult($entry['time'])){
+                  #  debug("entry in lu_cache was fresh");
+                    return _appendTimeComment($datapoint, $entry['value']);
+                }
+            }
         }
     }
+    # not found in cache. Let's get the last update from the database
     $timestamp = getLastUpdate($metricname);
     if(ACTIVATE_CACHE){
+        # and then add it to the cache
         $entry = array("value"=>$timestamp, "time" => time());
-        $_SESSION['timeliness_cache'][$metricname] = $entry;  
-        // debug("New entry in timecache: ");
-        // debug($entry);
+        $_SESSION['lu_cache'][$metricname] = $entry;  
+        debug("New entry in timecache with name " . $metricname. ": ");
+        debug($entry);
     }
     
     return _appendTimeComment($datapoint, $timestamp);
