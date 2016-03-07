@@ -1,5 +1,7 @@
 <?php
 
+require_once('resultset.class.php');
+
 function redirectTo($path)
 {
     header("Location: " . $path);
@@ -9,17 +11,22 @@ function redirectTo($path)
 function sendAnnotation($timestamp, $tags, $text, $title, $name)
 {
     /*
+    For version 0.8:
         curl -X POST -d ''  'http://10.1.3.220:8086/db/annotations/series?u=root&p=root&time_precision=s'
-    */
+    For version 0.9:
+         curl -XPOST 'http://localhost:8086/write'    */
 
     $payload = createAnnotationBody($name, $timestamp, $tags, $text, $title);
     $precision = calculatePrecision($timestamp);
-    $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['annotation_database'] . "/series?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&time_precision=" . $precision;
+    if (($_SESSION['is_new_influxdb_version'])) {
+        $url = "TODO"; // TODO
+    } else {
+        $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['annotation_database'] . "/series?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&time_precision=" . $precision;
+    }
 
-    $httpResult = sendPostRequest($url, $payload);
+    $httpResult = runHttpRequest($url, $payload);
     $success = 200 == $httpResult['status_code'];
-    if (!$success)
-    {
+    if (!$success) {
         debug("Error when setting annotation: " . $url . " => " . $httpResult['status_code'] . " " . $httpResult['results']);
         debug("Payload: " . $payload);
     }
@@ -28,66 +35,120 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
 
 
 /*
+For version 0.8:
+
 curl -X POST -d '[{ "name" : "list_series_foo",
     "columns" : ["time", "tags", "text", "title"],
     "points" : [
       [1427976200, "", "Di 24. Feb 12:57:54 CET 2015", "Run 1 Start"]
      ]  }]'  'http://192.168.35.85:8086/db/events/series?u=root&p=root&time_precision=s'
+
+For version 0.9:
+
+    {
+    "database": "mydb",
+    "retentionPolicy": "default",
+    "points": [
+        {
+            "name": "cpu_load_short",
+            "tags": {
+                "host": "server01",
+                "region": "us-west"
+            },
+            "timestamp": "2009-11-10T23:00:00Z",
+            "fields": {
+                "value": 0.64
+            }
+        }
+    ]
+}
+
 */
-function createAnnotationBody($name, $timestamp, $tags, $text, $title)
+function createAnnotationBody($name, $timestamp, $tags, $text, $title, $database = null, $retentionPolicy = "default") // TODO support v0.9
 {
-    return <<<FOO
+    if ($_SESSION['is_new_influxdb_version']) {
+        // TODO for the 0.9 version: add tags to payload &  test if this works once graphana supports 0.9
+        return <<<FOO
+    { "database" : "$database",
+    "retentionPolicy" : "$retentionPolicy",
+    "points" : [
+        {
+            "name": "$name",
+            "tags": {
+
+            },
+            "timestamp": "$timestamp",
+            "fields": {
+                "text": "$text",
+                "title": "$title"
+            }
+        }
+    ] }
+FOO;
+    } else
+        return <<<BAR
     [{ "name" : "$name",
     "columns" : ["time", "tags", "text", "title"],
     "points" : [      [$timestamp, "$tags", "$text", "$title"]    ]  }]
-FOO;
+BAR;
 }
 
 function calculatePrecision($timestamp)
 {
     /* "If you write data with a time you should specify the precision, which can be done via the time_precision query parameter. It can be set to either s for seconds, ms for milliseconds, or u for microseconds." */
     $length = strlen($timestamp);
-    if ($length <= 10)
-    {
+    if ($length <= 10) {
         // seconds 1417651191
         return "s";
-    } else if ($length <= 13)
-    {
+    } else if ($length <= 13) {
         // milliseconds 1417651191000
         return "ms";
-    } else
-    {
+    } else {
         // must be microseconds then.
         return "u";
     }
 }
 
+function getDatabaseListUrl($newVersion = null)
+{
+    if ($newVersion == null) $newVersion = $_SESSION['is_new_influxdb_version'];
+    return ($newVersion) ? "http://" . $_SESSION['host'] . ":8086/query?q=SHOW%20DATABASES&u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) : "http://" . $_SESSION['host'] . ":8086/db?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']);
+}
+
 function getListOfDatabases()
 {
-    $url = "http://" . $_SESSION['host'] . ":8086/db?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']);
-    $httpResult = getUrlContent($url);
+    $url = getDatabaseListUrl();
+    $httpResult = runHttpRequest($url);
 
     $result = [];
 
-    if (200 == $httpResult['status_code'])
-    {
+    if (200 == $httpResult['status_code']) {
+
 
         $json = json_decode($httpResult['results']);
-        foreach ($json as $value)
-        {
-            $result[] = $value->name;
+
+
+        if ($_SESSION['is_new_influxdb_version']) {
+            // debug($json->results[0]->series[0]->values);
+            foreach ($json->results[0]->series[0]->values as $value) {
+                //   debug($value);
+                $result[] = $value[0];
+            }
+        } else {
+            foreach ($json as $value) {
+                $result[] = $value->name;
+            }
+
         }
         sort($result);
-    }
-    else
-    {
+    } else {
         debug("Error message! Maybe no database exists? Status code " . $httpResult['status_code'] . " with message " . $httpResult['results']);
 
     }
     return $result;
 }
 
-function sendPostRequest($url, $payload)
+function runHttpRequest($url, $payload = null)
 {
 
     $ch = curl_init();
@@ -95,22 +156,10 @@ function sendPostRequest($url, $payload)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    $data = curl_exec($ch);
-    $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    return ['status_code' => $statuscode, 'results' => $data];
-}
-
-function getUrlContent($url)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    if ($payload != null) {
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    }
     $data = curl_exec($ch);
     $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
@@ -122,8 +171,7 @@ function getUrlContent($url)
 function autoLimit($query)
 {
 
-    if (AUTO_LIMIT && isSelectQuery($query) && !isLimited($query))
-    {
+    if (AUTO_LIMIT && isSelectQuery($query) && !isLimited($query)) {
         $query .= " LIMIT " . AUTO_LIMIT_VALUE;
     }
     return $query;
@@ -148,14 +196,14 @@ function isSeriesList($query)
 
 function addCommandToCookie($command, $ts, $number_of_pages)
 {
+    debug("Adding query to last commands: $command");
     $cookie_name = "last_commands";
     $saveMe = $ts . DELIMITER_COMMANDCOOKIE_INTERNAL . $number_of_pages . DELIMITER_COMMANDCOOKIE_INTERNAL . $command;
     #debug("New cookie section: " . $saveMe . "<br>";
     $oldValue = readCookie($cookie_name);
-    if (!cookieContainsCommand($oldValue, $command))
-    {
+    if (!cookieContainsCommand($oldValue, $command)) {
         $newValue = $oldValue . DELIMITER_COMMANDCOOKIE_EXTERNAL . $saveMe;
-        # debug("Old cookie section: " . $oldValue . "<br>";
+        #debug("Old cookie section: " . $oldValue . "<br>";
         #debug("Full cookie section: " . $newValue . "<br>";
 
         setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
@@ -171,12 +219,10 @@ function cookieContainsCommand($oldValue, $str)
 {
     $commands = explode(DELIMITER_COMMANDCOOKIE_EXTERNAL, $oldValue);
 
-    foreach ($commands as $command)
-    {
+    foreach ($commands as $command) {
         $tokens = explode(DELIMITER_COMMANDCOOKIE_INTERNAL, $command);
 
-        if (sizeof($tokens) == 3 && $tokens[2] == $str)
-        {
+        if (sizeof($tokens) == 3 && $tokens[2] == $str) {
             return true;
         }
     }
@@ -188,8 +234,7 @@ function cookieContainsCommand($oldValue, $str)
 function saveResultsToCache($query, $results, $timestamp, $number_of_results)
 {
 
-    if (ACTIVATE_CACHE && $number_of_results > 0)
-    {
+    if (ACTIVATE_CACHE && $number_of_results > 0) {
         $newEntry = ['timestamp' => $timestamp, 'results' => $results, 'number_of_results' => $number_of_results];
         $_SESSION['cache'][$query] = $newEntry;
         debug("Adding entry to cache for key " . $query . " with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
@@ -199,8 +244,7 @@ function saveResultsToCache($query, $results, $timestamp, $number_of_results)
 
 function searchCache($query)
 {
-    if (isset($_SESSION['cache'][$query]) && isFreshResult($_SESSION['cache'][$query]['timestamp']))
-    {
+    if (isset($_SESSION['cache'][$query]) && isFreshResult($_SESSION['cache'][$query]['timestamp'])) {
         return $_SESSION['cache'][$query];
     }
     return null;
@@ -215,8 +259,7 @@ function isFreshResult($timestamp)
 function limitResult($page, $data)
 {
 
-    if (empty($page) || !is_numeric($page) || $page < 1)
-    {
+    if (empty($page) || !is_numeric($page) || $page < 1) {
         $page = 1;
     }
 
@@ -229,8 +272,7 @@ function limitResult($page, $data)
 
 function getPaginationStart($page, $number_of_pages)
 {
-    if ($number_of_pages <= MAX_PAGINATION_PAGES)
-    {
+    if ($number_of_pages <= MAX_PAGINATION_PAGES) {
         debug("Pagination lower bound not limited");
         return 1;
     }
@@ -242,30 +284,25 @@ function getPaginationStart($page, $number_of_pages)
 
 function getPaginationEnd($number_of_pages, $start)
 {
-    if ($number_of_pages <= MAX_PAGINATION_PAGES)
-    {
+    if ($number_of_pages <= MAX_PAGINATION_PAGES) {
         debug("Pagination upper bound not limited");
         return $number_of_pages;
     }
     //$end = $page + ceil(MAX_PAGINATION_PAGES / 2);
     $end = $start + MAX_PAGINATION_PAGES;
     debug("Pagination upper bound: $start - " . MAX_PAGINATION_PAGES . " -> $end");
-    if ($end > $number_of_pages)
-    {
+    if ($end > $number_of_pages) {
         debug("Resetting pagination upper bound to because calculated boundary $end > number of pages $number_of_pages");
         return $number_of_pages;
-    } else
-    {
+    } else {
         return $end;
     }
 }
 
 function debugCacheContent()
 {
-    if (ACTIVATE_CACHE && isset($_SESSION['cache']))
-    {
-        foreach ($_SESSION['cache'] as $query => $record)
-        {
+    if (ACTIVATE_CACHE && isset($_SESSION['cache'])) {
+        foreach ($_SESSION['cache'] as $query => $record) {
             debug("Query " . $query . " with timestamp " . $record['timestamp'] . " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
         }
     }
@@ -273,13 +310,10 @@ function debugCacheContent()
 
 function removeOldCacheEntries()
 {
-    if (ACTIVATE_CACHE && isset($_SESSION['cache']))
-    {
+    if (ACTIVATE_CACHE && isset($_SESSION['cache'])) {
         $i = 0;
-        foreach ($_SESSION['cache'] as $query => $record)
-        {
-            if (!isFreshResult($record['timestamp']))
-            {
+        foreach ($_SESSION['cache'] as $query => $record) {
+            if (!isFreshResult($record['timestamp'])) {
                 $i++;
                 unset($_SESSION['cache'][$query]);
                 debug("Clean cache deletes query $query with timestamp " . $record['timestamp']);
@@ -290,140 +324,145 @@ function removeOldCacheEntries()
     }
 }
 
-function getDatabaseResults($query)
+function queryCache($query, &$feedback)
 {
-    $feedback = [];
-    $feedback['error_message'] = null;
-    $feedback['is_cached'] = false;
+    if (DEBUG) {
+        debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time()));
+        debugCacheContent();
+    }
+
+    $cache_results = searchCache($query);
+    if (time() % 10 == 0) {
+        // randomly remove obsolete stuff from the cache every 10th access
+        removeOldCacheEntries();
+    }
+    if (!empty($cache_results)) {
+        debug("Got data from cache. ");
+
+        $feedback->results = $cache_results['results'];
+        $feedback->is_cached = true;
+        $feedback->timestamp = $cache_results['timestamp'];
+        $feedback->number_of_results = $cache_results['number_of_results'];
+        $feedback->number_of_pages = ceil($feedback->number_of_results / RESULTS_PER_PAGE);
+        $feedback->error_message = null;
+    } else {
+        debug("Cache was empty.");
+    }
+
+}
+
+function parseQueryResults($httpResult, $query)
+{
+    $now = time();
+    $feedback = new ResultSet();
+
+    if ($httpResult['results'] == "[]") // Series is empty
+    {
+        return $feedback;
+    }
+
+
+
+    $json = json_decode($httpResult['results']);
+
+    debug("Response length from database: " . strlen($httpResult['results']));
+    //     debug($json);
+    debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
+
+    if ($_SESSION['is_new_influxdb_version']) {
+        debug($json->results);
+        $columns = null;
+
+
+    } else {
+        $columns = $json[0]->columns;
+        $datapoints = $json[0]->points;
+    }
+    $results = ['columns' => $columns, 'datapoints' => $datapoints];
+    $number_of_results = count($datapoints);
+    $number_of_pages = ceil($number_of_results / RESULTS_PER_PAGE);
+    debug("Got " . $number_of_results . " results.");
+    $feedback->results = $results;
+    $feedback->number_of_pages = $number_of_pages;
+    $feedback->number_of_results = $number_of_results;
+
+    saveResultsToCache($query, $results, $now, $number_of_results);
+    addCommandToCookie($query, $now, $number_of_pages);
+    return $feedback;
+}
+
+function getQueryUrl($query)
+{
+    if ($_SESSION['is_new_influxdb_version']) {
+        return "http://" . $_SESSION['host'] . ":8086/query?u="
+        . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&q=" . urlencode($query) . "&db=" . urlencode($_SESSION['database']);
+    } else {
+        return "http://" . $_SESSION['host'] . ":8086/db/" . urlencode($_SESSION['database']) . "/series?u="
+        . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&q=" . urlencode($query);
+    }
+}
+
+function getDatabaseResults($query) // TODO add support for 0.9
+{
+    $feedback = new ResultSet();
 
     $ignore_cache = (isset($_REQUEST['ignore_cache']) && !empty($_REQUEST['ignore_cache'])) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
 
-    if (ACTIVATE_CACHE && !$ignore_cache)
-    {
-        if (DEBUG)
-        {
-            debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time()));
-            debugCacheContent();
-        }
-
-        $cache_results = searchCache($query);
-        if (time() % 10 == 0)
-        {
-            // randomly remove obsolete stuff from the cache every 10th access
-            removeOldCacheEntries();
-        }
-        if (!empty($cache_results))
-        {
-            debug("Got data from cache. ");
-
-            $feedback['results'] = $cache_results['results'];
-            $feedback['is_cached'] = true;
-            $feedback['timestamp'] = $cache_results['timestamp'];
-            $feedback['number_of_results'] = $cache_results['number_of_results'];
-            $feedback['number_of_pages'] = ceil($feedback['number_of_results'] / RESULTS_PER_PAGE);
-
-            $feedback['error_message'] = null;
-        } else
-        {
-            debug("Cache was empty.");
-        }
+    if (ACTIVATE_CACHE && !$ignore_cache) {
+        queryCache($query, $feedback);
     }
-    if (!$feedback['is_cached'])
-    {
+    if (!$feedback->is_cached) {
         debug("Getting data from db. ");
-        $now = time();
-        $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['database'] . "/series?u="
-            . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&q=" . urlencode($query);
+        $url = getQueryUrl($query);
+        $httpResult = runHttpRequest($url);
 
-
-        $httpResult = getUrlContent($url);
-
-        if (200 == $httpResult['status_code'])
-        {
-
-            if ($httpResult['results'] == "[]") // Series is empty
-            {
-                return [
-                    'timestamp' => $now,
-                    'results' => null,
-                    'is_cached' => false,
-                    'page' => 1,
-                    'number_of_pages' => 1,
-                    'number_of_results' => 0,
-                    'error_message' => null
-                ];
-            }
-
-            $json = json_decode($httpResult['results']);
-
-            debug("Response length from database: " . strlen($httpResult['results']));
-            //     debug($json);
-            debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
-            $columns = $json[0]->columns;
-            $datapoints = $json[0]->points;
-            $results = ['columns' => $columns, 'datapoints' => $datapoints];
-            $number_of_results = count($datapoints);
-            $number_of_pages = ceil($number_of_results / RESULTS_PER_PAGE);
-            debug("Got " . $number_of_results . " results.");
-            $feedback = [
-                'timestamp' => $now,
-                'results' => $results,
-                'is_cached' => false,
-                'page' => 1,
-                'number_of_pages' => $number_of_pages,
-                'number_of_results' => $number_of_results,
-                'error_message' => null
-            ];
-
-            saveResultsToCache($query, $results, $now, $number_of_results);
-
-            addCommandToCookie($query, $now, $number_of_pages);
-        } else
-        {
+        if (200 == $httpResult['status_code']) {
+            $feedback = parseQueryResults($httpResult, $query);
+        } else {
             debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
             debug($httpResult['results']);
-            return [
-                'timestamp' => $now,
-                'results' => null,
-                'is_cached' => false,
-                'page' => 1,
-                'number_of_pages' => 1,
-                'number_of_results' => 0,
-                'error_message' => "Http status code " . $httpResult['status_code'] . ". Error message: " . $httpResult['results']
-            ];
+            if ($_SESSION['is_new_influxdb_version']) {
+                $json = json_decode($httpResult['results']);
+                debug($json);
+                $errorMessage = $json->error;
+            } else {
+                $errorMessage = $httpResult['results'];
+            }
+            $feedback->error_message = "Http status code " . $httpResult['status_code'] . ". Error message: " . $errorMessage;
+            # TODO if version 0.9 then warn if 0.8 query has been used, such as list series
+            return $feedback;
 
         }
     }
-    if ($feedback['error_message'] == null)
-    {
-        $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-        debug("Page is " . $page);
-
-        $limitedResult = limitResult($page, $feedback['results']['datapoints']);
-
-        if (!empty($limitedResult))
-        {
-            debug("Setting limited result");
-            $feedback['page'] = $page;
-            $feedback['results']['datapoints'] = $limitedResult;
-        } else
-        {
-            debug("Subset creation failed, result empty");
-        }
+    if ($feedback->error_message == null) {
+        setPaginationWindow($feedback);
     }
 
     return $feedback;
 }
 
+function setPaginationWindow(&$feedback)
+{
+    $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
+    debug("Page is " . $page);
+
+    $limitedResult = limitResult($page, $feedback->results['datapoints']);
+
+    if (!empty($limitedResult)) {
+        debug("Setting limited result");
+        $feedback->page = $page;
+        $feedback->results['datapoints'] = $limitedResult;
+    } else {
+        debug("Subset creation failed, result empty");
+    }
+}
+
 function debug($text)
 {
-    if (DEBUG)
-    {
-        if (is_scalar($text))
-        {
+    if (DEBUG) {
+        if (is_scalar($text)) {
             print $text;
-        } else
-        {
+        } else {
             print_r($text);
         }
         print "<br>";
@@ -434,10 +473,8 @@ function debug($text)
 function getTimestampColumn($cols)
 {
     $i = 0;
-    if (!empty($cols))
-    {
-        foreach ($cols as $name)
-        {
+    if (!empty($cols)) {
+        foreach ($cols as $name) {
             if ($name == "time") return $i;
 
             $i++;
@@ -447,13 +484,26 @@ function getTimestampColumn($cols)
 }
 
 
-function checkLoginValid()
+function checkLoginValid($version = 0.8)
 {
-    $url = "http://" . $_POST['host'] . ":8086/db?u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']);
-    $httpResult = getUrlContent($url);
+
+
+    $url = ($version == 0.8) ? "http://" . $_POST['host'] . ":8086/db?u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']) :
+        "http://" . $_POST['host'] . ":8086/query?q=SHOW%20DATABASES&u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']);
+    $httpResult = runHttpRequest($url);
     debug("Login check against $url returned: ");
     debug($httpResult);
-    return (200 == $httpResult['status_code']);
+    if (200 == $httpResult['status_code']) {
+        $_SESSION['is_new_influxdb_version'] = $version > 0.8;
+        return true;
+    }
+
+    if ($version == 0.8) {
+        // if not successful: Let's try the v0.9 version
+        return checkLoginValid(0.9);
+    } else {
+        return false;
+    }
 }
 
 function storeLoginToSession()
@@ -471,8 +521,7 @@ function addLoginToCookie()
     debug("New cookie value: " . $saveMe);
     $oldValue = readCookie($cookie_name);
     debug("Old cookie: " . $oldValue);
-    if (!cookieContainsLogin($oldValue, $saveMe))
-    {
+    if (!cookieContainsLogin($oldValue, $saveMe)) {
         $newValue = $oldValue . DELIMITER_LOGINCOOKIE_EXTERNAL . $saveMe;
         debug("Setting new cookie: " . $newValue);
         setcookie($cookie_name, $newValue, time() + (86400 * 30), '/');
@@ -483,11 +532,9 @@ function cookieContainsLogin($oldValue, $str)
 {
     $logins = explode(DELIMITER_LOGINCOOKIE_EXTERNAL, $oldValue);
     debug("Found " . sizeof($logins) . " login cookie values: ");
-    foreach ($logins as $login)
-    {
+    foreach ($logins as $login) {
         debug($login);
-        if ($login == $str)
-        {
+        if ($login == $str) {
             debug("Login already stored");
             return true;
         }
@@ -495,5 +542,3 @@ function cookieContainsLogin($oldValue, $str)
 
     return false;
 }
-
-
