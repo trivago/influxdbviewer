@@ -66,8 +66,8 @@ function handle_v08_select($render, $feedback){
 
 function handle_v09_select($render, $feedback){ 
     # TODO
-    debug($feedback->results);
-    $render->datapoints = $feedback->results['datapoints'];
+    debug($feedback->results['measurements']);
+    $render->datapoints = $feedback->results['measurements'];
     $render->timestamp = $feedback->timestamp;
     $render->is_cached = $feedback->is_cached;
     $render->page = $feedback->page;
