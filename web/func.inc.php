@@ -492,6 +492,7 @@ function handle_v08_select(&$render, $data)
 
 function handle_v09_select(&$render, $data) # TODO check what's duplicate and then merge with other handle functions
 { 
+    debug($data);
     $columns = $data->results[0]->series[0]->columns;
     $datapoints = $data->results[0]->series[0]->values;
    
