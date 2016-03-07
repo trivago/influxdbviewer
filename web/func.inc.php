@@ -566,6 +566,7 @@ function checkLoginValid($version = 0.8)
     if (200 == $httpResult['status_code']) {
         $_SESSION['dbversion'] = $version;
         $_SESSION['is_new_influxdb_version'] = $version > 0.8; // deprecated, TODO switch to version
+        debug("Influx version discovered: " . $_SESSION['dbversion']);
         return true;
     }
 
