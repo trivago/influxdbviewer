@@ -609,10 +609,10 @@ function cookieContainsLogin($oldValue, $str)
 
 abstract class QueryType {
 
-    const v08_LIST_SERIES = 0;
+    const v08_LIST_SERIES = 5;
     const v08_SELECT = 1;
     const v08_GENERIC = 2;
     const v09_SHOW_MEASUREMENT = 3;
     const v09_SELECT = 4;
-    const v09_GENERIC = 5;  
+    const v09_GENERIC = 6;  
 }
