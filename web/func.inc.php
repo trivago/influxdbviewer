@@ -502,14 +502,14 @@ function handle_v09_select(&$render, $data)
 { 
     #debug($data);
     $render->columns = $data->results[0]->series[0]->columns;
-    $render->datapoints $data->results[0]->series[0]->values;
+    $render->datapoints = $data->results[0]->series[0]->values;
     $render->timestamp_column = getTimestampColumn($render->columns);
 }
 
 function handle_v09_show_measurement(&$render, $data)
 { 
     $render->columns = $data->results[0]->series[0]->columns;
-    $render->datapoints $data->results[0]->series[0]->values;   
+    $render->datapoints = $data->results[0]->series[0]->values;   
     $render->timestamp_column = -1;
     $render->is_series_list = true; 
 }
