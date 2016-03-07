@@ -453,7 +453,7 @@ function parseQueryResults($httpResult, $query, &$render)
 
 function handle_response($data, &$render){
     $query_type = $render->query_type;
-    debug("Query type for '" + $render->query + "' is " + $query_type);
+    debug("Query type for '" . $render->query . "' is " . $query_type);
     switch ($query_type) {
         case QueryType::v08_SELECT:
             handle_v08_select($render, $data);
@@ -468,7 +468,8 @@ function handle_response($data, &$render){
             break;
         
         default:
-            # TODO error
+            debug("error: unknown query type");
+            # TODO handle error
             break;
     }
 }
