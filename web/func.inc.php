@@ -187,10 +187,18 @@ function isLimited($query)
     return preg_match('/select .* limit \d+/i', $query) > 0;
 }
 
+// deprecated
 function isSeriesList($query)
 {
     // return strrpos(strtolower($query), "list series") !== false;
     return preg_match('/list series.*/i', $query) > 0;
+}
+
+function getQueryType($query)
+{
+    if (preg_match('/list series.*/i', $query) > 0) return QueryType::v08_LIST_SERIES;
+    if strtolower($query) == "show measurements" return QueryType::v09_SHOW_MEASUREMENT;
+    if (preg_match('/list series.*/i', $query) > 0) return $_SESSION['dbversion'] == 0.9 ? QueryType::v09_SELECT : QueryType::v08_SELECT;
 }
 
 
@@ -490,7 +498,8 @@ function checkLoginValid($version = 0.8)
     debug("Login check against $url returned: ");
     debug($httpResult);
     if (200 == $httpResult['status_code']) {
-        $_SESSION['is_new_influxdb_version'] = $version > 0.8;
+        $_SESSION['dbversion'] = $version;
+        $_SESSION['is_new_influxdb_version'] = $version > 0.8; // deprecated, TODO switch to version
         return true;
     }
 
@@ -542,6 +551,7 @@ function cookieContainsLogin($oldValue, $str)
 abstract class QueryType {
 
     const v08_LIST_SERIES = 0;
-    const v08_SELECT = 0;
-    const v09_SHOW_MEASUREMENT = 0;
+    const v08_SELECT = 1;
+    const v09_SHOW_MEASUREMENT = 2;
+    const v09_SELECT = 3; 
 }
