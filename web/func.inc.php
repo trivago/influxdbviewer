@@ -447,8 +447,10 @@ function parseQueryResults($httpResult, $query, &$render)
     $data = json_decode($httpResult['results']);
     # debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
     handle_response($data, $render);
-    saveResultsToCache($query, $results, $now, $number_of_results);
-    addCommandToCookie($query, $now, $number_of_pages);
+    $render->number_of_results = count($render->datapoints);      
+    debug("Got " . $render->number_of_results . " results.");  
+    saveResultsToCache($query, $results, $now, $render->number_of_results); # TODO why is the number of results needed here?
+    addCommandToCookie($query, $now, $number_of_pages); # TODO number of pages not known yet
     return;
 }
 
@@ -457,15 +459,21 @@ function handle_response($data, &$render){
     debug("Query type for '" . $render->query . "' is " . $query_type);
     switch ($query_type) {
         case QueryType::v08_SELECT:
+        case QueryType::v08_GENERIC:
             handle_v08_select($render, $data);
             break;
 
         case QueryType::v09_SELECT:
+        case QueryType::v09_GENERIC:
             handle_v09_select($render, $data);
             break;
 
         case QueryType::v09_SHOW_MEASUREMENT:
             handle_v09_show_measurement($render, $data);
+            break;
+
+        case QueryType::v08_LIST_SERIES:
+            handle_v08_list_series($render, $data);
             break;
         
         default:
@@ -475,54 +483,38 @@ function handle_response($data, &$render){
     }
 }
 
+function handle_v08_list_series(&$render, $data)
+{
+    $render->columns = $data[0]->columns;
+    $render->datapoints = $data[0]->points;    
+    $render->timestamp_column = -1;
+    $render->is_series_list = true;
+}
+
 function handle_v08_select(&$render, $data)
 {
-
-    $columns = $data[0]->columns;
-    $datapoints = $data[0]->points;
-
-    $number_of_results = count($datapoints);    
-    debug("Got " . $number_of_results . " results.");
-    #$render->results = ['columns' => $columns, 'datapoints' => $datapoints];
-    $render->columns = $columns; # why is this duplicate? TODO
-    $render->number_of_results = $number_of_results;
-    $render->timestamp_column = getTimestampColumn($columns);
-    $render->datapoints = $datapoints; # why is this duplicate? TODO
-    $render->is_series_list = $render->query_type == QueryType::v08_LIST_SERIES;
-
+    $render->columns = $data[0]->columns;
+    $render->datapoints = $data[0]->points;    
+    $render->timestamp_column = getTimestampColumn($render->columns);    
 }
 
-function handle_v09_select(&$render, $data) # TODO check what's duplicate and then merge with other handle functions
+function handle_v09_select(&$render, $data)
 { 
     #debug($data);
-    $columns = $data->results[0]->series[0]->columns;
-    $datapoints = $data->results[0]->series[0]->values;
-   
-    $number_of_results = count($datapoints);    
-    debug("Got " . $number_of_results . " results.");
-    #$render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
-    $render->columns = $columns; # why is this duplicate? TODO
-    $render->number_of_results = $number_of_results;
-    $render->timestamp_column = -1;
-    $render->datapoints = $datapoints;  # why is this duplicate? TODO
-   
+    $render->columns = $data->results[0]->series[0]->columns;
+    $render->datapoints $data->results[0]->series[0]->values;
+    $render->timestamp_column = getTimestampColumn($render->columns);
 }
 
-function handle_v09_show_measurement(&$render, $data) # TODO check what's duplicate and then merge with other handle functions
+function handle_v09_show_measurement(&$render, $data)
 { 
-    $columns = $data->results[0]->series[0]->columns;
-    $datapoints = $data->results[0]->series[0]->values;
-   
-    $number_of_results = count($datapoints);    
-    debug("Got " . $number_of_results . " results.");
-    #$render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
-    $render->timestamp_column = getTimestampColumn($columns);
-    $render->number_of_results = $number_of_results;
+    $render->columns = $data->results[0]->series[0]->columns;
+    $render->datapoints $data->results[0]->series[0]->values;   
     $render->timestamp_column = -1;
-    $render->datapoints = $datapoints;  # why is this duplicate? TODO
-    $render->columns = $columns; # why is this duplicate? TODO
-    $render->is_series_list = $render->query_type == QueryType::v09_LIST_SERIES;
+    $render->is_series_list = true; 
 }
+
+# TODO test what happens when we execute list series. It should be handled here aswell.
 
 
 
