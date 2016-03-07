@@ -19,6 +19,6 @@ class Renderobject extends Resultset {
     var $start_pagination = 1;
     var $end_pagination = 1;
     var $timestamp_column = "";
-    var $timestamp = time();
+    var $timestamp = 0;
 }
 ?>

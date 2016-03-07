@@ -436,6 +436,7 @@ function getDatabaseResults($query) // TODO add support for 0.9
 function parseQueryResults($httpResult, $query, &$render)
 {
     $now = time();
+    $render->timestamp = $now;
    
     if ($httpResult['results'] == "[]") // Series is empty
     {
