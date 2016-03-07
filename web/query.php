@@ -37,6 +37,7 @@ try
     } 
     else 
     {
+        $render = new Renderobject();
         debug("Empty query, aborting.");
     }
 
