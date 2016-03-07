@@ -38,6 +38,10 @@ try
         $render->query = $query;
         $feedback = getDatabaseResults($query);       
         handle_response($feedback, $render);
+    } 
+    else 
+    {
+        debug("Empty query, aborting.");
     }
 
     echo $template->render(
