@@ -11,7 +11,7 @@ class Renderobject {
     var $query_type = 0;
 	var $title = 'Results'; 
     var $user = $_SESSION['user'];
-    var $host = $_SESSION['host']; 
+    var $host = $_SESSION['host'];
     var $database = $_SESSION['database'];
     var $datapoints = [];
     var $columns = [];
