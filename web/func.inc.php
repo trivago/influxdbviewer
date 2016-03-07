@@ -465,6 +465,8 @@ function handle_response($data, &$render){
 
         case QueryType::v09_GENERIC:
             debug($data);
+            handle_v09_generic($render, $data);
+
         case QueryType::v09_SELECT:
             handle_v09_select($render, $data);
             break;
@@ -489,7 +491,6 @@ function handle_v08_list_series(&$render, $data)
 {
     $render->columns = $data[0]->columns;
     $render->datapoints = $data[0]->points;    
-    $render->timestamp_column = -1;
     $render->is_series_list = true;
 }
 
@@ -498,6 +499,14 @@ function handle_v08_select(&$render, $data)
     $render->columns = $data[0]->columns;
     $render->datapoints = $data[0]->points;    
     $render->timestamp_column = getTimestampColumn($render->columns);    
+}
+
+function handle_v09_generic(&$render, $data)
+{ 
+    
+    $render->columns = $data->results[0]->series[0]->columns;
+    $render->datapoints = $data->results[0]->series[0]->values;
+
 }
 
 function handle_v09_select(&$render, $data)
@@ -512,7 +521,6 @@ function handle_v09_show_measurement(&$render, $data)
 { 
     $render->columns = $data->results[0]->series[0]->columns;
     $render->datapoints = $data->results[0]->series[0]->values;   
-    $render->timestamp_column = -1;
     $render->is_series_list = true; 
 }
 

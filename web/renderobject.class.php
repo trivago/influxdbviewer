@@ -18,7 +18,7 @@ class Renderobject {
     var $is_series_list = false; // TODO switch to enum
     var $start_pagination = 1;
     var $end_pagination = 1;
-    var $timestamp_column = "";
+    var $timestamp_column = -1;
     var $timestamp = 0;
 }
 ?>
