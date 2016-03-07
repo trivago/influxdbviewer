@@ -483,7 +483,7 @@ function handle_v08_select(&$render, $data)
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
     $render->results = ['columns' => $columns, 'datapoints' => $datapoints];
-    
+    $render->columns = $columns; # why is this duplicate? TODO
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = getTimestampColumn($render->results['columns']);
     $render->datapoints = $datapoints; # why is this duplicate? TODO
@@ -500,7 +500,7 @@ function handle_v09_select(&$render, $data) # TODO check what's duplicate and th
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
     $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
-    
+    $render->columns = $columns; # why is this duplicate? TODO
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
     $render->datapoints = $datapoints;  # why is this duplicate? TODO
@@ -519,6 +519,7 @@ function handle_v09_show_measurement(&$render, $data) # TODO check what's duplic
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
     $render->datapoints = $datapoints;  # why is this duplicate? TODO
+    $render->columns = $columns; # why is this duplicate? TODO
     $render->is_series_list = $render->query_type == QueryType::v09_LIST_SERIES;
 }
 
