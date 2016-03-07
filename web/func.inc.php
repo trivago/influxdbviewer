@@ -361,19 +361,15 @@ function parseQueryResults($httpResult, $query)
         return $feedback;
     }
 
-
-
     $json = json_decode($httpResult['results']);
 
     debug("Response length from database: " . strlen($httpResult['results']));
     //     debug($json);
-    debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
+    # debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
 
     if ($_SESSION['is_new_influxdb_version']) {
         debug($json->results);
         $columns = null;
-
-
     } else {
         $columns = $json[0]->columns;
         $datapoints = $json[0]->points;
