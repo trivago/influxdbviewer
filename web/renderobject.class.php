@@ -10,9 +10,7 @@ class Renderobject {
     
     var $query_type = 0;
 	var $title = 'Results'; 
-    var $user = $_SESSION['user'];
-    var $host = $_SESSION['host'];
-    var $database = $_SESSION['database'];
+    
     var $datapoints = [];
     var $columns = [];
     var $is_series_list = false; // TODO switch to enum
@@ -20,5 +18,16 @@ class Renderobject {
     var $end_pagination = 1;
     var $timestamp_column = -1;
     var $timestamp = 0;
+
+    /**
+We need this data in the template and setting it here makes the access easiest. We cannot set these data in the class definition because
+it must not contain runtime dependant variables in the member initialization. See here: 
+*/
+    public function __construct() 
+    {
+        $this->user = $_SESSION['user'];
+        $this->host = $_SESSION['host'];
+        $this->database = $_SESSION['database'];
+    }
 }
 ?>

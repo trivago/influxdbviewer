@@ -531,7 +531,16 @@ function handle_v09_show_measurement(&$render, $data)
 
 # TODO test what happens when we execute list series. It should be handled here aswell.
 
-
+/**
+We need this data in the template and setting it here makes the access easiest. We cannot set these data in the class definition because
+it must not contain runtime dependant variables in the member initialization. See here: 
+*/
+function add_session_variables(&$render)
+{
+    $render->user = $_SESSION['user'];
+    $render->host = $_SESSION['host'];
+    $render->database = $_SESSION['database'];
+}
 
 
 function debug($text)

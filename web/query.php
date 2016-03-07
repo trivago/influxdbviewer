@@ -43,7 +43,7 @@ try
     echo $template->render(
         (array) $render
     );
-    
+
 } 
 catch (Exception $e)
 {
