@@ -505,6 +505,7 @@ function set_flags_for_querytype(&$render)
             break;
 
         case QueryType::v08_LIST_SERIES:
+            debug("Setting is_series_list to true for v08");
             $render->is_series_list = true;
             break;
 
@@ -520,6 +521,7 @@ function set_flags_for_querytype(&$render)
             break;
 
         case QueryType::v09_SHOW_MEASUREMENT:
+            debug("Setting is_series_list to true for v09");
             $render->is_series_list = true; 
             break;
                
