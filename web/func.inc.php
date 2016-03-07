@@ -423,7 +423,7 @@ function getDatabaseResults($query) // TODO add support for 0.9
             debug($httpResult['results']);
             if ($_SESSION['is_new_influxdb_version']) {
                 $json = json_decode($httpResult['results']);
-                debug($json);
+                # debug($json);
                 $errorMessage = $json->error;
             } else {
                 $errorMessage = $httpResult['results'];
@@ -541,4 +541,11 @@ function cookieContainsLogin($oldValue, $str)
     }
 
     return false;
+}
+
+abstract class QueryType {
+
+    const v08_LIST_SERIES = 0;
+    const v08_SELECT = 0;
+    const v09_SHOW_MEASUREMENT = 0;
 }

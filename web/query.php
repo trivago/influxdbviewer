@@ -28,63 +28,96 @@ try
     // load template
     $template = $twig->loadTemplate('query.twig');
 
-    $query = "";
-    $results = null;
-    $is_series_list = false;
-    $timestamp = 0;
-    $is_cached = false;
-    $error_message = null;
-    $page = 1;
-    $number_of_pages = 1;
-    $number_of_results = -1;
-    $columns = [];
-    $datapoints = [];
-
+    $render = new Renderobject();
+    
     if (!empty($_REQUEST['query']))
     {
         $query = $_REQUEST['query'];
         $query = autoLimit($query);
-        $feedback = getDatabaseResults($query);
-        $columns = $feedback->results['columns'];
-        $datapoints = $feedback->results['datapoints'];
-        $timestamp = $feedback->timestamp;
-        $is_cached = $feedback->is_cached;
-        $page = $feedback->page;
-        $is_series_list = isSeriesList($query);
-        $number_of_pages = $feedback->number_of_pages;
-        $number_of_results = $feedback->number_of_results;
-        $error_message = $feedback->error_message;
-
+        $render["query"] = $query;
+        $feedback = getDatabaseResults($query);       
+        handle_response($feedback, &$render);
     }
 
-    debug("Timestamp column is: " . getTimestampColumn($columns));
-
-    // set template variables
-    // render template
-    $pagination_start = getPaginationStart($page, $number_of_pages);
     echo $template->render(
-        array(
-            'title' => 'Results',
-            'query' => $query,
-            'datapoints' => $datapoints,
-            'columns' => $columns,
-            'is_series_list' => $is_series_list,
-            'timestamp' => $timestamp,
-            'is_cached' => $is_cached,
-            'error_message' => $error_message,
-            'page' => $page,
-            'number_of_pages' => $number_of_pages,
-            'start_pagination' => $pagination_start,
-            'end_pagination' => getPaginationEnd($number_of_pages, $pagination_start),
-            'number_of_results' => $number_of_results,
-            'user' => $_SESSION['user'],
-            'host' => $_SESSION['host'],
-            'database' => $_SESSION['database'],
-            'timestamp_column' => getTimestampColumn($columns)
-        )
+        (array) $render
     );
-} catch (Exception $e)
+} 
+catch (Exception $e)
 {
     die ('ERROR: ' . $e->getMessage());
+}
+
+function handle_v08_select($render, $feedback){
+    $render['datapoints'] = $feedback->results['datapoints'];
+    $render['timestamp'] = $feedback->timestamp;
+    $render['is_cached'] = $feedback->is_cached;
+    $render['page'] = $feedback->page;
+    $render['is_series_list'] = isSeriesList($query);
+    $render['number_of_pages'] = $feedback->number_of_pages;
+    $render['number_of_results'] = $feedback->number_of_results;
+    $render['error_message'] = $feedback->error_message;
+    $pagination_start = getPaginationStart($page, $render['number_of_pages']);
+    $render['start_pagination'] = $pagination_start;
+    $render['end_pagination'] = getPaginationEnd($number_of_pages, $pagination_start);
+    $render['number_of_results'] =$number_of_results;
+    $render['timestamp_column'] = getTimestampColumn($feedback->results['columns']);
+}
+
+function handle_v09_select($render, $feedback){ 
+    # TODO
+    debug($feedback->results);
+    $render['datapoints'] = $feedback->results['datapoints'];
+    $render['timestamp'] = $feedback->timestamp;
+    $render['is_cached'] = $feedback->is_cached;
+    $render['page'] = $feedback->page;
+    $render['is_series_list'] = isSeriesList($query);
+    $render['number_of_pages'] = $feedback->number_of_pages;
+    $render['number_of_results'] = $feedback->number_of_results;
+    $render['error_message'] = $feedback->error_message;
+    $pagination_start = getPaginationStart($page, $render['number_of_pages']);
+    $render['start_pagination'] = $pagination_start;
+    $render['end_pagination'] = getPaginationEnd($number_of_pages, $pagination_start);
+    $render['number_of_results'] =$number_of_results;
+    $render['timestamp_column'] = getTimestampColumn($feedback->results['columns']);
+}
+
+function handle_v09_show_measurement($render, $feedback){ 
+    # TODO
+    $render['datapoints'] = $feedback->results['datapoints'];
+    $render['timestamp'] = $feedback->timestamp;
+    $render['is_cached'] = $feedback->is_cached;
+    $render['page'] = $feedback->page;
+    $render['is_series_list'] = isSeriesList($query);
+    $render['number_of_pages'] = $feedback->number_of_pages;
+    $render['number_of_results'] = $feedback->number_of_results;
+    $render['error_message'] = $feedback->error_message;
+    $pagination_start = getPaginationStart($page, $render['number_of_pages']);
+    $render['start_pagination'] = $pagination_start;
+    $render['end_pagination'] = getPaginationEnd($number_of_pages, $pagination_start);
+    $render['number_of_results'] =$number_of_results;
+    $render['timestamp_column'] = getTimestampColumn($feedback->results['columns']);
+}
+
+
+function handle_response($feedback, $render){
+    $query_type = getQueryType($render["query"]);
+    switch ($query_type) {
+        case QueryType::v08_SELECT:
+            handle_v08_select($render, $feedback);
+            break;
+
+        case QueryType::v09_SELECT:
+            handle_v09_select($render, $feedback);
+            break;
+
+        case QueryType::v09_SHOW_MEASUREMENT:
+            handle_v09_show_measurement($render, $feedback);
+            break;
+        
+        default:
+            # code...
+            break;
+    }
 }
 
