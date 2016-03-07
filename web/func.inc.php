@@ -395,7 +395,7 @@ function setPaginationWindow(&$render)
         if (!empty($subset)) {
             debug("Setting limited result");
             $render->page = $page;
-            $render->datapoints = $limitedResult;
+            $render->datapoints = $subset;
             $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
             $pagination_start = getPaginationStart($page, $render->number_of_pages);
             $render->start_pagination = $pagination_start;
