@@ -10,9 +10,9 @@ class Renderobject {
     
     var $query_type = 0;
 	var $title = 'Results'; 
-    #var $user = $_SESSION['user']; // TODO fix
-    #var $host = $_SESSION['host']; // TODO fix
-    #var $database = $_SESSION['database']; // TODO fix
+    var $user = $_SESSION['user'];
+    var $host = $_SESSION['host']; 
+    var $database = $_SESSION['database'];
     var $datapoints = [];
     var $columns = [];
     var $is_series_list = false; // TODO switch to enum
