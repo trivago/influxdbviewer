@@ -238,14 +238,13 @@ function cookieContainsCommand($oldValue, $str)
 }
 
 
-function saveResultsToCache($query, $results, $timestamp, $number_of_results)
+function saveResultsToCache($query, $datapoints, $timestamp, $columns)
 {
 
-    if (ACTIVATE_CACHE && $number_of_results > 0) {
-        $newEntry = ['timestamp' => $timestamp, 'results' => $results, 'number_of_results' => $number_of_results];
+    if (ACTIVATE_CACHE) {
+        $newEntry = ['timestamp' => $timestamp, 'datapoints' => $datapoints, 'columns' => $columns];
         $_SESSION['cache'][$query] = $newEntry;
-        debug("Adding entry to cache for key " . $query . " with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
-
+        debug("Adding entry to cache for key '" . $query . "'' with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
     }
 }
 
@@ -453,8 +452,11 @@ function parseQueryResults($httpResult, $query, &$render)
     handle_response($data, $render);
     $render->number_of_results = count($render->datapoints);      
     debug("Got " . $render->number_of_results . " results.");  
-    saveResultsToCache($query, $results, $now, $render->number_of_results); # TODO why is the number of results needed here?
-    addCommandToCookie($query, $now, $number_of_pages); # TODO number of pages not known yet
+    if ( $render->number_of_results > 0 )
+    {
+        saveResultsToCache($query, $render->datapoints, $now, $render->columns);
+    }   
+    addCommandToCookie($query, $now, $render->number_of_pages); # TODO why do we need the number of pages here?
     return;
 }
 
@@ -531,16 +533,8 @@ function handle_v09_show_measurement(&$render, $data)
 
 # TODO test what happens when we execute list series. It should be handled here aswell.
 
-/**
-We need this data in the template and setting it here makes the access easiest. We cannot set these data in the class definition because
-it must not contain runtime dependant variables in the member initialization. See here: 
-*/
-function add_session_variables(&$render)
-{
-    $render->user = $_SESSION['user'];
-    $render->host = $_SESSION['host'];
-    $render->database = $_SESSION['database'];
-}
+
+
 
 
 function debug($text)
