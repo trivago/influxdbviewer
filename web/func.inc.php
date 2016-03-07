@@ -238,13 +238,14 @@ function cookieContainsCommand($oldValue, $str)
 }
 
 
-function saveResultsToCache($query, $datapoints, $timestamp, $columns)
+function saveResultsToCache($render, $timestamp)
 {
 
     if (ACTIVATE_CACHE) {
-        $newEntry = ['timestamp' => $timestamp, 'datapoints' => $datapoints, 'columns' => $columns];
-        $_SESSION['cache'][$query] = $newEntry;
-        debug("Adding entry to cache for key '" . $query . "'' with timestamp " . $timestamp . " / " . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
+        $newEntry = ['timestamp' => $timestamp, 'datapoints' => $render->datapoints, 'columns' => $render->columns];
+        $_SESSION['cache'][ $render->query ] = $newEntry;
+        debug("Adding entry to cache for key '" . $render->query . "'' with timestamp " . $timestamp . " / " 
+            . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
     }
 }
 
@@ -456,7 +457,7 @@ function parseQueryResults($httpResult, $query, &$render)
     debug("Got " . $render->number_of_results . " results.");  
     if ( $render->number_of_results > 0 )
     {
-        saveResultsToCache($query, $render->datapoints, $now, $render->columns);
+        saveResultsToCache($render, $now);
     }   
     addCommandToCookie($query, $now, $render->number_of_pages); # TODO why do we need the number of pages here?
     return;
