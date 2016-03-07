@@ -263,20 +263,34 @@ function isFreshResult($timestamp)
     return time() - $timestamp < MAX_RESULT_AGE_CACHE_SECONDS;
 }
 
-
-function limitResult($page, $data)
+function setPaginationWindow(&$render)
 {
-
+    $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
     if (empty($page) || !is_numeric($page) || $page < 1) {
         $page = 1;
     }
-
+    debug("Page is " . $page);
     $start = ($page - 1) * RESULTS_PER_PAGE;
+
+    $limitedResult = limitResult($page, $render->results['datapoints']);
     debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
-    $subset = array_slice($data, $start, RESULTS_PER_PAGE);
+    $subset = array_slice($render->results['datapoints'], $start, RESULTS_PER_PAGE);
     debug("Subset has " . sizeof($subset) . " results");
-    return $subset;
+
+    if (!empty($subset)) {
+        debug("Setting limited result");
+        $render->page = $page;
+        $render->results['datapoints'] = $limitedResult;
+        $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
+        $pagination_start = getPaginationStart($page, $render->number_of_pages);
+        $render->start_pagination = $pagination_start;
+        $render->end_pagination = getPaginationEnd($number_of_pages, $pagination_start);
+    } else {
+        debug("Subset creation failed, result empty");
+    }
 }
+
+
 
 function getPaginationStart($page, $number_of_pages)
 {
@@ -332,7 +346,7 @@ function removeOldCacheEntries()
     }
 }
 
-function queryCache($query, &$feedback)
+function queryCache($query, &$render)
 {
     if (DEBUG) {
         debug("Content of cache at " . time() . " / " . gmdate("Y-m-d\TH:i:s\Z", time()));
@@ -347,53 +361,18 @@ function queryCache($query, &$feedback)
     if (!empty($cache_results)) {
         debug("Got data from cache. ");
 
-        $feedback->results = $cache_results['results'];
-        $feedback->is_cached = true;
-        $feedback->timestamp = $cache_results['timestamp'];
-        $feedback->number_of_results = $cache_results['number_of_results'];
-        $feedback->number_of_pages = ceil($feedback->number_of_results / RESULTS_PER_PAGE);
-        $feedback->error_message = null;
+        $render->results = $cache_results['results'];
+        $render->is_cached = true;
+        $render->timestamp = $cache_results['timestamp'];
+        $render->number_of_results = $cache_results['number_of_results'];
+        $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
+        $render->error_message = null;
     } else {
         debug("Cache was empty.");
     }
 
 }
 
-function parseQueryResults($httpResult, $query)
-{
-    $now = time();
-    $feedback = new ResultSet();
-
-    if ($httpResult['results'] == "[]") // Series is empty
-    {
-        return $feedback;
-    }
-
-    $json = json_decode($httpResult['results']);
-
-    debug("Response length from database: " . strlen($httpResult['results']));
-    //     debug($json);
-    # debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
-
-    if ($_SESSION['is_new_influxdb_version']) {
-        debug($json->results[0]);
-        $columns = null;
-    } else {
-        $columns = $json[0]->columns;
-        $datapoints = $json[0]->points;
-    }
-    $results = ['columns' => $columns, 'datapoints' => $datapoints];
-    $number_of_results = count($datapoints);
-    $number_of_pages = ceil($number_of_results / RESULTS_PER_PAGE);
-    debug("Got " . $number_of_results . " results.");
-    $feedback->results = $results;
-    $feedback->number_of_pages = $number_of_pages;
-    $feedback->number_of_results = $number_of_results;
-
-    saveResultsToCache($query, $results, $now, $number_of_results);
-    addCommandToCookie($query, $now, $number_of_pages);
-    return $feedback;
-}
 
 function getQueryUrl($query)
 {
@@ -406,60 +385,132 @@ function getQueryUrl($query)
     }
 }
 
+
+function parseErrorMessage($httpResult, $query, &$render){
+    debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
+    debug($httpResult['results']);
+    if ($_SESSION['is_new_influxdb_version']) {
+        $json = json_decode($httpResult['results']);
+        # debug($json);
+        $errorMessage = $json->error;
+    } else {
+        $errorMessage = $httpResult['results'];
+    }
+    $render->error_message = "Http status code " . $httpResult['status_code'] . ". Error message: " . $errorMessage;
+}
+
 function getDatabaseResults($query) // TODO add support for 0.9
 {
-    $feedback = new ResultSet();
+     # TODO if version 0.9 then warn if 0.8 query has been used, such as list series
+    $render = new Renderobject();
+    $render->query_type = getQueryType($query);
+    $render->query = $query;
 
-    $ignore_cache = (isset($_REQUEST['ignore_cache']) && !empty($_REQUEST['ignore_cache'])) ? $_REQUEST['ignore_cache'] == true || $_REQUEST['ignore_cache'] == "true" : false;
+    $ignore_cache = (isset($_REQUEST['ignore_cache']) && !empty($_REQUEST['ignore_cache'])) ? $_REQUEST['ignore_cache'] == true 
+                    || $_REQUEST['ignore_cache'] == "true" : false;
 
-    if (ACTIVATE_CACHE && !$ignore_cache) {
-        queryCache($query, $feedback);
+    if (ACTIVATE_CACHE && !$ignore_cache) 
+    {
+        queryCache($query, $render);
     }
-    if (!$feedback->is_cached) {
+
+    if (!$render->is_cached) 
+    {
         debug("Getting data from db. ");
         $url = getQueryUrl($query);
         $httpResult = runHttpRequest($url);
 
-        if (200 == $httpResult['status_code']) {
-            $feedback = parseQueryResults($httpResult, $query);
+        if (200 == $httpResult['status_code']) 
+        {
+            parseQueryResults($httpResult, $query, $render);
         } else {
-            debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
-            debug($httpResult['results']);
-            if ($_SESSION['is_new_influxdb_version']) {
-                $json = json_decode($httpResult['results']);
-                # debug($json);
-                $errorMessage = $json->error;
-            } else {
-                $errorMessage = $httpResult['results'];
-            }
-            $feedback->error_message = "Http status code " . $httpResult['status_code'] . ". Error message: " . $errorMessage;
-            # TODO if version 0.9 then warn if 0.8 query has been used, such as list series
-            return $feedback;
-
+            parseErrorMessage($httpResult, $query, $render);
+            return $render;
         }
     }
-    if ($feedback->error_message == null) {
-        setPaginationWindow($feedback);
-    }
 
-    return $feedback;
+    setPaginationWindow($render);
+    return $render;
 }
 
-function setPaginationWindow(&$feedback)
+function parseQueryResults($httpResult, $query, &$render)
 {
-    $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-    debug("Page is " . $page);
+    $now = time();
+   
+    if ($httpResult['results'] == "[]") // Series is empty
+    {
+        return;
+    }
 
-    $limitedResult = limitResult($page, $feedback->results['datapoints']);
+    debug("Response length from database: " . strlen($httpResult['results']));
+    $data = json_decode($httpResult['results']);
+    # debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
+    handle_response($data, $render);
+    saveResultsToCache($query, $results, $now, $number_of_results);
+    addCommandToCookie($query, $now, $number_of_pages);
+    return;
+}
 
-    if (!empty($limitedResult)) {
-        debug("Setting limited result");
-        $feedback->page = $page;
-        $feedback->results['datapoints'] = $limitedResult;
-    } else {
-        debug("Subset creation failed, result empty");
+function handle_response($data, &$render){
+    $query_type = $render->query_type;
+    debug("Query type for '" + $render->query + "' is " + $query_type);
+    switch ($query_type) {
+        case QueryType::v08_SELECT:
+            handle_v08_select($render, $data);
+            break;
+
+        case QueryType::v09_SELECT:
+            handle_v09_select($render, $data);
+            break;
+
+        case QueryType::v09_SHOW_MEASUREMENT:
+            handle_v09_show_measurement($render, $data);
+            break;
+        
+        default:
+            # TODO error
+            break;
     }
 }
+
+function handle_v08_select(&$render, $data){
+
+    $columns = $data[0]->columns;
+    $datapoints = $data[0]->points;
+
+    $number_of_results = count($datapoints);    
+    debug("Got " . $number_of_results . " results.");
+    $render->results = ['columns' => $columns, 'datapoints' => $datapoints];
+    
+    $render->number_of_results = $number_of_results;
+    $render->timestamp_column = getTimestampColumn($render->results['columns']);
+    $render->datapoints = $datapoints;
+    $render->is_series_list = $render->query_type == QueryType::v08_LIST_SERIES;
+
+}
+
+function handle_v09_select(&$render, $data){ 
+    # TODO
+   
+}
+
+function handle_v09_show_measurement(&$render, $data){ 
+    # TODO $json->results[0]->series[0]->values
+    debug($data->results[0]);
+    $column = null; # TODO
+    $datapoints = null; # TODO
+    $number_of_results = count($datapoints);    
+    debug("Got " . $number_of_results . " results.");
+    $render->results = ['columns' => $columns, 'datapoints' => $datapoints];
+    
+    $render->number_of_results = $number_of_results;
+    $render->timestamp_column = -1;
+    $render->datapoints = $datapoints;
+    $render->is_series_list = $render->query_type == QueryType::v08_LIST_SERIES;
+}
+
+
+
 
 function debug($text)
 {

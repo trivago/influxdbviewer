@@ -1,7 +1,14 @@
 <?php
 
 class Renderobject extends Resultset { 
-
+	var $is_cached = false;
+	var $error_message = "";
+	var $results = null;
+	var $page = 1;
+    var $number_of_pages = 0;
+    var $number_of_results = 0;
+    var $timestamp = time();
+    var $query_type = 0;
 	var $title = 'Results'; 
     #var $user = $_SESSION['user']; // TODO fix
     #var $host = $_SESSION['host']; // TODO fix
