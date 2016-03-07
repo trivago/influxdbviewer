@@ -262,62 +262,7 @@ function isFreshResult($timestamp)
     return time() - $timestamp < MAX_RESULT_AGE_CACHE_SECONDS;
 }
 
-function setPaginationWindow(&$render)
-{
-    $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-    if (empty($page) || !is_numeric($page) || $page < 1) {
-        $page = 1;
-    }
-    debug("Page is " . $page);
-    $start = ($page - 1) * RESULTS_PER_PAGE;
 
-    debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
-    $subset = array_slice($render->datapoints, $start, RESULTS_PER_PAGE);
-    debug("Subset has " . sizeof($subset) . " results");
-
-    if (!empty($subset)) {
-        debug("Setting limited result");
-        $render->page = $page;
-        $render->datapoints = $limitedResult;
-        $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
-        $pagination_start = getPaginationStart($page, $render->number_of_pages);
-        $render->start_pagination = $pagination_start;
-        $render->end_pagination = getPaginationEnd($number_of_pages, $pagination_start);
-    } else {
-        debug("Subset creation failed, result empty");
-    }
-}
-
-
-
-function getPaginationStart($page, $number_of_pages)
-{
-    if ($number_of_pages <= MAX_PAGINATION_PAGES) {
-        debug("Pagination lower bound not limited");
-        return 1;
-    }
-    $half = floor(MAX_PAGINATION_PAGES / 2);
-    $start = $page - $half;
-    debug("Pagination lower bound: $page - $half -> $start");
-    return ($start < 1) ? 1 : $start;
-}
-
-function getPaginationEnd($number_of_pages, $start)
-{
-    if ($number_of_pages <= MAX_PAGINATION_PAGES) {
-        debug("Pagination upper bound not limited");
-        return $number_of_pages;
-    }
-    //$end = $page + ceil(MAX_PAGINATION_PAGES / 2);
-    $end = $start + MAX_PAGINATION_PAGES;
-    debug("Pagination upper bound: $start - " . MAX_PAGINATION_PAGES . " -> $end");
-    if ($end > $number_of_pages) {
-        debug("Resetting pagination upper bound to because calculated boundary $end > number of pages $number_of_pages");
-        return $number_of_pages;
-    } else {
-        return $end;
-    }
-}
 
 function debugCacheContent()
 {
@@ -430,6 +375,66 @@ function getDatabaseResults($query)
 
     setPaginationWindow($render);
     return $render;
+}
+
+function setPaginationWindow(&$render)
+{
+    $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
+    if (empty($page) || !is_numeric($page) || $page < 1) {
+        $page = 1;
+    }
+    debug("Page is " . $page);
+    $start = ($page - 1) * RESULTS_PER_PAGE;
+
+    if ($render->number_of_results > RESULTS_PER_PAGE)
+    {
+        debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
+        $subset = array_slice($render->datapoints, $start, RESULTS_PER_PAGE);
+        debug("Subset has " . sizeof($subset) . " results");
+
+        if (!empty($subset)) {
+            debug("Setting limited result");
+            $render->page = $page;
+            $render->datapoints = $limitedResult;
+            $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
+            $pagination_start = getPaginationStart($page, $render->number_of_pages);
+            $render->start_pagination = $pagination_start;
+            $render->end_pagination = getPaginationEnd($number_of_pages, $pagination_start);
+        } 
+        else 
+        {
+            debug("Subset creation failed, result empty");
+        }
+    }
+}
+
+function getPaginationStart($page, $number_of_pages)
+{
+    if ($number_of_pages <= MAX_PAGINATION_PAGES) {
+        debug("Pagination lower bound not limited");
+        return 1;
+    }
+    $half = floor(MAX_PAGINATION_PAGES / 2);
+    $start = $page - $half;
+    debug("Pagination lower bound: $page - $half -> $start");
+    return ($start < 1) ? 1 : $start;
+}
+
+function getPaginationEnd($number_of_pages, $start)
+{
+    if ($number_of_pages <= MAX_PAGINATION_PAGES) {
+        debug("Pagination upper bound not limited");
+        return $number_of_pages;
+    }
+    //$end = $page + ceil(MAX_PAGINATION_PAGES / 2);
+    $end = $start + MAX_PAGINATION_PAGES;
+    debug("Pagination upper bound: $start - " . MAX_PAGINATION_PAGES . " -> $end");
+    if ($end > $number_of_pages) {
+        debug("Resetting pagination upper bound to because calculated boundary $end > number of pages $number_of_pages");
+        return $number_of_pages;
+    } else {
+        return $end;
+    }
 }
 
 function parseQueryResults($httpResult, $query, &$render)
