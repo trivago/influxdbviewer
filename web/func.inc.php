@@ -518,7 +518,7 @@ function set_flags_for_querytype(&$render)
             break;
 
         case QueryType::v09_SELECT:
-            $render->timestamp_column = getTimestampColumn($render->columns);
+            # not needed because they already have human readable timestamps. $render->timestamp_column = getTimestampColumn($render->columns);
             break;
 
         case QueryType::v09_SHOW_MEASUREMENT:
