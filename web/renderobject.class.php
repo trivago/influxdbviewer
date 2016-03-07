@@ -1,6 +1,6 @@
 <?php
 
-class Renderobject extends Resultset { 
+class Renderobject { 
 	var $is_cached = false;
 	var $error_message = "";
 	var $results = null;

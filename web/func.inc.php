@@ -1,7 +1,5 @@
 <?php
 
-require_once('resultset.class.php');
-
 function redirectTo($path)
 {
     header("Location: " . $path);
