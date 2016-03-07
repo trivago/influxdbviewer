@@ -272,7 +272,6 @@ function setPaginationWindow(&$render)
     debug("Page is " . $page);
     $start = ($page - 1) * RESULTS_PER_PAGE;
 
-    $limitedResult = limitResult($page, $render->results['datapoints']);
     debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
     $subset = array_slice($render->results['datapoints'], $start, RESULTS_PER_PAGE);
     debug("Subset has " . sizeof($subset) . " results");
@@ -497,12 +496,10 @@ function handle_v09_select(&$render, $data){
 
 function handle_v09_show_measurement(&$render, $data){ 
     # TODO $json->results[0]->series[0]->values
-    debug($data->results[0]->series[0]->values);
+    #debug($data->results[0]->series[0]->values);
     $columns = $data->results[0]->series[0]->columns;
     $datapoints = $data->results[0]->series[0]->values;
-
-
-    
+   
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
     $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; # TODO check what's duplicate and then merge with other handle functions
