@@ -500,7 +500,8 @@ This is called by the handle_response() method for parsing data that we fetched 
 */
 function set_flags_for_querytype(&$render)
 {
-    switch ($query_type) {
+    debug("Setting flags for querytype {$render->query_type}");
+    switch ($render->query_type) {
         case QueryType::v08_GENERIC:
             break;
 
