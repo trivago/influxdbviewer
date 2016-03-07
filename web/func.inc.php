@@ -273,13 +273,13 @@ function setPaginationWindow(&$render)
     $start = ($page - 1) * RESULTS_PER_PAGE;
 
     debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
-    $subset = array_slice($render->results['datapoints'], $start, RESULTS_PER_PAGE);
+    $subset = array_slice($render->datapoints, $start, RESULTS_PER_PAGE);
     debug("Subset has " . sizeof($subset) . " results");
 
     if (!empty($subset)) {
         debug("Setting limited result");
         $render->page = $page;
-        $render->results['datapoints'] = $limitedResult;
+        $render->datapoints = $limitedResult;
         $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
         $pagination_start = getPaginationStart($page, $render->number_of_pages);
         $render->start_pagination = $pagination_start;
@@ -360,7 +360,8 @@ function queryCache($query, &$render)
     if (!empty($cache_results)) {
         debug("Got data from cache. ");
 
-        $render->results = $cache_results['results'];
+        $render->datapoints = $cache_results['results']['datapoints'];
+        $render->columns = $cache_results['results']['columns'];
         $render->is_cached = true;
         $render->timestamp = $cache_results['timestamp'];
         $render->number_of_results = $cache_results['number_of_results'];
@@ -398,7 +399,7 @@ function parseErrorMessage($httpResult, $query, &$render){
     $render->error_message = "Http status code " . $httpResult['status_code'] . ". Error message: " . $errorMessage;
 }
 
-function getDatabaseResults($query) // TODO add support for 0.9
+function getDatabaseResults($query)
 {
      # TODO if version 0.9 then warn if 0.8 query has been used, such as list series
     $render = new Renderobject();
@@ -482,10 +483,10 @@ function handle_v08_select(&$render, $data)
 
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
-    $render->results = ['columns' => $columns, 'datapoints' => $datapoints];
+    #$render->results = ['columns' => $columns, 'datapoints' => $datapoints];
     $render->columns = $columns; # why is this duplicate? TODO
     $render->number_of_results = $number_of_results;
-    $render->timestamp_column = getTimestampColumn($render->results['columns']);
+    $render->timestamp_column = getTimestampColumn($columns);
     $render->datapoints = $datapoints; # why is this duplicate? TODO
     $render->is_series_list = $render->query_type == QueryType::v08_LIST_SERIES;
 
@@ -499,7 +500,7 @@ function handle_v09_select(&$render, $data) # TODO check what's duplicate and th
    
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
-    $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
+    #$render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
     $render->columns = $columns; # why is this duplicate? TODO
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
@@ -514,8 +515,8 @@ function handle_v09_show_measurement(&$render, $data) # TODO check what's duplic
    
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
-    $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
-    $render->timestamp_column = getTimestampColumn($render->results['columns']);
+    #$render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
+    $render->timestamp_column = getTimestampColumn($columns);
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
     $render->datapoints = $datapoints;  # why is this duplicate? TODO
