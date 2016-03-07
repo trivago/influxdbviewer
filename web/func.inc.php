@@ -473,7 +473,8 @@ function handle_response($data, &$render){
     }
 }
 
-function handle_v08_select(&$render, $data){
+function handle_v08_select(&$render, $data)
+{
 
     $columns = $data[0]->columns;
     $datapoints = $data[0]->points;
@@ -484,30 +485,39 @@ function handle_v08_select(&$render, $data){
     
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = getTimestampColumn($render->results['columns']);
-    $render->datapoints = $datapoints;
+    $render->datapoints = $datapoints; # why is this duplicate? TODO
     $render->is_series_list = $render->query_type == QueryType::v08_LIST_SERIES;
 
 }
 
-function handle_v09_select(&$render, $data){ 
-    # TODO
-   
-}
-
-function handle_v09_show_measurement(&$render, $data){ 
-    # TODO $json->results[0]->series[0]->values
-    #debug($data->results[0]->series[0]->values);
+function handle_v09_select(&$render, $data) # TODO check what's duplicate and then merge with other handle functions
+{ 
     $columns = $data->results[0]->series[0]->columns;
     $datapoints = $data->results[0]->series[0]->values;
    
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
-    $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; # TODO check what's duplicate and then merge with other handle functions
+    $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
     
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
     $render->datapoints = $datapoints;
-    $render->is_series_list = $render->query_type == QueryType::v08_LIST_SERIES;
+   
+}
+
+function handle_v09_show_measurement(&$render, $data) # TODO check what's duplicate and then merge with other handle functions
+{ 
+    $columns = $data->results[0]->series[0]->columns;
+    $datapoints = $data->results[0]->series[0]->values;
+   
+    $number_of_results = count($datapoints);    
+    debug("Got " . $number_of_results . " results.");
+    $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
+    
+    $render->number_of_results = $number_of_results;
+    $render->timestamp_column = -1;
+    $render->datapoints = $datapoints;
+    $render->is_series_list = $render->query_type == QueryType::v09_LIST_SERIES;
 }
 
 
@@ -606,6 +616,8 @@ abstract class QueryType {
 
     const v08_LIST_SERIES = 0;
     const v08_SELECT = 1;
-    const v09_SHOW_MEASUREMENT = 2;
-    const v09_SELECT = 3; 
+    const v08_GENERIC = 2;
+    const v09_SHOW_MEASUREMENT = 3;
+    const v09_SELECT = 4;
+    const v09_GENERIC = 5;  
 }
