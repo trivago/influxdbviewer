@@ -1,6 +1,6 @@
 <?php
 
-#require_once('resultset.class.php');
+require_once('resultset.class.php');
 
 function redirectTo($path)
 {

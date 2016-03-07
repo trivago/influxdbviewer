@@ -10,7 +10,7 @@ Requires a webserver with php.
 
 1. Clone or download the InfluxDBviewer codebase
 2. Install Dependencies via Composer:  
-    `$ curl -s http://getcomposer.org/installer | php`  
+    `$ cd web/; curl -s http://getcomposer.org/installer | php`  
     `$ php composer.phar install`
 3. Set date.timezone option in php.ini because otherwise the twig template engine might complain.
 4. Configure your webserver to include this project, and please use https because the credentials are sent to the database without being encrypted.
