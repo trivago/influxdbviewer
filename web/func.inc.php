@@ -311,12 +311,15 @@ function queryCache($query, &$render)
         $render->timestamp = $cache_results['timestamp'];
         $render->number_of_results = $cache_results['number_of_results'];
         $render->query_type = $cache_results['query_type'];
+        set_flags_for_querytype($render);
 
     } else {
         debug("Cache was empty.");
     }
 
 }
+
+
 
 
 function getQueryUrl($query)
@@ -468,29 +471,22 @@ function parseQueryResults($httpResult, $query, &$render)
 function handle_response($data, &$render){
     $query_type = $render->query_type;
     debug("Query type for '" . $render->query . "' is " . $query_type);
+
+    set_flags_for_querytype($render);
+
     switch ($query_type) {
         case QueryType::v08_GENERIC:
-            debug($data);
         case QueryType::v08_SELECT:
-            handle_v08_select($render, $data);
+        case QueryType::v08_LIST_SERIES:
+            handle_v08_response($render, $data);
             break;
 
         case QueryType::v09_GENERIC:
-            debug($data);
-            handle_v09_generic($render, $data);
-
-        case QueryType::v09_SELECT:
-            handle_v09_select($render, $data);
-            break;
-
+        case QueryType::v09_SELECT:           
         case QueryType::v09_SHOW_MEASUREMENT:
-            handle_v09_show_measurement($render, $data);
+            handle_v09_response($render, $data);
             break;
-
-        case QueryType::v08_LIST_SERIES:
-            handle_v08_list_series($render, $data);
-            break;
-        
+       
         default:
             debug("error: unknown query type");
             debug($data);
@@ -499,41 +495,51 @@ function handle_response($data, &$render){
     }
 }
 
-function handle_v08_list_series(&$render, $data)
+/*
+This is called by the handle_response() method for parsing data that we fetched from the db, and on data that we grabbed from the cache.
+*/
+function set_flags_for_querytype(&$render)
+{
+    switch ($query_type) {
+        case QueryType::v08_GENERIC:
+            break;
+
+        case QueryType::v08_LIST_SERIES:
+            $render->is_series_list = true;
+            break;
+
+        case QueryType::v08_SELECT:
+            $render->timestamp_column = getTimestampColumn($render->columns);  
+            break;
+
+        case QueryType::v09_GENERIC:
+            break;
+
+        case QueryType::v09_SELECT:
+            $render->timestamp_column = getTimestampColumn($render->columns);
+            break;
+
+        case QueryType::v09_SHOW_MEASUREMENT:
+            $render->is_series_list = true; 
+            break;
+               
+        default:
+            break;
+    }
+}
+
+function handle_v08_response(&$render, $data)
 {
     $render->columns = $data[0]->columns;
     $render->datapoints = $data[0]->points;    
-    $render->is_series_list = true;
-}
-
-function handle_v08_select(&$render, $data)
-{
-    $render->columns = $data[0]->columns;
-    $render->datapoints = $data[0]->points;    
-    $render->timestamp_column = getTimestampColumn($render->columns);    
-}
-
-function handle_v09_generic(&$render, $data)
-{ 
     
-    $render->columns = $data->results[0]->series[0]->columns;
-    $render->datapoints = $data->results[0]->series[0]->values;
-
 }
 
-function handle_v09_select(&$render, $data)
-{ 
-    #debug($data);
-    $render->columns = $data->results[0]->series[0]->columns;
-    $render->datapoints = $data->results[0]->series[0]->values;
-    $render->timestamp_column = getTimestampColumn($render->columns);
-}
-
-function handle_v09_show_measurement(&$render, $data)
+function handle_v09_response(&$render, $data)
 { 
     $render->columns = $data->results[0]->series[0]->columns;
     $render->datapoints = $data->results[0]->series[0]->values;   
-    $render->is_series_list = true; 
+    
 }
 
 # TODO test what happens when we execute list series. It should be handled here aswell.
