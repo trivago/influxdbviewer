@@ -1,12 +1,11 @@
 <?php
 
 class Renderobject extends Resultset { 
-# TODO find out why this is different than Resultset and merge or extend
-	
+
 	var $title = 'Results'; 
-    var $user = $_SESSION['user'];
-    var $host = $_SESSION['host'];
-    var $database = $_SESSION['database'];
+    #var $user = $_SESSION['user']; // TODO fix
+    #var $host = $_SESSION['host']; // TODO fix
+    #var $database = $_SESSION['database']; // TODO fix
     var $results = null;
 	var $datapoints = [];
     var $columns = [];
