@@ -1,6 +1,6 @@
 <?php
 
-require_once('resultset.class.php');
+#require_once('resultset.class.php');
 
 function redirectTo($path)
 {
@@ -484,7 +484,7 @@ function getTimestampColumn($cols)
 }
 
 
-function checkLoginValid($version = 0.8)
+function checkLoginValid($version = 0.8) 
 {
 
 
