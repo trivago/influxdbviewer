@@ -493,7 +493,7 @@ function handle_v08_select(&$render, $data)
 
 function handle_v09_select(&$render, $data) # TODO check what's duplicate and then merge with other handle functions
 { 
-    debug($data);
+    #debug($data);
     $columns = $data->results[0]->series[0]->columns;
     $datapoints = $data->results[0]->series[0]->values;
    
@@ -503,7 +503,7 @@ function handle_v09_select(&$render, $data) # TODO check what's duplicate and th
     
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
-    $render->datapoints = $datapoints;
+    $render->datapoints = $datapoints;  # why is this duplicate? TODO
    
 }
 
@@ -515,10 +515,10 @@ function handle_v09_show_measurement(&$render, $data) # TODO check what's duplic
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
     $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; 
-    
+    $render->timestamp_column = getTimestampColumn($render->results['columns']);
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
-    $render->datapoints = $datapoints;
+    $render->datapoints = $datapoints;  # why is this duplicate? TODO
     $render->is_series_list = $render->query_type == QueryType::v09_LIST_SERIES;
 }
 
