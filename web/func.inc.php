@@ -403,7 +403,7 @@ function setPaginationWindow(&$render)
             $render->datapoints = $subset;
             $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
             $render->start_pagination = getPaginationStart($page, $render->number_of_pages);
-            $render->end_pagination = getPaginationEnd($render->number_of_pages, $render->pagination_start);
+            $render->end_pagination = getPaginationEnd($render->number_of_pages, $render->start_pagination);
         } 
         else 
         {
