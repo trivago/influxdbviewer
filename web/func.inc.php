@@ -497,12 +497,15 @@ function handle_v09_select(&$render, $data){
 
 function handle_v09_show_measurement(&$render, $data){ 
     # TODO $json->results[0]->series[0]->values
+
+    $columns = $data[0]->results[0]->series[0]->columns;
+    $datapoints = $data[0]->results[0]->series[0]->values;
+
+
     debug($data->results[0]);
-    $column = null; # TODO
-    $datapoints = null; # TODO
     $number_of_results = count($datapoints);    
     debug("Got " . $number_of_results . " results.");
-    $render->results = ['columns' => $columns, 'datapoints' => $datapoints];
+    $render->results = ['columns' => $columns, 'datapoints' => $datapoints]; # TODO check what's duplicate and then merge with other handle functions
     
     $render->number_of_results = $number_of_results;
     $render->timestamp_column = -1;
