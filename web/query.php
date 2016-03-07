@@ -36,7 +36,7 @@ try
         $query = autoLimit($query);
         $render["query"] = $query;
         $feedback = getDatabaseResults($query);       
-        handle_response($feedback, &$render);
+        handle_response($feedback, $render);
     }
 
     echo $template->render(
@@ -100,7 +100,7 @@ function handle_v09_show_measurement($render, $feedback){
 }
 
 
-function handle_response($feedback, $render){
+function handle_response($feedback, &$render){
     $query_type = getQueryType($render["query"]);
     switch ($query_type) {
         case QueryType::v08_SELECT:
