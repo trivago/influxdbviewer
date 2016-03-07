@@ -467,7 +467,9 @@ function debug($text)
         if (is_scalar($text)) {
             print $text;
         } else {
+            print "<pre>";
             print_r($text);
+            print "</pre>";
         }
         print "<br>";
     }
