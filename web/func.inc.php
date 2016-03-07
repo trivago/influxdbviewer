@@ -267,7 +267,7 @@ function debugCacheContent()
 {
     if (ACTIVATE_CACHE && isset($_SESSION['cache'])) {
         foreach ($_SESSION['cache'] as $query => $record) {
-            debug("Query " . $query . " with timestamp " . $record['timestamp'] . " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
+            debug("Cache content: query '" . $query . "'' with timestamp " . $record['timestamp'] . " / " . gmdate("Y-m-d\TH:i:s\Z", $record['timestamp']));
         }
     }
 }
@@ -303,8 +303,8 @@ function queryCache($query, &$render)
     if (!empty($cache_results)) {
         debug("Got data from cache. ");
 
-        $render->datapoints = $cache_results['results']['datapoints'];
-        $render->columns = $cache_results['results']['columns'];
+        $render->datapoints = $cache_results['datapoints'];
+        $render->columns = $cache_results['columns'];
         $render->is_cached = true;
         $render->timestamp = $cache_results['timestamp'];
         $render->number_of_results = $cache_results['number_of_results'];
