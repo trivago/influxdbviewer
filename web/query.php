@@ -83,6 +83,7 @@ function handle_v09_select($render, $feedback){
 
 function handle_v09_show_measurement($render, $feedback){ 
     # TODO
+    debug($feedback->results);
     $render->datapoints = $feedback->results['datapoints'];
     $render->timestamp = $feedback->timestamp;
     $render->is_cached = $feedback->is_cached;
