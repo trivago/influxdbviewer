@@ -478,7 +478,7 @@ function handle_response($data, &$render){
         
         default:
             debug("error: unknown query type");
-            # TODO handle error
+            $render->error_message = "Internal error code 0815 - unknown query type for statement '{$render->query}'. Please report this as a bug.";
             break;
     }
 }
