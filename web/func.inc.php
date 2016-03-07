@@ -459,13 +459,15 @@ function handle_response($data, &$render){
     $query_type = $render->query_type;
     debug("Query type for '" . $render->query . "' is " . $query_type);
     switch ($query_type) {
-        case QueryType::v08_SELECT:
         case QueryType::v08_GENERIC:
+            debug($data);
+        case QueryType::v08_SELECT:
             handle_v08_select($render, $data);
             break;
 
-        case QueryType::v09_SELECT:
         case QueryType::v09_GENERIC:
+            debug($data);
+        case QueryType::v09_SELECT:
             handle_v09_select($render, $data);
             break;
 
