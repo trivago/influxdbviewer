@@ -389,12 +389,12 @@ function setPaginationWindow(&$render)
         $page = 1;
     }
     debug("Page is " . $page);
-    $start = ($page - 1) * RESULTS_PER_PAGE;
+    $slice_start = ($page - 1) * RESULTS_PER_PAGE;
 
     if ($render->number_of_results > RESULTS_PER_PAGE)
     {
-        debug("Limiting result to " . $start . " - " . ($start + RESULTS_PER_PAGE));
-        $subset = array_slice($render->datapoints, $start, RESULTS_PER_PAGE);
+        debug("Limiting result to " . $slice_start . " - " . ($slice_start + RESULTS_PER_PAGE));
+        $subset = array_slice($render->datapoints, $slice_start, RESULTS_PER_PAGE);
         debug("Subset has " . sizeof($subset) . " results");
 
         if (!empty($subset)) {
@@ -402,9 +402,8 @@ function setPaginationWindow(&$render)
             $render->page = $page;
             $render->datapoints = $subset;
             $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
-            $pagination_start = getPaginationStart($page, $render->number_of_pages);
-            $render->start_pagination = $pagination_start;
-            $render->end_pagination = getPaginationEnd($number_of_pages, $pagination_start);
+            $render->start_pagination = getPaginationStart($page, $render->number_of_pages);
+            $render->end_pagination = getPaginationEnd($render->number_of_pages, $render->pagination_start);
         } 
         else 
         {
