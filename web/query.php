@@ -101,6 +101,7 @@ function handle_v09_show_measurement($render, $feedback){
 
 function handle_response($feedback, &$render){
     $query_type = getQueryType($render->query);
+    debug("Query type for '" + $render->query + "' is " + $query_type);
     switch ($query_type) {
         case QueryType::v08_SELECT:
             handle_v08_select($render, $feedback);
