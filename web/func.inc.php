@@ -302,14 +302,12 @@ function queryCache($query, &$render)
     }
     if (!empty($cache_results)) {
         debug("Got data from cache. ");
-
+        debug($cache_results);
         $render->datapoints = $cache_results['datapoints'];
         $render->columns = $cache_results['columns'];
         $render->is_cached = true;
         $render->timestamp = $cache_results['timestamp'];
-        $render->number_of_results = $cache_results['number_of_results'];
-        $render->number_of_pages = ceil($render->number_of_results / RESULTS_PER_PAGE);
-        $render->error_message = null;
+
     } else {
         debug("Cache was empty.");
     }
