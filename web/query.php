@@ -1,6 +1,7 @@
 <?php
 require("config.inc.php");
 require("func.inc.php");
+require("renderobject.class.php");
 
 require __DIR__ . '/vendor/autoload.php';
 session_start();
