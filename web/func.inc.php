@@ -302,7 +302,7 @@ function queryCache($query, &$render)
     }
     if (!empty($cache_results)) {
         debug("Got data from cache. ");
-        debug($cache_results);
+        #debug($cache_results);
         $render->datapoints = $cache_results['datapoints'];
         $render->columns = $cache_results['columns'];
         $render->is_cached = true;
@@ -355,7 +355,11 @@ function getDatabaseResults($query)
         queryCache($query, $render);
     }
 
-    if (!$render->is_cached) 
+    if ($render->is_cached) 
+    {
+        debug("Data loaded from cache.");
+    }
+    else
     {
         debug("Getting data from db. ");
         $url = getQueryUrl($query);
