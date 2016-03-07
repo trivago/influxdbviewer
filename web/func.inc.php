@@ -197,7 +197,7 @@ function isSeriesList($query)
 function getQueryType($query)
 {
     if (preg_match('/list series.*/i', $query) > 0) return QueryType::v08_LIST_SERIES;
-    if strtolower($query) == "show measurements" return QueryType::v09_SHOW_MEASUREMENT;
+    if (strtolower($query) == "show measurements") return QueryType::v09_SHOW_MEASUREMENT;
     if (preg_match('/list series.*/i', $query) > 0) return $_SESSION['dbversion'] == 0.9 ? QueryType::v09_SELECT : QueryType::v08_SELECT;
 }
 
