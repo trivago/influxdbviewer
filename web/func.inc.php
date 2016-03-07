@@ -242,7 +242,8 @@ function saveResultsToCache($render, $timestamp)
 {
 
     if (ACTIVATE_CACHE) {
-        $newEntry = ['timestamp' => $timestamp, 'datapoints' => $render->datapoints, 'columns' => $render->columns];
+        $newEntry = ['timestamp' => $timestamp, 'datapoints' => $render->datapoints, 'columns' => $render->columns
+        , 'number_of_results' => $render->number_of_results];
         $_SESSION['cache'][ $render->query ] = $newEntry;
         debug("Adding entry to cache for key '" . $render->query . "'' with timestamp " . $timestamp . " / " 
             . gmdate("Y-m-d\TH:i:s\Z", $timestamp));
@@ -308,6 +309,7 @@ function queryCache($query, &$render)
         $render->columns = $cache_results['columns'];
         $render->is_cached = true;
         $render->timestamp = $cache_results['timestamp'];
+        $render->number_of_results = $cache_results['number_of_results'];
 
     } else {
         debug("Cache was empty.");
