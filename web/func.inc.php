@@ -556,8 +556,6 @@ function getTimestampColumn($cols)
 
 function checkLoginValid($version = 0.8) 
 {
-
-
     $url = ($version == 0.8) ? "http://" . $_POST['host'] . ":8086/db?u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']) :
         "http://" . $_POST['host'] . ":8086/query?q=SHOW%20DATABASES&u=" . urlencode($_POST['user']) . "&p=" . urlencode($_POST['pw']);
     $httpResult = runHttpRequest($url);
