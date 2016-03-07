@@ -7,7 +7,7 @@ class Renderobject extends Resultset {
 	var $page = 1;
     var $number_of_pages = 0;
     var $number_of_results = 0;
-    var $timestamp = time();
+    
     var $query_type = 0;
 	var $title = 'Results'; 
     #var $user = $_SESSION['user']; // TODO fix
@@ -20,5 +20,6 @@ class Renderobject extends Resultset {
     var $start_pagination = 1;
     var $end_pagination = 1;
     var $timestamp_column = "";
+    var $timestamp = time();
 }
 ?>
