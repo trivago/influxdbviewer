@@ -376,7 +376,7 @@ function parseQueryResults($httpResult, $query)
     # debug("First 200 characters: " . substr($httpResult['results'], 0, 200));
 
     if ($_SESSION['is_new_influxdb_version']) {
-        debug($json->results);
+        debug($json->results[0]);
         $columns = null;
     } else {
         $columns = $json[0]->columns;
