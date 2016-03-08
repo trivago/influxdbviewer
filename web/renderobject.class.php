@@ -1,6 +1,7 @@
 <?php
 
 class Renderobject { 
+
 	var $is_cached = false;
 	var $error_message = "";
 	var $results = null;
@@ -28,6 +29,7 @@ it must not contain runtime dependant variables in the member initialization. Se
         $this->user = $_SESSION['user'];
         $this->host = $_SESSION['host'];
         $this->database = $_SESSION['database'];
+        $this->viewerversion = VERSION;
     }
 }
 ?>
