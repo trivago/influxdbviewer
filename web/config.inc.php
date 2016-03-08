@@ -21,4 +21,4 @@ define('MAX_PAGINATION_PAGES', 10);
 // if you want to send annotations to the database and you dont want to have to select the database name every time: set it here.
 define('DEFAULT_ANNOTATION_DATABASE', "events");
 
-define('VERSION', 0.9.0);
+define('VERSION', 0.9);
