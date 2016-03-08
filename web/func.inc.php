@@ -169,8 +169,13 @@ function runHttpRequest($url, $payload = null)
 function autoLimit($query)
 {
 
-    if (AUTO_LIMIT && isSelectQuery($query) && !isLimited($query)) {
-        $query .= " LIMIT " . AUTO_LIMIT_VALUE;
+    if (AUTO_LIMIT && isSelectQuery($query) ) {
+
+        if !isOrdered($query)
+            $query .= " ORDER BY time DESC";
+
+        if !isLimited($query)
+            $query .= " LIMIT " . AUTO_LIMIT_VALUE;
     }
     return $query;
 }
@@ -178,6 +183,11 @@ function autoLimit($query)
 function isSelectQuery($query)
 {
     return preg_match('/select .*/i', $query) > 0;
+}
+
+function isOrdered($query)
+{
+    return preg_match('/select .* order by/i', $query) > 0;
 }
 
 function isLimited($query)

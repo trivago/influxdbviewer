@@ -14,7 +14,7 @@ define('RESULTS_PER_PAGE', 30);
 // would you like the tool to add a "limit 1000" clause to every select statement which does not contain a limit already?
 define("AUTO_LIMIT", true);
 // the value for the auto-limit clause, if activated:
-define("AUTO_LIMIT_VALUE", 1000);
+define("AUTO_LIMIT_VALUE", 100);
 
 define('MAX_PAGINATION_PAGES', 10);
 
