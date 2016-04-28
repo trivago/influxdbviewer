@@ -169,12 +169,12 @@ function runHttpRequest($url, $payload = null)
 function autoLimit($query)
 {
 
-    if (AUTO_LIMIT && isSelectQuery($query) ) {
+    if (isSelectQuery($query) ) {
 
-        if !isOrdered($query)
+        if (AUTO_ORDER && !isOrdered($query))
             $query .= " ORDER BY time DESC";
 
-        if !isLimited($query)
+        if (AUTO_LIMIT && !isLimited($query))
             $query .= " LIMIT " . AUTO_LIMIT_VALUE;
     }
     return $query;
@@ -520,8 +520,7 @@ function set_flags_for_querytype(&$render)
             $render->is_series_list = true;
             break;
 
-        case QueryType::v08_SELECT:
-            $render->timestamp_column = getTimestampColumn($render->columns);  
+        case QueryType::v08_SELECT:             
             break;
 
         case QueryType::v09_GENERIC:
@@ -544,7 +543,8 @@ function set_flags_for_querytype(&$render)
 function handle_v08_response(&$render, $data)
 {
     $render->columns = $data[0]->columns;
-    $render->datapoints = $data[0]->points;    
+    $render->datapoints = $data[0]->points; 
+    $render->timestamp_column = getTimestampColumn($render->columns); 
     
 }
 

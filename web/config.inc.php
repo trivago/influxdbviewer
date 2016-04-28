@@ -11,6 +11,9 @@ define('MAX_RESULT_AGE_CACHE_SECONDS', 30);
 // this defines the pagination windows:
 define('RESULTS_PER_PAGE', 30);
 
+// would you like the tool to add an "order by time desc" clause to every select statement? It will make sure that you're looking at the newest datapoints always.
+define("AUTO_ORDER", false);
+
 // would you like the tool to add a "limit 1000" clause to every select statement which does not contain a limit already?
 define("AUTO_LIMIT", true);
 // the value for the auto-limit clause, if activated:
