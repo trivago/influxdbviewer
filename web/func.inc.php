@@ -20,7 +20,7 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
         $url = "TODO"; // TODO
     } else {
         $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['annotation_database'] . "/series?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&time_precision=" . $precision;
-    }527G
+    }
 
     $httpResult = runHttpRequest($url, $payload);
     $success = 200 == $httpResult['status_code'];
