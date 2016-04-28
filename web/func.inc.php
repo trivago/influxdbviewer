@@ -20,7 +20,7 @@ function sendAnnotation($timestamp, $tags, $text, $title, $name)
         $url = "TODO"; // TODO
     } else {
         $url = "http://" . $_SESSION['host'] . ":8086/db/" . $_SESSION['annotation_database'] . "/series?u=" . urlencode($_SESSION['user']) . "&p=" . urlencode($_SESSION['pw']) . "&time_precision=" . $precision;
-    }
+    }527G
 
     $httpResult = runHttpRequest($url, $payload);
     $success = 200 == $httpResult['status_code'];
@@ -482,7 +482,7 @@ function handle_response($data, &$render){
     $query_type = $render->query_type;
     debug("Query type for '" . $render->query . "' is " . $query_type);
 
-    set_flags_for_querytype($render);
+    
 
     switch ($query_type) {
         case QueryType::v08_GENERIC:
@@ -503,6 +503,8 @@ function handle_response($data, &$render){
             $render->error_message = "Internal error code 0815 - unknown query type for statement '{$render->query}'. Please report this as a bug.";
             break;
     }
+
+    set_flags_for_querytype($render);
 }
 
 /*
@@ -520,7 +522,8 @@ function set_flags_for_querytype(&$render)
             $render->is_series_list = true;
             break;
 
-        case QueryType::v08_SELECT:             
+        case QueryType::v08_SELECT:    
+            $render->timestamp_column = getTimestampColumn($render->columns);          
             break;
 
         case QueryType::v09_GENERIC:
@@ -544,7 +547,7 @@ function handle_v08_response(&$render, $data)
 {
     $render->columns = $data[0]->columns;
     $render->datapoints = $data[0]->points; 
-    $render->timestamp_column = getTimestampColumn($render->columns); 
+    
     
 }
 
