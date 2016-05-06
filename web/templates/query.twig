@@ -105,7 +105,7 @@
                         
                        
                         {% if is_series_list %}
-							{% if cell != "0" %}
+							{% if is_series_name_column %}
 							<a href='query.php?query=select%20*%20from%20"{{ cell }}"'>
 								{% endif %}
 								{% else %}
