@@ -12,9 +12,9 @@ Requires a webserver with php.
 2. Install Dependencies via Composer:  
     `$ cd web/; curl -s http://getcomposer.org/installer | php`  
     `$ php composer.phar install`
-3. Set date.timezone option in php.ini because otherwise the twig template engine might complain.
-4. Configure your webserver to include this project, and please use https because the credentials are sent to the database without being encrypted.
-5. Have fun!
+3. apt-get install php5-curl
+4. Set date.timezone option in php.ini because otherwise the twig template engine might complain.
+5. Configure your webserver to include this project, and please use https because the credentials are sent to the database without being encrypted.
 
 # Tips
 * to see a human readable version of any timestamp, move the mouse over it.
