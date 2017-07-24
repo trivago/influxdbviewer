@@ -345,7 +345,7 @@ function getQueryUrl($query)
 
 
 function parseErrorMessage($httpResult, $query, &$render){
-    debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . $url);
+    debug("Error message! Status code: " . $httpResult['status_code'] . " for url " . getQueryUrl($query));
     debug($httpResult['results']);
     if ($_SESSION['is_new_influxdb_version']) {
         $json = json_decode($httpResult['results']);
